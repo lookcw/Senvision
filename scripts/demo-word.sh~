@@ -1,4 +1,4 @@
-i#!/bin/bash
+#!/bin/bash
 
 DATA_DIR=/Users/smadan/Downloads
 BIN_DIR=../bin
@@ -28,4 +28,4 @@ fi
 echo -----------------------------------------------------------------------------------------------------
 echo -- distance...
 
-#$Bin_DIR/distance $DATA_DIR/$VECTOR_DATA
+$BIN_DIR/distance $DATA_DIR/$VECTOR_DATA

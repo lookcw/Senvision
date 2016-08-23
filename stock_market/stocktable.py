@@ -4,7 +4,7 @@ arr = []
 #noticed: closing price != opening price next day
 company = raw_input("enter company name: ")
 
-f = open(str(company)+ ".csv", "r")
+f = open('./alldata/' + str(company)+ ".csv", "r")
 reader = csv.reader(f, delimiter=",")
 for row in reader:
 	arr.append(row)
@@ -31,7 +31,7 @@ for row in newarr:
 	pcent_change = ( (float(row[4]) - float(row[1])) / float(row[1]) ) * 100
 	row.append(pcent_change)
 
-outf = open(str(company) + ".txt", "w")
+outf = open('./cleaned_data/' + str(company) + ".csv", "w")
 
 for x in headings:
 	outf.write(str(x) + "\t")
