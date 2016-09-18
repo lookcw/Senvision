@@ -1,35 +1,11 @@
-good
-great
-success
-successful
-succeed
-achieve	
-achievement	
-achieved
-innovate	
-competitive
-gain
-up
-rise
-acquire
-win
-bad
-worse
-worst
-failure
-obsolete
-cut
-horrible
-struggle
-struggling
-bankrupt
-loss
-down
-fail
-lose
-suit
-lawsuit
-sue
-court
-lawyer
-controversy	
+good great awesome nice marvelous
+
+happy excited pleasant satisfactory valuable satisfying
+
+success successful succeed achieve achievement achieved win
+ 	
+innovate competitive innovative new  
+
+gain up rise plus increase
+
+acquire merge
