@@ -31,7 +31,7 @@ public class CompileWeekends {
 							|| current.get(Calendar.DAY_OF_WEEK) == 7) {
 						String tweetFileName = file.getName() + "_"
 								+ current.getTime() + "Tweets.txt";
-						File tweetFile = new File(
+						File currentTweetFile = new File(
 								"C:\\Users\\Digga_000\\Documents\\BitBucket"
 										+ tweetFileName);
 						if (current.get(Calendar.DAY_OF_WEEK) == 6)
@@ -44,8 +44,13 @@ public class CompileWeekends {
 						File fridayTweetFile = new File(
 								"C:\\Users\\Digga_000\\Documents\\BitBucket"
 										+ fridayFileName);
-						if (fridayTweetfile.exists()) {
-								append(fridayTweetFile,tweetFile)
+						if (fridayTweetFile.exists()) {
+								try {
+									append(fridayTweetFile,currentTweetFile);
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
 						}
 					}
 				}
