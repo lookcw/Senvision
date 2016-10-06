@@ -3,6 +3,10 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="lib" path="C:/Users/Digga_000/Downloads/twitter4j-4.0.4/lib/twitter4j-core-4.0.4.jar"/>
+<<<<<<< HEAD
 	<classpathentry kind="lib" path="/home/mankeyace/Programs/packages/twitter4j/lib/twitter4j-core-4.0.4.jar"/>
+=======
+	<classpathentry kind="lib" path="C:/Users/Digga_000/Downloads/org.apache.commons.io.jar/org.apache.commons.io.jar"/>
+>>>>>>> 6704e78363f2941184ea8f3b769aae1fed28b0d0
 	<classpathentry kind="output" path="bin"/>
 </classpath>
