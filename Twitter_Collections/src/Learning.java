@@ -168,15 +168,8 @@ String tweetNoURL= removeUrl(stat);
 	 */
 	private static String removeUrl(String commentstr)
     {
-        String urlPattern = "((https?|ftp|gopher|telnet|file|Unsure|http):((//)|(\\\\))+[\\w\\d:#@%/;$()~_?\\+-=\\\\\\.&]*)";
-        Pattern p = Pattern.compile(urlPattern,Pattern.CASE_INSENSITIVE);
-        Matcher m = p.matcher(commentstr);
-        int i = 0;
-        while (m.find()) {
-            commentstr = commentstr.replaceAll(m.group(i),"").trim();
-            i++;
-        }
-        return commentstr;
+		
+		return commentstr.replaceAll("https?://\\S+\\s?", "");
     }
 	
 	
@@ -225,8 +218,8 @@ String tweetNoURL= removeUrl(stat);
 	public static void main(String[] args) throws TwitterException, IOException, ParseException, InterruptedException{
 	Learning l= new Learning();
 	
-	System.out.println(removeUrl("asdf asdfa wefadf ghttps://mail.google.com/mail/u/0/#inbox/1579b537485463c8 https://mail.google.com/mail/u/0/#inbox/1579b537485463c8"));
-	//l.runTweetCollection("2016-10-5", "2016-10-7");
+//	System.out.println(removeUrl("asdf asdfa wefadf ghttps://mail.google.com/mail/u/0/#inbox/1579b537485463c8 https://mail.google.com/mail/u/0/#inbox/1579b537485463c8"));
+	l.runTweetCollection("2016-10-5", "2016-10-7");
 	   }
     
 }
