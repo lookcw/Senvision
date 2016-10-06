@@ -10,14 +10,14 @@ import java.util.Calendar;
 
 public class CompileWeekends {
 
-	public static void compileWeekends(File[] files) {
+	public static void compileWeekends(File[] files) throws IOException {
 		for (File file : files) {
 			if (file.isDirectory()) {
-				System.out.println("Directory: " + file.getName());
+				System.out.println("Company: " + file.getName());
 				File[] tweetsfiles = file.listFiles();
 				for (File tweetFile : tweetsfiles) {
-					String tweetDate = tweetFile.getName().substring(
-							tweetFile.getName().indexOf("-"),
+
+					String tweetDate = tweetFile.getName().substring(tweetFile.getName().indexOf("_")+1,
 							tweetFile.getName().indexOf("Tweet"));
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 					Calendar current = Calendar.getInstance();
@@ -27,38 +27,64 @@ public class CompileWeekends {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					if (current.get(Calendar.DAY_OF_WEEK) == 6
-							|| current.get(Calendar.DAY_OF_WEEK) == 7) {
-						String tweetFileName = file.getName() + "_"
-								+ current.getTime() + "Tweets.txt";
-						File tweetFile = new File(
-								"C:\\Users\\Digga_000\\Documents\\BitBucket"
-										+ tweetFileName);
-						if (current.get(Calendar.DAY_OF_WEEK) == 6)
+					String tweetFileName = file.getName() + "_" + sdf.format(current.getTime()) + "Tweets.txt";
+					File tweetTxtFile = new File(
+							"/home/mankeyace/GitHub/stock/backupTweets/" + file.getName() + "/" + tweetFileName);
+					
+					
+					if (current.get(Calendar.DAY_OF_WEEK) == 7 || current.get(Calendar.DAY_OF_WEEK) == 1) {
+					
+						//System.out.println(tweetTxtFile.getPath()+" "+ tweetTxtFile.exists()+" that the current day file exists");
+						if (current.get(Calendar.DAY_OF_WEEK) == 7){
 							current.add(current.DATE, -1);
-						if (current.get(Calendar.DAY_OF_WEEK) == 7)
-							current.add(current.DATE, -2);
-						String fridayFileName = file.getName() + "_"
-								+ current.getTime() + "Tweets.txt";
-
-						File fridayTweetFile = new File(
-								"C:\\Users\\Digga_000\\Documents\\BitBucket"
-										+ fridayFileName);
-						if (fridayTweetfile.exists()) {
-								append(fridayTweetFile,tweetFile)
 						}
+						else  if(current.get(Calendar.DAY_OF_WEEK) == 1)
+							current.add(current.DATE, -2);
+						
+						String fridayFileName = file.getName() + "_" + sdf.format(current.getTime()) + "Tweets.txt";
+
+						File fridayTweetFile = new File("/home/mankeyace/GitHub/stock/backupTweets/"+file.getName()+"/" + fridayFileName);
+						System.out.println("appending "+tweetTxtFile.getName()+" to "+fridayTweetFile.getName());
+						if (fridayTweetFile.exists()) {
+						 	Runtime.getRuntime().exec(new String[]{"bash","-c","cat "+tweetTxtFile.getPath()+" >> "+fridayTweetFile.getPath()});
+				
+						}
+						try {
+							Thread.sleep(50);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						System.out.println(tweetTxtFile.delete()+ " that "+ tweetTxtFile.getName()+"  has been deleted.");
+						
 					}
+					
 				}
 			}
 		}
 	}
-public static void append(File fileToAppendTo, File fileToAppend) throws IOException{
-	BufferedWriter bW= new BufferedWriter( new FileWriter(fileToAppendTo,true));
-	BufferedReader bR= new BufferedReader( new FileReader(fileToAppend));
-	String nextLine;
-	while((nextLine=bR.readLine())!=null){
-		bW.write(nextLine);
-	}
-}
 
+	public static void append(File fileToAppendTo, File fileToAppend) throws IOException {
+		BufferedWriter bW = new BufferedWriter(new FileWriter(fileToAppendTo, true));
+		BufferedReader bR = new BufferedReader(new FileReader(fileToAppend));
+		String nextLine;
+		int count=0;
+		while ((nextLine = bR.readLine()) != null) {
+			bW.write(nextLine);
+			System.out.println(count);
+			count++;
+		}
+		bW.close();
+		bR.close();
+	}
+		public static void main(String[] args){
+			File[] CompaniesArray = new File("/home/mankeyace/GitHub/stock/backupTweets").listFiles();
+			try {
+				compileWeekends(CompaniesArray);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	
 }
