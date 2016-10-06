@@ -1,0 +1,23 @@
+import java.io.FileOutputStream;
+import java.net.URL;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
+
+
+public class StockFetcher {
+	
+	static String[] Tickername= new String[]{"INTC","AAPL","MRK","PG","WMT", "BA","JPM","GOOGL"};
+	public static void fetchStock(int finalDateMonth,String outputfolder){
+		for(String stockSymbol:Tickername){
+			
+			
+			
+String url="http://ichart.finance.yahoo.com/table.csv?s="+stockSymbol+"&d="+finalDateMonth +"&e="+finalDateday+"&f="+FinaldateYear +"&g=d&a="+StartdateMonth +"&b="+Startdateday+"&c="+StartdateYear+"&ignore=.csv"		
+URL website = new URL(url);
+ReadableByteChannel rbc = Channels.newChannel(website.openStream());
+FileOutputStream fos = new FileOutputStream("information.html");
+fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+		}
+	}
+
+}
