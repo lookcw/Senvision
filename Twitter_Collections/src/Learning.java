@@ -1,14 +1,15 @@
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import twitter4j.Query;
 import twitter4j.QueryResult;
@@ -59,6 +60,8 @@ public class Learning {
        		 break;
         case "GOOGL ": compname="Google";
         break;
+        case "GOOGL": compname="Google";
+        break;
     }
 		 return compname;
 	}
@@ -74,6 +77,7 @@ public class Learning {
 	 */
 	public int GetTweetsDay(String date,String queryterm) throws  IOException, ParseException{
 		String writeLine;
+		ArrayList<String> noDuplicateTweets= new ArrayList<String>();
 		Query query = new Query(queryterm+"+exclude:retweets").lang("en");
 		 boolean finished = false;
 		 int count=0;
@@ -133,10 +137,12 @@ else{
 				     for (Status status : statuses) {
 				         // do your processing here and work out if you are 'finished' etc... 
 				    	 String stat= status.getText();
-				    //	 System.out.println(stat);
-				     writeLine=ReplaceTickers.replaceticks(stat);
-			//	     System.out.println(writeLine);
-				   	 pW.println(writeLine);
+String tweetNoURL= removeUrl(stat);
+				    	 if (!noDuplicateTweets.contains(tweetNoURL)){
+				    	 writeLine=ReplaceTickers.replaceticks(stat);
+				    	 pW.println(writeLine);
+				    	 noDuplicateTweets.add(tweetNoURL);
+				    	 }
 				         // Capture the lowest (earliest) Status id
 				         lowestStatusId = Math.min(status.getId(), lowestStatusId);
 				     }
@@ -155,6 +161,21 @@ else{
 		 System.out.println(queryterm+" closed ");
 		 return 1;
 	}
+	/**
+	 * 
+	 * @param commentstr
+	 * @return
+	 */
+	private static String removeUrl(String commentstr)
+    {
+		
+		return commentstr.replaceAll("https?://\\S+\\s?", "");
+    }
+	
+	
+	
+	
+	
 	/**
 	 * Start may not be after enddate
 	 * @param startdate
@@ -196,7 +217,9 @@ else{
 	
 	public static void main(String[] args) throws TwitterException, IOException, ParseException, InterruptedException{
 	Learning l= new Learning();
-	l.runTweetCollection("2016-09-012", "2016-09-17");
+	
+//	System.out.println(removeUrl("asdf asdfa wefadf ghttps://mail.google.com/mail/u/0/#inbox/1579b537485463c8 https://mail.google.com/mail/u/0/#inbox/1579b537485463c8"));
+	l.runTweetCollection("2016-10-5", "2016-10-7");
 	   }
     
 }
