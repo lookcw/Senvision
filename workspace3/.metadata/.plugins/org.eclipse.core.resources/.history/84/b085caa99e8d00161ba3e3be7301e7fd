@@ -83,33 +83,23 @@ public class StockFetcher {
 	
 	
 	public static void addTwitterDatetoStockFile(File inputfile,String outputfile,int numDaysToAdd) throws IOException, ParseException{
-		CSVReader cR = new CSVReader(new FileReader(inputfile),'\t');
-		CSVWriter cW = new CSVWriter(new FileWriter(outputfile),'\t');
+		CSVReader cR = new CSVReader(new FileReader(inputfile));
+		CSVWriter cW = new CSVWriter(new FileWriter(outputfile));
 		String[] nextLine;
-		nextLine = cR.readNext();
-		System.out.println(nextLine.length);
-		System.out.println(inputfile);
-		String[] writeLine=new String[nextLine.length];
-		writeLine[0]=nextLine[0];
-		writeLine[1]="Tweet Prediction Date";;
-		for(int i=1;i<nextLine.length-1;i++){
-			writeLine[i+1]=nextLine[i];
-		}
-		cW.writeNext(writeLine);
 		while((nextLine=cR.readNext())!=null){
-			writeLine = new String[nextLine.length];
+			String[] writeLine = new String[nextLine.length+1];
 			writeLine[0]=nextLine[0];
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			 Calendar c = Calendar.getInstance();
 			 c.setTime(sdf.parse(nextLine[0]));
 			 c.add(Calendar.DATE, numDaysToAdd);
 			 writeLine[1]=sdf.format(c.getTime());
-			 for(int i=1;i<nextLine.length-1;i++){
+			 for(int i=1;i<nextLine.length;i++){
 				 writeLine[i+1]=nextLine[i];
 			 }
 			 cW.writeNext(writeLine);
 		}
-		cW.close();
+		
 		
 	}
 	

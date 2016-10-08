@@ -87,12 +87,10 @@ public class StockFetcher {
 		CSVWriter cW = new CSVWriter(new FileWriter(outputfile),'\t');
 		String[] nextLine;
 		nextLine = cR.readNext();
-		System.out.println(nextLine.length);
-		System.out.println(inputfile);
 		String[] writeLine=new String[nextLine.length];
 		writeLine[0]=nextLine[0];
 		writeLine[1]="Tweet Prediction Date";;
-		for(int i=1;i<nextLine.length-1;i++){
+		for(int i=1;i<nextLine.length-2;i++){
 			writeLine[i+1]=nextLine[i];
 		}
 		cW.writeNext(writeLine);
@@ -104,7 +102,7 @@ public class StockFetcher {
 			 c.setTime(sdf.parse(nextLine[0]));
 			 c.add(Calendar.DATE, numDaysToAdd);
 			 writeLine[1]=sdf.format(c.getTime());
-			 for(int i=1;i<nextLine.length-1;i++){
+			 for(int i=1;i<nextLine.length;i++){
 				 writeLine[i+1]=nextLine[i];
 			 }
 			 cW.writeNext(writeLine);

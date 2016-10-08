@@ -88,7 +88,6 @@ public class StockFetcher {
 		String[] nextLine;
 		nextLine = cR.readNext();
 		System.out.println(nextLine.length);
-		System.out.println(inputfile);
 		String[] writeLine=new String[nextLine.length];
 		writeLine[0]=nextLine[0];
 		writeLine[1]="Tweet Prediction Date";;
