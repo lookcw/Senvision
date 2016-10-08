@@ -1,0 +1,11 @@
+import java.io.File;
+
+public class DeleteDuplicates {
+	public static void deleteDuplicates(String TweetsFolder){
+File[] TweetFolderArray = new File("../../Tweets").listFiles();
+for(File compFolder: TweetFolderArray){
+	System.out.println(compFolder.getName());
+}
+
+	}
+}

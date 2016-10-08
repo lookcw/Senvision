@@ -14,9 +14,9 @@ import twitter4j.TwitterException;
 
 public class StockFetcher {
 
-	String[] tickername = { "INTC", "AAPL", "MRK ", "PG ", "WMT ", "BA", "JPM", "GOOGL " };
+	static String[] tickername = { "INTC", "AAPL", "MRK ", "PG ", "WMT ", "BA", "JPM", "GOOGL " };
 
-	public String tickerToName(String tickerCompName) {
+	public static String tickerToName(String tickerCompName) {
 		String compname = tickerCompName;
 		switch (tickerCompName) {
 		case "INTC":
@@ -52,7 +52,7 @@ public class StockFetcher {
 
 	public static void fetchStock(int finalDateYear, int finalDateMonth, int finalDateday, int startDateYear,
 			int startDateMonth, int startDateDay, String outputfolder) throws IOException {
-		for (String stockSymbol : Tickername) {
+		for (String stockSymbol : tickername) {
 
 			String url = "http://ichart.finance.yahoo.com/table.csv?" + "s=" + stockSymbol + "&d=" + finalDateMonth
 					+ "&e=" + finalDateday + "&f=" + finalDateYear + "&g=d&a=" + startDateMonth + "&b=" + startDateDay
