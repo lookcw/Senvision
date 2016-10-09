@@ -25,8 +25,7 @@ for filename in os.listdir("./auto_pulled_data"):
 	arr.remove(arr[0])
 
 	#strip down to first few dates
-	newarr = arr[0:10]
-	for row in newarr:
+	for row in arr:
 		if float(row[1]) > float(row[4]):
 			row.append('-')
 		elif float(row[1]) < float(row[4]):
@@ -42,7 +41,7 @@ for filename in os.listdir("./auto_pulled_data"):
 	for x in headings:
 		outf.write(str(x) + "\t")
 	outf.write("\n")
-	for row in newarr:
+	for row in arr:
 		for x in row:
 			outf.write(str(x) + "\t")
 		outf.write("\n")
