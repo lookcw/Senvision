@@ -118,6 +118,6 @@ public class StockFetcher {
 	public static void main(String[] args) throws IOException {
 //		fetchStock(2016, 10, 6, 2016, 9, 7, "");
 		
-		//addTwitterDatetoStockFolder("../../stock_data/cleaned_data", "../../stock_data/tweet_date_data", 3);
+		addTwitterDatetoStockFolder("../../stock_data/cleaned_data", "../../stock_data/tweet_date_data", 3);
 	}
 }

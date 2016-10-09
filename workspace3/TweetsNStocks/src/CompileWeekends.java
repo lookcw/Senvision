@@ -32,13 +32,13 @@ public class CompileWeekends {
 							"../../AllTweets/filteredTweets/" + file.getName() + "/" + tweetFileName);
 					
 					
-					if (current.get(Calendar.DAY_OF_WEEK) == 7-lagtime || current.get(Calendar.DAY_OF_WEEK) == Math.abs((1-lagtime)%7)) {
+					if (current.get(Calendar.DAY_OF_WEEK) == 7-lagtime || current.get(Calendar.DAY_OF_WEEK) == Math.abs((8-lagtime)%7)) {
 					
 						//System.out.println(tweetTxtFile.getPath()+" "+ tweetTxtFile.exists()+" that the current day file exists");
 						if (current.get(Calendar.DAY_OF_WEEK) == 7-lagtime){
 							current.add(current.DATE, -1);
 						}
-						else  if(current.get(Calendar.DAY_OF_WEEK) ==  Math.abs((1-lagtime)%7))
+						else  if(current.get(Calendar.DAY_OF_WEEK) ==  Math.abs((8-lagtime)%7));
 							current.add(current.DATE, -2);
 						
 						String fridayFileName = file.getName() + "_" + sdf.format(current.getTime()) + "Tweets.txt";
@@ -80,7 +80,7 @@ public class CompileWeekends {
 		public static void main(String[] args){
 			File[] CompaniesArray = new File("../../AllTweets/filteredTweets/").listFiles();
 			try {
-				compileWeekends(CompaniesArray,0);
+				compileWeekends(CompaniesArray,3);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
