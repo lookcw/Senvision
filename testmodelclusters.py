@@ -13,11 +13,11 @@ allvalues = {}
 # open files containing words ############################
 ##########################################################
 
-good_words = open("Vocab/good_words", "r")
-bad_words =  open("Vocab/bad_words", "r")
-neutral_words = open("Vocab/neutral_words", "r")
-good_for_neutral = open("Vocab/good_for_neutral", "r") 
-bad_for_neutral = open("Vocab/bad_for_neutral", "r")
+good_words = open("Vocab/good_words.txt", "r")
+bad_words =  open("Vocab/bad_words.txt", "r")
+neutral_words = open("Vocab/neutral_words.txt", "r")
+good_for_neutral = open("Vocab/good_for_neutral.txt", "r") 
+bad_for_neutral = open("Vocab/bad_for_neutral.txt", "r")
 
 good_clusters = open("Vocab_Clusters/good_words_clustered.txt", "r")
 bad_clusters = open("Vocab_Clusters/bad_words_clustered.txt", "r")
@@ -126,7 +126,8 @@ for company_name in full_company_names:
 		context = 10 #subject to change
 		#downsampling = 1e-3
 
-		sentences = LineSentence('/Tweets/' + company_name + '/'  + company_name + '_' + date + 'Tweets.txt')
+		# file path AllTweets/filteredTweets
+		sentences = LineSentence('AllTweets/filteredTweets/' + company_name + '/'  + company_name + '_' + date + 'Tweets.txt')
 		print("Training model...")
 		model = word2vec.Word2Vec(sentences, workers=num_workers, size=num_features, min_count=min_word_count, window=context)
 
@@ -160,29 +161,16 @@ for company_name in full_company_names:
 					allvalues[str(x) + "_" + str(y)] = dist
 				except KeyError:
 					allvalues[str(x) + "_" + str(y)] = 0
-
+					continue
 
 			for y in bad_for_neutral:
-                                        dist = model.similarity(str(x), str(y))
-                                        allvalues[str(x) + "_" + str(y)] = dist
-                                except KeyError:
-                                        allvalues[str(x) + "_" + str(y)] = 0 
+				try:
+					dist = model.similarity(str(x), str(y))
+					allvalues[str(x) + "_" + str(y)] = dist
+				except KeyError:
+					allvalues[str(x) + "_" + str(y)] = 0 
+					continue
 
-
-
-
-#		outf.write('MOST SIMILAR WORDS' + '\n')
-#		simarr = model.most_similar(str(company_name))
-#		for x in simarr:
-#			try:
-#				for y in x:
-#					outf.write(str(y) + '\t')
-#				outf.write('\n')
-#			except UnicodeEncodeError:
-#				continue
-#
-#		for distance in posarr:
-#			outf.write(str(distance) + '\t')
-#		for distance in negarr:
-#			outf.write(str(distance) + '\t')
-#		outf.write('\n')
+		for value in DESCRIPTOR:
+			outf.write(str(value) + '\t')
+		outf.write('\n')
