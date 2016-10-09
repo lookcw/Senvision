@@ -54,7 +54,7 @@ public class StockFetcher {
 			int startDateMonth, int startDateDay, String outputfolder) throws IOException {
 		for (String stockSymbol : tickername) {
 
-			String url = "http://ichart.finance.yahoo.com/table.csv?" + "s=" + stockSymbol + "&d=" + finalDateMonth
+			String url = "http://ichart.finance.yahoo.com/table.csv?" + "s=" + stockSymbol.trim() + "&d=" + finalDateMonth
 					+ "&e=" + finalDateday + "&f=" + finalDateYear + "&g=d&a=" + startDateMonth + "&b=" + startDateDay
 					+ "&c=" + startDateYear + "&ignore=.csv";
 
@@ -116,8 +116,8 @@ public class StockFetcher {
 	
 	
 	public static void main(String[] args) throws IOException {
-		//fetchStock(2016, 10, 1, 2016, 8, 7, "");
+		fetchStock(2016, 10, 6, 2016, 8, 7, "");
 		
-		addTwitterDatetoStockFolder("../../stock_data/cleaned_data", "../../stock_data/tweet_date_data", 3);
+		//addTwitterDatetoStockFolder("../../stock_data/cleaned_data", "../../stock_data/tweet_date_data", 3);
 	}
 }

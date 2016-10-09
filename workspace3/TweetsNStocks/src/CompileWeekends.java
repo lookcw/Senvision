@@ -29,7 +29,7 @@ public class CompileWeekends {
 					}
 					String tweetFileName = file.getName() + "_" + sdf.format(current.getTime()) + "Tweets.txt";
 					File tweetTxtFile = new File(
-							"/home/mankeyace/GitHub/stock/backupTweets/" + file.getName() + "/" + tweetFileName);
+							"../../AllTweets/filteredTweets/" + file.getName() + "/" + tweetFileName);
 					
 					
 					if (current.get(Calendar.DAY_OF_WEEK) == 7 || current.get(Calendar.DAY_OF_WEEK) == 1) {
@@ -43,7 +43,7 @@ public class CompileWeekends {
 						
 						String fridayFileName = file.getName() + "_" + sdf.format(current.getTime()) + "Tweets.txt";
 
-						File fridayTweetFile = new File("/home/mankeyace/GitHub/stock/backupTweets/"+file.getName()+"/" + fridayFileName);
+						File fridayTweetFile = new File("../../AllTweets/filteredTweets/"+file.getName()+"/" + fridayFileName);
 						System.out.println("appending "+tweetTxtFile.getName()+" to "+fridayTweetFile.getName());
 						if (fridayTweetFile.exists()) {
 						 	Runtime.getRuntime().exec(new String[]{"bash","-c","cat "+tweetTxtFile.getPath()+" >> "+fridayTweetFile.getPath()});
@@ -78,7 +78,7 @@ public class CompileWeekends {
 		bR.close();
 	}
 		public static void main(String[] args){
-			File[] CompaniesArray = new File("/home/mankeyace/GitHub/stock/backupTweets").listFiles();
+			File[] CompaniesArray = new File("../../AllTweets/filteredTweets/").listFiles();
 			try {
 				compileWeekends(CompaniesArray);
 			} catch (IOException e) {
