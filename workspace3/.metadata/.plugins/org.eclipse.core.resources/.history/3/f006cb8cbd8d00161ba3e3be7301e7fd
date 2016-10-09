@@ -54,7 +54,7 @@ public class StockFetcher {
 			int startDateMonth, int startDateDay, String outputfolder) throws IOException {
 		for (String stockSymbol : tickername) {
 
-			String url = "http://ichart.finance.yahoo.com/table.csv?" + "s=" + stockSymbol.trim() + "&d=" + finalDateMonth
+			String url = "http://ichart.finance.yahoo.com/table.csv?" + "s=" + stockSymbol + "&d=" + finalDateMonth
 					+ "&e=" + finalDateday + "&f=" + finalDateYear + "&g=d&a=" + startDateMonth + "&b=" + startDateDay
 					+ "&c=" + startDateYear + "&ignore=.csv";
 

@@ -78,7 +78,7 @@ public class CompileWeekends {
 		bR.close();
 	}
 		public static void main(String[] args){
-			File[] CompaniesArray = new File("../../AllTweets/filteredTweets/").listFiles();
+			File[] CompaniesArray = new File("/home/mankeyace/GitHub/stock/backupTweets").listFiles();
 			try {
 				compileWeekends(CompaniesArray);
 			} catch (IOException e) {
