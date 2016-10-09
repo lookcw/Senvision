@@ -31,20 +31,19 @@ public class TweetStockDataPairer {
 		DescriptorReader.close();
 		DescriptorReader = new CSVReader(new FileReader(DescriptorFile), '\t');
 		readDesLine = DescriptorReader.readNext();
-		writeLine = new String[readDesLine.length];
-		for (int i = 0; i < readDesLine.length-1; i++) {
+		writeLine = new String[readDesLine.length + 1];
+		for (int i = 0; i < readDesLine.length; i++) {
 			writeLine[i] = readDesLine[i];
 		}
-		writeLine[readDesLine.length-1] = "+/-/=";
+		writeLine[readDesLine.length] = "+/-/=";
 		XValWriter.writeNext(writeLine);
-		
 		while ((readDesLine = DescriptorReader.readNext()) != null) {
 
 			if (stockupdown.containsKey(readDesLine[0])) {
-				for (int i = 0; i < readDesLine.length-1; i++) {
+				for (int i = 0; i < readDesLine.length; i++) {
 					writeLine[i] = readDesLine[i];
 				}
-				writeLine[readDesLine.length-1] = stockupdown.get(readDesLine[0]);
+				writeLine[readDesLine.length] = stockupdown.get(readDesLine[0]);
 				XValWriter.writeNext(writeLine);
 			}
 
