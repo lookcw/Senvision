@@ -1,5 +1,6 @@
 import os
 import csv
+from datetime import date, timedelta as td
 from gensim.models import word2vec
 from gensim.models.word2vec import LineSentence
 import logging
@@ -143,45 +144,48 @@ class MySentences(object):
 full_company_names = ['Apple', 'Boeing', 'Google', 'Intel', 'Merck', 'Morgan Chase', 'p&g', 'Walmart']
 #full_company_names = open("file_containing_company_names.txt", "r")
 dates = []
-current_year = raw_input("Enter current year: ")
-current_month = raw_input("Enter current month: ")
-firstdate = raw_input("Enter start date (put a 0 on front if single digit): ")
-lastdate = raw_input("Enter end date: ")
+#current_year = raw_input("Enter current year: ")
+#first_month = raw_input("Enter first month: ")
+#first_date = raw_input("Enter first date: ")
+#last_month = raw_input("Enter last month: ")
+#last_date = raw_input("Enter last date: ")
 
-for i in range (int(firstdate), int(lastdate)+1):
-	if len(str(i)) == 1:
-		dates.append(str(current_year) + "-" + str(current_month) + "-0" + str(i))
-	else:
-		dates.append(str(current_year) + "-" + str(current_month) + "-" + str(i))
+#date1 = date(int(current_year), int(first_month), int(first_date))
+#date2 = date(int(current_year), int(last_month), int(last_date))
+
+#delta = date2 - date1
+
+#for i in range(delta.days + 1):
+#	dates.append(str(date1 + td(days=i)))
 
 
 ##########################################################################################
 ###                         loop through all the companies                             ### 
 ##########################################################################################
+outf = open('./descriptors/DESCRIPTORS.txt', 'w')
+outf.write('DATE' + '\t' + 'COMPANY' + '\t')
+count = 0
+for cluster in good_clusters_arr:
+	count+=1
+for cluster in bad_clusters_arr:
+	count+=1
+for cluster in neutral_clusters_arr:
+	for cluster in neutral_good_clusters_arr:
+		count+=1
+	for cluster in neutral_bad_clusters_arr: 
+		count+=1
+for i in range(0, count):
+	outf.write("Cluster_" + str(i) + "\t")
+outf.write('\n')
+
 for company_name in full_company_names:
 
-	outf = open('./descriptors/' + str(company_name) + "_descriptor" + ".txt", 'w')
-	outf.write('DATE' + '\t')
+	for filename in os.listdir('AllTweets/filteredTweets/' + company_name):
+		index1 = filename.index('_')
+		index2 = filename.index('T')
+		date = filename[index1+1:index2]
 
-	num_c = 0
-	for cluster in good_clusters_arr:
-		num_c += 1
-		outf.write("Good_" + str(company_name) + '\t')
-	for cluster in bad_clusters_arr:
-		num_c += 1
-		outf.write("Bad_" + str(company_name) + '\t')
-	for cluster in neutral_clusters_arr:
-		for cluster in neutral_good_clusters_arr:
-			num_c += 1
-			outf.write("Good_Neutral" + '\t')
-		for cluster in neutral_bad_clusters_arr:
-			num_c += 1
-			outf.write("Bad_Neutral" + '\t')
-	print("NUMBER OF CLUSTERS", num_c)
-	outf.write('\n')
-
-	for date in dates:
-		outf.write(str(date) + "\t")
+		outf.write(str(date) + "\t" + str(company_name) + "\t")
 
 		num_features = 40 #subject to change
 		min_word_count = 1 #subject to change
@@ -189,7 +193,7 @@ for company_name in full_company_names:
 		context = 10 #subject to change
 		#downsampling = 1e-3
 
-		sentences = LineSentence('AllTweets/filteredTweets/' + company_name + '/'  + company_name + '_' + date + 'Tweets.txt')
+		sentences = LineSentence('AllTweets/filteredTweets/' + company_name + '/'  + filename)
 		print("Training model...")
 		model = word2vec.Word2Vec(sentences, workers=num_workers, size=num_features, min_count=min_word_count, window=context)
 
