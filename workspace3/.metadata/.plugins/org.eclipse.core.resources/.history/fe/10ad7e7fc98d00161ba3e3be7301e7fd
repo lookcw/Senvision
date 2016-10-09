@@ -80,7 +80,7 @@ public class CompileWeekends {
 		public static void main(String[] args){
 			File[] CompaniesArray = new File("../../AllTweets/filteredTweets/").listFiles();
 			try {
-				compileWeekends(CompaniesArray,0);
+				compileWeekends(CompaniesArray);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

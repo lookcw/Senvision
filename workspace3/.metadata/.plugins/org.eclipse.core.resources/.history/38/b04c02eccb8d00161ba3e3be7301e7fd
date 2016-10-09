@@ -13,7 +13,6 @@ public class TweetStockDataPairer {
 		Map<String, String> stockupdown = new HashMap<String, String>();
 		CSVReader StockReader = new CSVReader(new FileReader(StockFile),'\t');
 		CSVWriter XValWriter = new CSVWriter(new FileWriter(XValFile));
-		CSVWriter KnimeInputWriter = new CSVWriter(new FileWriter("../../KnimeInput/Knimeinput.tsv",true),'\t');
 		CSVReader DescriptorReader = new CSVReader(new FileReader(DescriptorFile), '\t');
 		System.out.println(new File(StockFile).exists());
 		StockReader.readNext();
@@ -32,31 +31,27 @@ public class TweetStockDataPairer {
 		DescriptorReader.close();
 		DescriptorReader = new CSVReader(new FileReader(DescriptorFile), '\t');
 		readDesLine = DescriptorReader.readNext();
-		writeLine = new String[readDesLine.length+1];
-		for (int i = 0; i < readDesLine.length; i++) {
+		writeLine = new String[readDesLine.length];
+		for (int i = 0; i < readDesLine.length-1; i++) {
 			writeLine[i] = readDesLine[i];
 		}
-		writeLine[readDesLine.length] = "+/-/=";
+		writeLine[readDesLine.length-1] = "+/-/=";
 		XValWriter.writeNext(writeLine);
 		
 		while ((readDesLine = DescriptorReader.readNext()) != null) {
 
 			if (stockupdown.containsKey(readDesLine[0])) {
-				for (int i = 0; i < readDesLine.length-2; i++) {
-					System.out.println(readDesLine.length);
-					System.out.println(DescriptorFile);
+				for (int i = 0; i < readDesLine.length-1; i++) {
 					writeLine[i] = readDesLine[i];
 				}
 				writeLine[readDesLine.length-1] = stockupdown.get(readDesLine[0]);
 				XValWriter.writeNext(writeLine);
-				KnimeInputWriter.writeNext(writeLine);
 			}
 
 		}
 
 		DescriptorReader.close();
 		XValWriter.close();
-		KnimeInputWriter.close();
 	}
 
 	public static void createPairsFolders(String DescriptorFolder, String StockFolder, String XValOutputFolder) {

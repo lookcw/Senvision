@@ -42,9 +42,7 @@ public class TweetStockDataPairer {
 		while ((readDesLine = DescriptorReader.readNext()) != null) {
 
 			if (stockupdown.containsKey(readDesLine[0])) {
-				for (int i = 0; i < readDesLine.length-2; i++) {
-					System.out.println(readDesLine.length);
-					System.out.println(DescriptorFile);
+				for (int i = 0; i < readDesLine.length; i++) {
 					writeLine[i] = readDesLine[i];
 				}
 				writeLine[readDesLine.length-1] = stockupdown.get(readDesLine[0]);
