@@ -36,6 +36,8 @@ for(File compFolder: TweetFolderArray){
 				noURLTweets.add(removeUrl(readLine));
 				bW.write(removeUrl(readLine)+"\r\n");
 			}
+			else
+				System.out.println(readLine);
 		}
 		bR.close();
 		bW.close();
