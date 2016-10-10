@@ -60,7 +60,7 @@ public class TweetStockDataPairer {
 
 	public static void createPairsFolders(String DescriptorFolder, String StockFolder, String XValOutputFolder) {
 		for (File DescriptorFile : new File(DescriptorFolder).listFiles()) {
-			System.out.println("Compnay: "+DescriptorFile.getName());
+			System.out.println(DescriptorFile.getName());
 			try {
 				createPair(StockFolder + "/" + DescriptorFile.getName().substring(0, DescriptorFile.getName().indexOf("_"))
 								+ "_cleaned.csv", 
