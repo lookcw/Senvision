@@ -33,17 +33,17 @@ public class TweetStockDataPairer {
 		DescriptorReader.close();
 		DescriptorReader = new CSVReader(new FileReader(DescriptorFile), '\t');
 		readDesLine = DescriptorReader.readNext();
-		writeLine = new String[readDesLine.length+1];
-		for (int i = 0; i < readDesLine.length; i++) {
+		writeLine = new String[readDesLine.length];
+		for (int i = 0; i < readDesLine.length-1; i++) {
 			writeLine[i] = readDesLine[i];
 		}
-		writeLine[readDesLine.length] = "+/-/=";
+		writeLine[readDesLine.length-1] = "+/-/=";
 		XValWriter.writeNext(writeLine);
 		
 		while ((readDesLine = DescriptorReader.readNext()) != null) {
 
 			if (stockupdown.containsKey(readDesLine[0])) {
-				for (int i = 0; i < readDesLine.length-2; i++) {
+				for (int i = 0; i < readDesLine.length-1; i++) {
 					writeLine[i] = readDesLine[i];
 				}
 				writeLine[readDesLine.length-1] = stockupdown.get(readDesLine[0]);
@@ -62,9 +62,10 @@ public class TweetStockDataPairer {
 		for (File DescriptorFile : new File(DescriptorFolder).listFiles()) {
 			System.out.println("Compnay: "+DescriptorFile.getName());
 			try {
+				System.out.println("asdfawefawgafja;odf;aijsdf;iasdfij;");
 				createPair(StockFolder + "/" + DescriptorFile.getName().substring(0, DescriptorFile.getName().indexOf("_"))
 								+ "_cleaned.csv", 
-						DescriptorFile.getPath(), XValOutputFolder + "/" + DescriptorFile.getName());
+						DescriptorFile.getPath(), XValOutputFolder + "/" + DescriptorFile.getName().substring(0,DescriptorFile.getName().indexOf(".tsv"))+".csv");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -74,5 +75,6 @@ public class TweetStockDataPairer {
 
 	public static void main(String[] args) {
 		createPairsFolders("../../descriptors", "../../stock_data/tweet_date_data", "../../XValSets");
+		System.out.println("what the fuckk");
 	}
 }

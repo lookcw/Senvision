@@ -6,5 +6,9 @@
 	<classpathentry kind="lib" path="/home/mankeyace/Programs/packages/twitter4j/lib/twitter4j-core-4.0.4.jar"/>
 	<classpathentry kind="lib" path="/home/mankeyace/BitBucket/Packages/opencsv-3.8.jar"/>
 	<classpathentry kind="lib" path="/home/mankeyace/BitBucket/Packages/org.apache.commons.io.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Digga_000/Downloads/org.apache.commons.io.jar/org.apache.commons.io.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Digga_000/Documents/BitBucket/Packages/opencsv-3.8.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Digga_000/Documents/BitBucket/Packages/org.apache.commons.io.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Digga_000/Documents/BitBucket/Packages/Twitter/lib/twitter4j-core-4.0.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
