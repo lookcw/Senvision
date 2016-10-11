@@ -76,5 +76,6 @@ public class TweetStockDataPairer {
 	public static void main(String[] args) {
 		createPairsFolders("../../descriptors", "../../stock_data/tweet_date_data", "../../XValSets");
 		System.out.println("what the fuckk");
+		System.out.println("wadsfwefwatwefaoiweofoawf");
 	}
 }

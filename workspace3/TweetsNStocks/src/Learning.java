@@ -219,7 +219,7 @@ String tweetNoURL= removeUrl(stat);
 	Learning l= new Learning();
 	
 //	System.out.println(removeUrl("asdf asdfa wefadf ghttps://mail.google.com/mail/u/0/#inbox/1579b537485463c8 https://mail.google.com/mail/u/0/#inbox/1579b537485463c8)"));
-	l.runTweetCollection("2016-10-5", "2016-10-7");
+	l.runTweetCollection("2016-10-5", "2016-10-11");
 	   }
     
 }
