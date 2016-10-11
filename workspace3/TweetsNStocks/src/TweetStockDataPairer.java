@@ -33,11 +33,11 @@ public class TweetStockDataPairer {
 		DescriptorReader.close();
 		DescriptorReader = new CSVReader(new FileReader(DescriptorFile), '\t');
 		readDesLine = DescriptorReader.readNext();
-		writeLine = new String[readDesLine.length-1];
-		for (int i = 0; i < readDesLine.length; i++) {
+		writeLine = new String[readDesLine.length];
+		for (int i = 0; i < readDesLine.length-1; i++) {
 			writeLine[i] = readDesLine[i];
 		}
-		writeLine[readDesLine.length] = "+/-/=";
+		writeLine[readDesLine.length-1] = "+/-/=";
 		XValWriter.writeNext(writeLine);
 		
 		while ((readDesLine = DescriptorReader.readNext()) != null) {
@@ -46,7 +46,7 @@ public class TweetStockDataPairer {
 				for (int i = 0; i < readDesLine.length-1; i++) {
 					writeLine[i] = readDesLine[i];
 				}
-				writeLine[readDesLine.length] = stockupdown.get(readDesLine[0]);
+				writeLine[readDesLine.length-1] = stockupdown.get(readDesLine[0]);
 				XValWriter.writeNext(writeLine);
 				KnimeInputWriter.writeNext(writeLine);
 			}

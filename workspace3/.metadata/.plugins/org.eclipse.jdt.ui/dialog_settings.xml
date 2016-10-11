@@ -10,11 +10,27 @@
 	</section>
 	<section name="quick_assist_proposal_size">
 	</section>
+<<<<<<< HEAD
+	<section name="completion_proposal_size">
+	</section>
+	<section name="org.eclipse.jdt.internal.ui.dialogs.OpenTypeSelectionDialog2">
+		<item value="true" key="ShowStatusLine"/>
+		<item value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#x0A;&lt;History/&gt;" key="History"/>
+		<item value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#x0A;&lt;workingSet workingSetName=&quot;&quot;/&gt;" key="WorkingSet"/>
+		<section name="DialogBoundsSettings">
+			<item value="600" key="DIALOG_WIDTH"/>
+			<item value="1|Noto Sans|9.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
+			<item value="500" key="DIALOG_HEIGHT"/>
+			<item value="384" key="DIALOG_X_ORIGIN"/>
+			<item value="38" key="DIALOG_Y_ORIGIN"/>
+		</section>
+=======
 	<section name="BuildPathsPropertyPage">
 		<item value="2" key="pageIndex"/>
 	</section>
 	<section name="completion_proposal_size">
 	</section>
 	<section name="JavaElementSearchActions">
+>>>>>>> 092a573c4b4d4ec0b6d65e73530201e4f98a0de7
 	</section>
 </section>
