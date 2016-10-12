@@ -42,7 +42,7 @@ public class CreateClusters {
 	}
 
 	public static void main(String[] args) throws IOException {
-		iterateClusters("../../Vocab", "../../Vocab_Clusters");
+		iterateClusters("Vocab", "Vocab_Clusters");
 	}
 
 }

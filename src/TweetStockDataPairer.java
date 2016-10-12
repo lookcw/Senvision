@@ -13,13 +13,12 @@ public class TweetStockDataPairer {
 		Map<String, String> stockupdown = new HashMap<String, String>();
 		CSVReader StockReader = new CSVReader(new FileReader(StockFile),'\t');
 		CSVWriter XValWriter = new CSVWriter(new FileWriter(XValFile));
-		CSVWriter KnimeInputWriter = new CSVWriter(new FileWriter("../../KnimeInput/Knimeinput.tsv",true),'\t');
+		CSVWriter KnimeInputWriter = new CSVWriter(new FileWriter("KnimeInput/Knimeinput.tsv",true),'\t');
 		CSVReader DescriptorReader = new CSVReader(new FileReader(DescriptorFile), '\t');
 		//StockReader.readNext();
 		//DescriptorReader.readNext();
 		String[] readDesLine;
 		String[] readStockLine;
-		
 		
 		while ((readStockLine = StockReader.readNext()) != null) {
 			readDesLine = DescriptorReader.readNext();
@@ -62,7 +61,7 @@ public class TweetStockDataPairer {
 		for (File DescriptorFile : new File(DescriptorFolder).listFiles()) {
 			System.out.println("Compnay: "+DescriptorFile.getName());
 			try {
-				System.out.println("asdfawefawgafja;odf;aijsdf;iasdfij;");
+
 				createPair(StockFolder + "/" + DescriptorFile.getName().substring(0, DescriptorFile.getName().indexOf("_"))
 								+ "_cleaned.csv", 
 						DescriptorFile.getPath(), XValOutputFolder + "/" + DescriptorFile.getName().substring(0,DescriptorFile.getName().indexOf(".tsv"))+".csv");
@@ -74,8 +73,6 @@ public class TweetStockDataPairer {
 	}
 
 	public static void main(String[] args) {
-		createPairsFolders("../../descriptors", "../../stock_data/tweet_date_data", "../../XValSets");
-		System.out.println("what the fuckk");
-		System.out.println("wadsfwefwatwefaoiweofoawf");
+		createPairsFolders("descriptors", "stock_data/tweet_date_data", "XValSets");
 	}
 }

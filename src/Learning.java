@@ -84,17 +84,17 @@ public class Learning {
 		 String compname = this.tickerToName(queryterm);
 		 System.out.println("compname:" +compname);
 		 String dt =date;  // Start date
-		 File companyFolder = new File("/home/mankeyace/GitHub/stock/Tweets/"+compname);
+		 File companyFolder = new File("AllTweets/filteredTweets/"+compname);
 		 
 		 if(!companyFolder.exists()){
 			 companyFolder.mkdir();
 		 }
 		 File filetomake;
-		 File finalFile= new File("/home/mankeyace/GitHub/stock/Tweets/"+compname+"/"+compname+"_"+dt+"Tweets.txt");
+		 File finalFile= new File("AllTweets/filteredTweets/"+compname+"/"+compname+"_"+dt+"Tweets.txt");
 		 if(finalFile.exists()){
 			 return 2;
 		 }
-		 File firstFile = new File("/home/mankeyace/GitHub/stock/Tweets/"+compname+"/"+compname+"_"+dt+"Tweets+.txt");
+		 File firstFile = new File("AllTweets/filteredTweets/"+compname+"/"+compname+"_"+dt+"Tweets+.txt");
 if(firstFile.exists()&& queryterm.toUpperCase()!=queryterm){ //if the intermediate file doesnt exist and its not on the ticker name quit
 	return 2;
 	
@@ -199,7 +199,8 @@ String tweetNoURL= removeUrl(stat);
 	 int success = 1;
 	 while(!current.getTime().equals(end.getTime()) ){
 		 for(int i =0;i<searchterms.length;i++){
-			 System.out.println(searchterms[i].toUpperCase()+" "+searchterms[i]);
+			 System.out.println(searchterms[i]+" |"+sdf.format(current.getTime())+"|");
+			 
 			 
 		 success =this.GetTweetsDay(sdf.format(current.getTime()).toString(),searchterms[i]);
 
@@ -211,7 +212,6 @@ String tweetNoURL= removeUrl(stat);
 		 if (success!=2){
 		Thread.sleep(1000*60*16);
 		 }
-		 System.out.println(searchterms[i]+" |"+sdf.format(current.getTime())+"|");
 		 
 		 }
 			current.add(current.DATE, 1);
@@ -220,10 +220,16 @@ String tweetNoURL= removeUrl(stat);
 	
 	
 	public static void main(String[] args) throws TwitterException, IOException, ParseException, InterruptedException{
+		
 	Learning l= new Learning();
-	
+	 Calendar c = Calendar.getInstance();
+	 Calendar d = Calendar.getInstance();
+		c.add(Calendar.DATE,-1);
+		c.add(Calendar.MONTH,1);
+		d.add(Calendar.DATE,-8);
+		d.add(Calendar.MONTH,1);
 //	System.out.println(removeUrl("asdf asdfa wefadf ghttps://mail.google.com/mail/u/0/#inbox/1579b537485463c8 https://mail.google.com/mail/u/0/#inbox/1579b537485463c8)"));
-	l.runTweetCollection("2016-10-5", "2016-10-11");
+	l.runTweetCollection(d.get(Calendar.YEAR)+"-"+d.get(Calendar.MONTH)+"-"+d.get(Calendar.DATE), c.get(Calendar.YEAR)+"-"+c.get(Calendar.MONTH)+"-"+c.get(Calendar.DATE));
 	   }
     
 }

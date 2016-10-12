@@ -54,15 +54,20 @@ public class StockFetcher {
 			int startDateMonth, int startDateDay, String outputfolder) throws IOException {
 		for (String stockSymbol : tickername) {
 
-			String url = "http://ichart.finance.yahoo.com/table.csv?" + "s=" + stockSymbol.trim() + "&d=" + finalDateMonth
-					+ "&e=" + finalDateday + "&f=" + finalDateYear + "&g=d&a=" + startDateMonth + "&b=" + startDateDay
+			 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			 Calendar c = Calendar.getInstance();
+			
+			c.add(Calendar.DATE,-1);
+			c.add(Calendar.MONTH,1);
+			String url = "http://ichart.finance.yahoo.com/table.csv?" + "s=" + stockSymbol.trim() + "&d=" + c.get(Calendar.MONTH)
+					+ "&e=" + c.get(Calendar.DATE) + "&f=" + c.get(Calendar.YEAR) + "&g=d&a=" + startDateMonth + "&b=" + startDateDay
 					+ "&c=" + startDateYear + "&ignore=.csv";
 
 			// String
 			// url="http://ichart.finance.yahoo.com/table.csv?s=AAPL&d=9&e=12&f=2013&g=d&a=8&b=7&c=1984&ignore=.csv";
 			URL website;
 			website = new URL(url);
-			File f = new File("../stock_data/auto_pulled_data/" + tickerToName(stockSymbol) + ".csv");
+			File f = new File("stock_data/auto_pulled_data/" + tickerToName(stockSymbol) + ".tsv");
 			FileUtils.copyURLToFile(website, f);
 			
 		}
@@ -87,8 +92,7 @@ public class StockFetcher {
 		CSVWriter cW = new CSVWriter(new FileWriter(outputfile),'\t');
 		String[] nextLine;
 		nextLine = cR.readNext();
-		System.out.println(nextLine.length);
-		System.out.println(inputfile);
+		System.out.println(outputfile);
 		String[] writeLine=new String[nextLine.length];
 		writeLine[0]=nextLine[0];
 		writeLine[1]="Tweet Prediction Date";;
@@ -116,8 +120,9 @@ public class StockFetcher {
 	
 	
 	public static void main(String[] args) throws IOException {
-//		fetchStock(2016, 10, 6, 2016, 9, 7, "");
+		System.out.println("Program outputting most current Stock data to stockdata_tweet_date_data with 3 days of lag time");
+		fetchStock(2016, 10, 6, 2016, 9, 7, "");
 		
-		addTwitterDatetoStockFolder("../../stock_data/cleaned_data", "../../stock_data/tweet_date_data", 3);
+		addTwitterDatetoStockFolder("stock_data/cleaned_data", "stock_data/tweet_date_data", 3);
 	}
 }
