@@ -1,0 +1,5 @@
+=\=\=\=\=\=\=
+<<<<<<<=HEAD
+>>>>>>>=092a573c4b4d4ec0b6d65e73530201e4f98a0de7
+eclipse.preferences.version=1
+org.eclipse.jdt.launching.PREF_VM_XML=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\n<vmSettings defaultVM\="57,org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType13,1476160093155" defaultVMConnector\="">\n<vmType id\="org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType">\n<vm id\="1476160093155" name\="java-8-openjdk-amd64" path\="/usr/lib/jvm/java-8-openjdk-amd64"/>\n</vmType>\n</vmSettings>\n

@@ -1,0 +1,37 @@
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.opencsv.CSVReader;
+import com.opencsv.CSVWriter;
+
+public class TweetStockDataPairer {
+public static void createpair(String StockFile,String DescriptorFile,String XValFile) throws IOException{
+	Map<String,String> stockupdown= new HashMap<String,String>();
+	CSVReader StockReader= new CSVReader(new FileReader(StockFile),'\t');
+	CSVWriter XValWriter= new CSVWriter(new FileWriter(XValFile));
+	StockReader.readNext();
+	String[] readLine;
+	while((readLine=StockReader.readNext()) != null){
+		stockupdown.put(readLine[1], readLine[readLine.length-2]);
+	}
+	String writeLine[];
+	StockReader.close();
+	CSVReader DescriptorReader=new CSVReader(new FileReader(DescriptorFile));
+	readLine = DescriptorReader.readNext();
+	writeLine = new String[readLine.length+1];
+	for(int i=0;i<readLine.length;i++){
+		writeLine[i]=readLine[i];
+	}
+	writeLine[readLine.length]="+/-/=";
+	while((readLine=DescriptorReader.readNext())!=null){
+		for(int i=0;i<readLine.length;i++){
+			writeLine[i]=readLine[i];
+		}
+		writeLine[readLine.length]=stockupdown.get(readLine[0]);
+	}
+	
+DescriptorReader.close();	
+}
+}
