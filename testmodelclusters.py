@@ -178,11 +178,13 @@ for cluster in neutral_clusters_arr:
 #	outf.write("Cluster_" + str(i) + "\t")
 #outf.write('\n')
 
+cluster_count = count
+
 for company_name in full_company_names:
 
 	outf = open('./descriptors/' + company_name + '_descriptor.tsv', 'w')
 	outf.write('DATE' + '\t' + 'COMPANY' + '\t') 
-	for i in range(0, 150):
+	for i in range(0, cluster_count):
 		outf.write("Cluster_" + str(i+1) + "\t")
 	outf.write('\n')
 
