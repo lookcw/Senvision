@@ -224,7 +224,7 @@ String tweetNoURL= removeUrl(stat);
 	Learning l= new Learning();
 	 Calendar c = Calendar.getInstance();
 	 Calendar d = Calendar.getInstance();
-		c.add(Calendar.DATE,-1);
+		c.add(Calendar.DATE,0);
 		c.add(Calendar.MONTH,1);
 		d.add(Calendar.DATE,-8);
 		d.add(Calendar.MONTH,1);
