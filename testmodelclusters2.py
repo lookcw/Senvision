@@ -14,17 +14,17 @@ allvalues = {}
 # open files containing words ############################
 ##########################################################
 
-good_words = open("Vocab_Clusters/good_words.txt", "r")
-bad_words =  open("Vocab_Clusters/bad_words.txt", "r")
+good_words = open("Vocab/goodwords.txt", "r")
+bad_words =  open("Vocab/badwords.txt", "r")
 #neutral_words = open("Vocab/neutral_words.txt", "r")
 #good_for_neutral = open("Vocab/good_for_neutral.txt", "r")
 #bad_for_neutral = open("Vocab/bad_for_neutral.txt", "r")
 
-good_clusters = open("Vocab_Clusters/good_words_clustered.txt", "r")
-bad_clusters = open("Vocab_Clusters/bad_words_clustered.txt", "r")
-neutral_clusters = open("Vocab_Clusters/neutral_words_clustered.txt", "r")
-neutral_good_clusters = open("Vocab_Clusters/good_for_neutral_clustered.txt", "r")
-neutral_bad_clusters = open("Vocab_Clusters/bad_for_neutral_clustered.txt", "r")
+good_clusters = open("Vocab_Clusters/goodwords_clustered.txt", "r")
+bad_clusters = open("Vocab_Clusters/badwords_clustered.txt", "r")
+#neutral_clusters = open("Vocab_Clusters/neutral_words_clustered.txt", "r")
+#neutral_good_clusters = open("Vocab_Clusters/good_for_neutral_clustered.txt", "r")
+#neutral_bad_clusters = open("Vocab_Clusters/bad_for_neutral_clustered.txt", "r")
 
 ###########################################################
 #append all the words and their contexts to various arrays#
@@ -61,29 +61,29 @@ for word in bad_arr:
         if word == '':
                 bad_arr.remove(word) 
 
-reader = csv.reader(neutral_words, delimiter = " ")
-for row in reader:
-	for item in row:
-		neutral_arr.append(item)
-for word in neutral_arr:
-        if word == '':
-                neutral_arr.remove(word)  
+#reader = csv.reader(neutral_words, delimiter = " ")
+#for row in reader:
+#	for item in row:
+#		neutral_arr.append(item)
+#for word in neutral_arr:
+#       if word == '':
+#                neutral_arr.remove(word)  
 
-reader = csv.reader(good_for_neutral, delimiter= " ")
-for row in reader:
-	for item in row:
-		good_for_neutral_arr.append(item)
-for word in good_for_neutral_arr:
-        if word == '':
-                good_for_neutral_arr.remove(word)  
+#reader = csv.reader(good_for_neutral, delimiter= " ")
+#for row in reader:
+#	for item in row:
+#		good_for_neutral_arr.append(item)
+#for word in good_for_neutral_arr:
+#        if word == '':
+#                good_for_neutral_arr.remove(word)  
 
-reader = csv.reader(bad_for_neutral, delimiter = " ")
-for row in reader:
-	for item in row:
-		bad_for_neutral_arr.append(item)
-for word in bad_for_neutral_arr:
-        if word == '':
-                bad_for_neutral_arr.remove(word)  
+#reader = csv.reader(bad_for_neutral, delimiter = " ")
+#for row in reader:
+#	for item in row:
+#		bad_for_neutral_arr.append(item)
+#for word in bad_for_neutral_arr:
+#        if word == '':
+#                bad_for_neutral_arr.remove(word)  
 
 ##############################################
 ###            READING CLUSTERS            ###
@@ -104,29 +104,29 @@ for cluster in bad_clusters_arr:
                 if word == '':
                         cluster.remove(word) 
 
-reader = csv.reader(neutral_clusters, delimiter = " ")
-for row in reader:
-	neutral_clusters_arr.append(row)
-for cluster in neutral_clusters_arr:
-        for word in cluster:
-                if word == '':
-                        cluster.remove(word) 
+#reader = csv.reader(neutral_clusters, delimiter = " ")
+#for row in reader:
+#	neutral_clusters_arr.append(row)
+#for cluster in neutral_clusters_arr:
+#        for word in cluster:
+#                if word == '':
+#                        cluster.remove(word) 
 
-reader = csv.reader(neutral_good_clusters, delimiter = " ")
-for row in reader:
-	neutral_good_clusters_arr.append(row)
-for cluster in neutral_good_clusters_arr:
-        for word in cluster:
-                if word == '':
-                        cluster.remove(word) 
+#reader = csv.reader(neutral_good_clusters, delimiter = " ")
+#for row in reader:
+#	neutral_good_clusters_arr.append(row)
+#for cluster in neutral_good_clusters_arr:
+#        for word in cluster:
+#                if word == '':
+#                        cluster.remove(word) 
 
-reader = csv.reader(neutral_bad_clusters, delimiter = " ")
-for row in reader:
-	neutral_bad_clusters_arr.append(row)
-for cluster in neutral_bad_clusters_arr:
-        for word in cluster:
-                if word == '':
-                        cluster.remove(word) 
+#reader = csv.reader(neutral_bad_clusters, delimiter = " ")
+#for row in reader:
+#	neutral_bad_clusters_arr.append(row)
+#for cluster in neutral_bad_clusters_arr:
+#        for word in cluster:
+#                if word == '':
+#                        cluster.remove(word) 
 
 
 class MySentences(object):
@@ -273,37 +273,37 @@ for company_name in full_company_names:
                         DESCRIPTOR.append(cluster_avg)
 
 
-                for neutral_cluster in neutral_clusters_arr:
-			for good_cluster in neutral_good_clusters_arr: 
-				count = 0
-				cluster_avg = 0
-				for neutral_word in neutral_cluster:
-						for good_word in good_cluster:
-							if allvalues[str(neutral_word) + '_' + str(good_word)] != 0:
-								count += 1
-								cluster_avg += allvalues[str(neutral_word) + "_" + str(good_word)]
-				try:
-					cluster_avg /= count
-				except ZeroDivisionError:
-					cluster_avg = 0
-				DESCRIPTOR.append(cluster_avg)
-
-
-                        for bad_cluster in neutral_bad_clusters_arr: 
-                                count = 0
-                                cluster_avg = 0
-                                for neutral_word in neutral_cluster: 
-                                                for bad_word in bad_cluster:
-                                                        if allvalues[str(neutral_word) + '_' + str(bad_word)] != 0:
-                                                                count += 1
-                                                                cluster_avg += allvalues[str(neutral_word) + "_" + str(bad_word)]
-				try:
-                                	cluster_avg /= count
-                                except ZeroDivisionError:
-                                        cluster_avg = 0 
-                                DESCRIPTOR.append(cluster_avg)
-
+#                for neutral_cluster in neutral_clusters_arr:
+#			for good_cluster in neutral_good_clusters_arr: 
+#				count = 0
+#				cluster_avg = 0
+#				for neutral_word in neutral_cluster:
+#						for good_word in good_cluster:
+#							if allvalues[str(neutral_word) + '_' + str(good_word)] != 0:
+#								count += 1
+#								cluster_avg += allvalues[str(neutral_word) + "_" + str(good_word)]
+#				try:
+#					cluster_avg /= count
+#				except ZeroDivisionError:
+#					cluster_avg = 0
+#				DESCRIPTOR.append(cluster_avg)
+#
+#
+#                        for bad_cluster in neutral_bad_clusters_arr: 
+#                                count = 0
+#                                cluster_avg = 0
+#                                for neutral_word in neutral_cluster: 
+#                                                for bad_word in bad_cluster:
+#                                                        if allvalues[str(neutral_word) + '_' + str(bad_word)] != 0:
+ #                                                               count += 1
+  #                                                              cluster_avg += allvalues[str(neutral_word) + "_" + str(bad_word)]
+#				try:
+ #                               	cluster_avg /= count
+  #                              except ZeroDivisionError:
+   #                                     cluster_avg = 0 
+    #                            DESCRIPTOR.append(cluster_avg)
+#
 		
-		for value in DESCRIPTOR:
-			outf.write(str(value) + '\t')
-		outf.write('\n')	
+#		for value in DESCRIPTOR:
+#			outf.write(str(value) + '\t')
+#		outf.write('\n')	
