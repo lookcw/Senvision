@@ -45,21 +45,21 @@ neutral_bad_clusters_arr = []
 ##############################################
 # READING INDIVIDUAL WORDS ###################
 ##############################################
-reader = csv.reader(good_words, delimiter="\n")
+reader = csv.reader(good_words, delimiter=" ")
 for row in reader:
-	good_arr.append(row[0])
+	good_arr.append(row)
 for word in good_arr:
 	if word == '':
 		good_arr.remove(word)
 
-reader = csv.reader(bad_words, delimiter = "\n")
+reader = csv.reader(bad_words, delimiter = " ")
 for row in reader:
-	bad_arr.append(row[0])
+	bad_arr.append(row)
 for word in bad_arr:
         if word == '':
                 bad_arr.remove(word) 
 
-#reader = csv.reader(neutral_words, delimiter = "\n")
+#reader = csv.reader(neutral_words, delimiter = " ")
 #for row in reader:
 #	for item in row:
 #		neutral_arr.append(item)
@@ -67,7 +67,7 @@ for word in bad_arr:
 #       if word == '':
 #                neutral_arr.remove(word)  
 
-#reader = csv.reader(good_for_neutral, delimiter= "\n")
+#reader = csv.reader(good_for_neutral, delimiter= " ")
 #for row in reader:
 #	for item in row:
 #		good_for_neutral_arr.append(item)
@@ -75,7 +75,7 @@ for word in bad_arr:
 #        if word == '':
 #                good_for_neutral_arr.remove(word)  
 
-#reader = csv.reader(bad_for_neutral, delimiter = "\n")
+#reader = csv.reader(bad_for_neutral, delimiter = " ")
 #for row in reader:
 #	for item in row:
 #		bad_for_neutral_arr.append(item)
@@ -234,7 +234,7 @@ for company_name in full_company_names:
 #					allvalues[str(x) + "_" + str(y)] = dist
 #				except KeyError:
 #					allvalues[str(x) + "_" + str(y)] = 0
-#					continue
+					continue
 
 #			for y in bad_for_neutral_arr:
 #				try:
@@ -302,6 +302,6 @@ for company_name in full_company_names:
     #                            DESCRIPTOR.append(cluster_avg)
 #
 		
-		for value in DESCRIPTOR:
-			outf.write(str(value) + '\t')
-		outf.write('\n')	
+#		for value in DESCRIPTOR:
+#			outf.write(str(value) + '\t')
+#		outf.write('\n')	
