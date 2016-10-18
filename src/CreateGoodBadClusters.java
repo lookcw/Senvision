@@ -32,7 +32,7 @@ public class CreateGoodBadClusters {
 		}
 	}
 
-	public static void MakeClusters(String vocabFolder, String ClusterFolder, int numOfExtraDescriptors)
+	public static void MakeClusters(String vocabFolder, String ClusterFolder,int numWordsInCluster, int numOfExtraDescriptors)
 			throws IOException {
 		File[] vocabfolder = new File(vocabFolder).listFiles();
 		for (File vocabFile : vocabfolder) {
@@ -40,30 +40,31 @@ public class CreateGoodBadClusters {
 			int numLines = countLines(vocabFile.getPath());
 			int start;
 			int end;
-			int[] exists = new int[60];
+			int[] exists = new int[numWordsInCluster];
 			String cluster;
 			String content = new Scanner(vocabFile).useDelimiter("\\Z").next();
 			String[] allWords = content.split("\\r?\\n");
 			BufferedWriter bW = new BufferedWriter(new FileWriter(ClusterFolder + "/"
 					+ vocabFile.getName().substring(0, vocabFile.getName().indexOf(".")) + "_clustered.txt"));
-			for (int i = 0; i < numLines; i += 60) {
+			//generating first descriptors based on order of words by 100 to include all of them
+			for (int i = 0; i < numLines; i += numWordsInCluster) {
 				cluster = "";
 				start = i;
-				if (i + 60 > numLines) {
-					start = numLines - 61;
+				if (i + numWordsInCluster > numLines) {
+					start = numLines - numWordsInCluster-1;
 					end = numLines - 1;
 				} else
-					end = i + 60;
+					end = i + numWordsInCluster;
 				for (int j = start; j < end; j++) {
 					cluster += allWords[j] + " ";
 				}
 				bW.write(cluster + "\r\n");
 			}
-
+			//makes randomly generated descriptors
 			for (int i = 0; i < numOfExtraDescriptors; i++) {
 				cluster = "";
 				Arrays.fill(exists, -1);
-				for (int k = 0; k < 60; k++) {
+				for (int k = 0; k < numWordsInCluster; k++) {
 
 					int randNum = generator.nextInt(numLines);
 					if (!Arrays.asList(exists).contains(randNum)) {
@@ -82,7 +83,7 @@ public class CreateGoodBadClusters {
 	}
 
 	public static void main(String[] args) throws IOException {
-		MakeClusters("Vocab", "Vocab_Clusters", 60);
+		MakeClusters("Vocab", "Vocab_Clusters",100, 60);
 	}
 
 }
