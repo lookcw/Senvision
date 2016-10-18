@@ -63,7 +63,7 @@ public class TweetStockDataPairer {
 			try {
 
 				createPair(StockFolder + "/" + DescriptorFile.getName().substring(0, DescriptorFile.getName().indexOf("_"))
-								+ "_cleaned.csv", 
+								+ "_cleaned.tsv", 
 						DescriptorFile.getPath(), XValOutputFolder + "/" + DescriptorFile.getName().substring(0,DescriptorFile.getName().indexOf(".tsv"))+".csv");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
