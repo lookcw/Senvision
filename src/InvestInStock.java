@@ -25,7 +25,7 @@ public static double Invest(String stockFile,String[] daysToInvest,double starti
 	int multiplier=1;
 	Map<String,Double> stockChanges=getStockData(stockFile);
 	for(String day: daysToInvest){
-		multiplier*=1+stockChanges.get(day);
+
 	}
 	return startingDollars*multiplier;
 }
