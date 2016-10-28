@@ -123,14 +123,14 @@ public class StockFetcher {
 	public static void main(String[] args) throws IOException {
 		
 		System.out.println("Program outputting most current Stock data to stock_data/tweet_date_data with 3 days of lag time");
-		
+/*		
 		Calendar c = Calendar.getInstance();
 		System.out.println(c.getTime());
 		// c.add(Calendar.DATE, numDay);
 		c.add(Calendar.DATE, -1);
 		
 		fetchStock(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE), 2016, 8, 7, "");
-		
-		//addTwitterDatetoStockFolder("stock_data/cleaned_data", "stock_data/tweet_date_data", 3);
+	*/	
+		addTwitterDatetoStockFolder("stock_data/cleaned_data", "stock_data/tweet_date_data", 3);
 	}
 }
