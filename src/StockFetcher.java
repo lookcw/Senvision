@@ -131,6 +131,6 @@ public class StockFetcher {
 		
 		fetchStock(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE), 2016, 8, 7, "");
 	*/	
-		addTwitterDatetoStockFolder("stock_data/cleaned_data", "stock_data/tweet_date_data", 3);
+		addTwitterDatetoStockFolder("stock_data/cleaned_data", "stock_data/tweet_date_data", -3);
 	}
 }
