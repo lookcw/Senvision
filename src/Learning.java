@@ -23,7 +23,7 @@ import twitter4j.conf.ConfigurationBuilder;
 
 public class Learning {
 	Twitter twitter;
-	String[] searchterms= {"Intel", "Apple", "Merck", "p&g", "Walmart", "Boeing","Morgan Chase","Google","INTC","AAPL","MRK ","PG ","WMT ", "BA","JPM","GOOGL "};
+	String[] searchterms= {"Merck", "p&g", "Walmart", "Boeing","Morgan Chase","Google","$INTC","$AAPL","$MRK ","$PG ","$WMT ", "$BA","$JPM","$GOOGL "};
 	//ENGLISH COMPNAY NAMES MUST COME FIRST && ticker Names must be all uppercase
 	
 	
@@ -42,25 +42,26 @@ public class Learning {
 	public String tickerToName(String tickerCompName){
 		String compname=tickerCompName;
 		 switch (tickerCompName) {
-        case "INTC":  compname = "Intel";
+        case "$INTC":  compname = "Intel";
                  break;
-        case "AAPL":  compname = "Apple";
+        case "$AAPL":  compname = "Apple";
                  break;
-        case "MRK ":  compname = "Merck";
+        case "$MRK ":  compname = "Merck";
                  break;
-        case "WMT ":  compname= "Walmart";
+        case "$WMT ":  compname= "Walmart";
                  break;
-        case "PG ":  compname = "p&g";
+        case "$PG ":  compname = "p&g";
                  break;
-        case "BA" :  compname = "Boeing";
+        case "$BA" :  compname = "Boeing";
                  break;
-        case "JPM": compname="Morgan Chase";
+        case "$JPM": compname="Morgan Chase";
        		 break;
-        case "GOOGL ": compname="Google";
+        case "$GOOGL ": compname="Google";
         break;
-        case "GOOGL": compname="Google";
+        case "$GOOGL": compname="Google";
         break;
     }
+		 System.out.println(compname+"old: "+tickerCompName);
 		 return compname;
 	}
 	
@@ -89,15 +90,20 @@ public class Learning {
 		 }
 		 File filetomake;
 		 File finalFile= new File("AllTweets/filteredTweets/"+compname+"/"+compname+"_"+dt+"Tweets.txt");
-		 if(finalFile.exists()){
+if(finalFile.exists()){
 			 return 2;
-		 }
+ }
 		 File firstFile = new File("AllTweets/filteredTweets/"+compname+"/"+compname+"_"+dt+"Tweets+.txt");
 if(firstFile.exists()&& queryterm.toUpperCase()!=queryterm){ //if the intermediate file doesnt exist and its not on the ticker name quit
 	return 2;
 	
 }
-if(firstFile.exists()&& queryterm.toUpperCase()==queryterm){//if intermediate file exists 
+
+else if(!firstFile.exists()&&queryterm.toUpperCase()==queryterm) {//if the intermediate file doesnt exist but its on the tickername
+	filetomake=finalFile;
+	
+}
+else if(firstFile.exists()&& queryterm.toUpperCase()==queryterm){//if intermediate file exists 
 	firstFile.renameTo(finalFile);//rename the intermediate to final file
 	filetomake=finalFile; //make the final file
 }
@@ -109,6 +115,7 @@ else{
 		 BufferedWriter bW;
 		 PrintWriter pW;
 		 if(queryterm.toUpperCase()==queryterm){//companynames first
+			 System.out.println(queryterm);
 			 System.out.println(queryterm+" Should append now");
 			  bW = new BufferedWriter(new FileWriter(filetomake,true));
 		 }
@@ -137,7 +144,7 @@ else{
 				    	 String stat= status.getText();
 String tweetNoURL= removeUrl(stat);
 				    	 if (!noDuplicateTweets.contains(tweetNoURL)){
-				    	 writeLine=ReplaceTickers.replaceticks(stat);
+				    	 writeLine=ReplaceTickers.replaceticks(tweetNoURL);
 				    	 String nextLine1 = writeLine.replaceAll("#", " ");
 //							System.out.println(nextLine1);
 							String nextLine2 = nextLine1.replaceAll("\\$", " ");
