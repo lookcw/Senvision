@@ -1,7 +1,5 @@
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -25,7 +23,11 @@ public class ReadNews {
 	
 public static String[] getUrlsFromRss(String Url) throws MalformedURLException, IOException, IllegalArgumentException, FeedException{
 	SyndFeedInput input = new SyndFeedInput();
-	XmlReader xReader = new XmlReader(new URL(Url));
+	//URL rssURL= new URL(Url);
+
+	java.net.URL rssURL = new java.net.URL(Url);
+			//+"&key=XXXXXXXXXXXXXXXXXXXXXXXXXX_");
+	XmlReader xReader = new XmlReader(rssURL);
 	SyndFeed feed = input.build(xReader);
 	String[] Urls= new String[feed.getEntries().size()];
 	for(int i=0; i<feed.getEntries().size();i++){
