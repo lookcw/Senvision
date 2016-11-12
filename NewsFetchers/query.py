@@ -1,7 +1,7 @@
 from eventregistry import *
 er = EventRegistry()
 q = QueryArticles()
-
+CompanyNames=["Merck","Procter & Gamble",
 def getArticlesUrls(queryterm,date):
 
 	#set the date limit of interest
@@ -10,8 +10,7 @@ def getArticlesUrls(queryterm,date):
 	q.addConcept(er.getConceptUri("Apple"))
 	# return the list of top 30 articles, including the concepts, categories and article image
 	q.addRequestedResult(RequestArticlesUrlList(page=1,count=30))
-	writefile=open(queryterm+"_"+date+"_Urls.txt",'w')
-	
+	writefile=open(queryterm+"_"+date+"_Urls.txt",'w')	
 	results=str(er.execQuery(q))
 	writefile.write(results)
 	writefile.close()
