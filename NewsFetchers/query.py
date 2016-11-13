@@ -14,7 +14,7 @@ def getArticlesUrls(queryterm,startdate,enddate):
 	if(os.path.isfile(writefilepath)): #checks if file exists. If it does, exit function
 		print "skipping "+ queryterm+ " "+str(startdate)
 		return
-	print "running " +company+ " " +str(currentDate)
+	print "running " +queryterm+ " " +str(startdate)
 	er = EventRegistry()
 	q = QueryArticles(lang=["eng"],isDuplicateFilter="skipDuplicates")
 	if not os.path.exists(companyfolderpath): #checks if folder exists. If not, make it
@@ -25,19 +25,19 @@ def getArticlesUrls(queryterm,startdate,enddate):
 	# find articles mentioning the company Apple		
 	q.addConcept(er.getConceptUri(queryterm))
 	# return the list of top 30 articles, including the concepts, categories and article image
-	q.addRequestedResult(RequestArticlesUrlList(page=1,count=100))
+	q.addRequestedResult(RequestArticlesUrlList(page=1,count=200))
 	writefile=open(companyfolderpath+"/"+queryterm+"_"+str(startdate)+"_Urls.txt",'w')	
 	results=er.execQuery(q)
 	#print str(results)
 	dict=results
-	for url in dict['urlList']['results']: 
+	for url in dict['urlList']['results']:
 		writefile.write(url.encode('utf-8') + "\n") #writes url by line to file
-	print("# of Urls: "+ len(dict['urlList']['results']))
+	print("# of Urls: " + len(dict['urlList']['results']))
 	writefile.close()
 
 
 
-def iterateDays(startyear,startmonth,startdate,endyear,endmonth,enddate):
+def iterateDays(startyear,startmonth,startdate,endyear,endmonth,enddate):#runs getArticlesUrls over range of dates
 
 
 	d1 = date(startyear, startmonth, startdate)
@@ -50,7 +50,8 @@ def iterateDays(startyear,startmonth,startdate,endyear,endmonth,enddate):
 		nextDate=d1+td(days=i+1)
 		for company in CompanyNames:
 			getArticlesUrls(company,currentDate,nextDate)
-			
-iterateDays(2016,10,5,2016,10,9)
+now= datetime.datetime.now()
+
+iterateDays(2016,10,5,now.year,now.month,now.day)
 		 
 #getArticlesUrls("Apple",date(2016,9,15),date(2016,9,16))	
