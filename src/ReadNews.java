@@ -74,17 +74,6 @@ public static String[] getBodiesFromRss(String rssLink) throws MalformedURLExcep
 
 public static void main(String[] args) throws MalformedURLException, IOException, IllegalArgumentException, FeedException{
 	
-	
-String[] articleTexts= getBodiesFromRss("https://news.google.com/news?cf=all&hl=en&pz=1&ned=us&topic=b&output=rss");
-System.out.println(articleTexts.length+"____________________________________");
-for (String article:articleTexts){
-	//System.out.println(article);
-}
-	/*
-	Document doc = Jsoup.connect(link).get();
-	Elements newsHeadlines = doc.select("p");
-	System.out.println(doc.body().text());
-	*/
 	}
 	
 }
