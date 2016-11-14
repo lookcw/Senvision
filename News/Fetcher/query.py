@@ -9,14 +9,14 @@ print "must be run inside the folder \"NewsFetcher\""
 
 
 def getArticlesUrls(queryterm,startdate,enddate):
-	companyfolderpath="../NewsUrls/"+queryterm
+	companyfolderpath="../Urls/"+queryterm
 	writefilepath=companyfolderpath+"/"+queryterm+"_"+str(startdate)+"_Urls.txt"
 	if(os.path.isfile(writefilepath)): #checks if file exists. If it does, exit function
 		print "skipping "+ queryterm+ " "+str(startdate)
 		return
 	print "running " +queryterm+ " " +str(startdate)
 	er = EventRegistry()
-	q = QueryArticles(lang=["eng"],isDuplicateFilter="skipDuplicates")
+	q = QueryArticles(lang=["eng"],isDuplicateFilter="skipDuplicates",hasDuplicateFilter="skipHasDuplicates")
 	if not os.path.exists(companyfolderpath): #checks if folder exists. If not, make it
 		os.makedirs(companyfolderpath)
 		print "created" + companyfolderpath
@@ -25,14 +25,14 @@ def getArticlesUrls(queryterm,startdate,enddate):
 	# find articles mentioning the company Apple		
 	q.addConcept(er.getConceptUri(queryterm))
 	# return the list of top 30 articles, including the concepts, categories and article image
-	q.addRequestedResult(RequestArticlesUrlList(page=1,count=200))
+	q.addRequestedResult(RequestArticlesUrlList(page=1,count=150))
 	writefile=open(companyfolderpath+"/"+queryterm+"_"+str(startdate)+"_Urls.txt",'w')	
 	results=er.execQuery(q)
 	#print str(results)
 	dict=results
 	for url in dict['urlList']['results']:
 		writefile.write(url.encode('utf-8') + "\n") #writes url by line to file
-	print("# of Urls: " + len(dict['urlList']['results']))
+	print("# of Urls: " + str(len(dict['urlList']['results'])))
 	writefile.close()
 
 

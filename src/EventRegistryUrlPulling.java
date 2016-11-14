@@ -58,6 +58,6 @@ public class EventRegistryUrlPulling {
 		
 	}
 	public static void main(String[] args) throws IOException{
-			WriteArticles("NewsUrls","NewsArticleData");
+			WriteArticles("News/Urls","News/ArticlesData");
 	}
 }
