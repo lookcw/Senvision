@@ -1,9 +1,10 @@
 import codecs
 import os
+import time
 from eventregistry import *
 from datetime import date, timedelta as td
 
-CompanyNames=["Merck","Procter & Gamble","Walmart","Boeing","JPMorgan Chase","Google","Intel","Apple"]
+CompanyNames=["Merck","Procter & Gamble","Walmart","Boeing","JPMorgan Chase","Google","INTC","Apple"]
 
 print "must be run inside the folder \"NewsFetcher\""
 
@@ -34,6 +35,7 @@ def getArticlesUrls(queryterm,startdate,enddate):
 		writefile.write(url.encode('utf-8') + "\n") #writes url by line to file
 	print("# of Urls: " + str(len(dict['urlList']['results'])))
 	writefile.close()
+	time.sleep(1)
 
 
 
@@ -50,6 +52,7 @@ def iterateDays(startyear,startmonth,startdate,endyear,endmonth,enddate):#runs g
 		nextDate=d1+td(days=i+1)
 		for company in CompanyNames:
 			getArticlesUrls(company,currentDate,nextDate)
+			
 now= datetime.datetime.now()
 
 iterateDays(2016,10,5,now.year,now.month,now.day)

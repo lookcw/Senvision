@@ -16,8 +16,7 @@ public class EventRegistryUrlPulling {
 		Document doc;
 		Elements paragraphs;
 		UrlValidator urlValidator = new UrlValidator();
-		System.out.println(url);
-		System.out.println(urlValidator.isValid(url));
+		System.out.println("Url: "+url);
 		if(urlValidator.isValid(url)){
 		try {
 			doc = Jsoup.connect(url).get();
@@ -25,7 +24,8 @@ public class EventRegistryUrlPulling {
 			paragraphs =doc.select("p");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
+			System.out.println("Failed to retreive URL");
 			return null;
 		}
 		//System.out.println(doc.title());
@@ -44,14 +44,19 @@ public class EventRegistryUrlPulling {
 				new File(outputFolder+"/"+company).mkdir();
 			}
 			for(File urlList: new File(compFolder.getAbsolutePath()).listFiles()){
-				String date= urlList.getName().substring(urlList.getName().indexOf("_"),urlList.getName().indexOf("_Urls.txt"));
-				
+				String date= urlList.getName().substring(urlList.getName().indexOf("_")+1,urlList.getName().indexOf("_Urls.txt"));
+				if (!new File(outputFolder+"/"+company+"/"+company+"_"+date+"_Articles.txt").exists()){
+				System.out.println(company+" "+date+"_____________________________________");
 				BufferedReader urlReader= new BufferedReader(new FileReader(urlList));
 				BufferedWriter articleWriter = new BufferedWriter(new FileWriter(outputFolder+"/"+company+"/"+company+"_"+date+"_Articles.txt"));
 				while ((nextLine=urlReader.readLine())!=null){
 						articleWriter.write(getBodyParagraph(nextLine)+"\n");
 				}
 				articleWriter.close();
+				}
+				else{
+					System.out.println("skipping "+company+" "+date);
+				}
 			}
 		}
 		
