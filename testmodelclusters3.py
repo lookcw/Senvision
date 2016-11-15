@@ -140,10 +140,6 @@ for company_name in full_company_names:
 		print("Count of good words", good_count)
 		print("Count of bad words", bad_count)
 		print("Total count is:", good_count+bad_count)
-		test_debug = 0
-		for value in allvalues:
-			test_debug+=allvalues[value]
-		print("Total value registered in dictionary is:", test_debug)
 
 ######################################################################################################
 ################                      GENERATING DESCRIPTORS                       ###################
@@ -154,24 +150,23 @@ for company_name in full_company_names:
 			cluster_avg = 0
 			for x in cluster:
 #				print("word in cluster:", x)
-				if x!= 0:
+				if allvalues[str(company_name) + "_" + str(x)] != 0:
 					count+=1
 					cluster_avg += allvalues[str(company_name) + "_" + str(x)]
-			cluster_avg /= count
+			print("What the descriptor is", cluster_avg)
 			DESCRIPTOR.append(cluster_avg)
 
                 for cluster in bad_clusters_arr: 
                         count = 0
                         cluster_avg = 0 
                         for x in cluster:
-                                if x!= 0:
+                                if allvalues[str(company_name) + "_" + str(x)] != 0:
                                         count+=1
                                         cluster_avg += allvalues[str(company_name) + "_" + str(x)]
-                        cluster_avg /= count
+                        print("What the descriptor is", cluster_avg)
                         DESCRIPTOR.append(cluster_avg)
 
-
-		
+	
 		for value in DESCRIPTOR:
 			outf.write(str(value) + '\t')
-		outf.write('\n')	
+		outf.write('\n')
