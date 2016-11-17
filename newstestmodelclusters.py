@@ -104,6 +104,10 @@ for cluster in bad_clusters_arr:
                 if word == '':
                         cluster.remove(word) 
 
+#print(good_words)
+#print(bad_words)
+#print(good_clusters_arr)
+#print(bad_clusters_arr)
 #reader = csv.reader(neutral_clusters, delimiter = " ")
 #for row in reader:
 #	neutral_clusters_arr.append(row)
@@ -141,7 +145,13 @@ class MySentences(object):
 ######################################################################################################
 ###                            COMPANY_NAMES AND DATE COLLECTION                                   ###
 ######################################################################################################
-full_company_names = ['Apple', 'Boeing', 'Google', 'Intel', 'Merck', 'JPMorgan Chase', 'Procter & Gamble', 'Walmart']
+#full_company_names = ['Apple', 'Boeing', 'Google', 'Intel', 'Merck', 'JPMorgan Chase', 'Procter & Gamble', 'Walmart']
+#full_company_names = [name for name in os.listdir("News/ArticlesData") if os.path.isdir(name)]
+full_company_names = []
+full_company_names = ['JPMorgan Chase']
+#for name in os.listdir("News/ArticlesData/"):
+#	full_company_names.append(name)
+#print(full_company_names)
 #full_company_names = open("file_containing_company_names.txt", "r")
 dates = []
 #current_year = raw_input("Enter current year: ")
@@ -165,6 +175,10 @@ dates = []
 #outf = open('./descriptors/DESCRIPTORS.txt', 'w')
 #outf.write('DATE' + '\t' + 'COMPANY' + '\t')
 count = 0
+#print(good_words)
+#print(bad_words)
+#print(good_clusters_arr)
+#print(bad_clusters_arr)
 for cluster in good_clusters_arr:
 	count+=1
 for cluster in bad_clusters_arr:
@@ -179,21 +193,23 @@ for cluster in bad_clusters_arr:
 #outf.write('\n')
 
 cluster_count = count
+print("NUMBER OF CLUSTERS", cluster_count)
+
+#for company_name in full_company_names:
+#	count=0
+#	for filename in os.listdir('News/ArticlesData/' + company_name):
+#		count+=1
+#	print(company name, count)
 
 for company_name in full_company_names:
-	count=0
-	for filename in os.listdir('News/ArticlesData/' + company_name):
-		count+=1
-	print str(count) + company_name
-for company_name in full_company_names:
-
 	outf = open('./descriptors/' + company_name + '_descriptor.tsv', 'w')
 	outf.write('DATE' + '\t' + 'COMPANY' + '\t') 
 	for i in range(0, cluster_count):
-		outf.write("Cluster_" + str(i+1) + "\t")
+		outf.write('Cluster_' + str(i+1) + '\t')
 	outf.write('\n')
 
 	for filename in os.listdir('News/ArticlesData/' + company_name):
+		print("looping through news articles...")
 		index1 = filename.index('_')
 		index2 = filename.rfind('A')
 		date = filename[index1+1:index2]
@@ -207,7 +223,7 @@ for company_name in full_company_names:
 		#downsampling = 1e-3
 
 		sentences = LineSentence('News/ArticlesData/' + company_name + '/'  + filename)
-		print 'News/ArticlesData/' + company_name + '/'  + filename
+		print ('News/ArticlesData/' + company_name + '/'  + filename)
 		
 		print("Training model...")
 		model = word2vec.Word2Vec(sentences, workers=num_workers, size=num_features, min_count=min_word_count, window=context)
@@ -217,8 +233,8 @@ for company_name in full_company_names:
 		print("made it here")
 
 		for x in good_arr:
-			print("...but not here")
-			print("Good word: ", x)
+			#print("...but not here")
+			#print("Good word: ", x)
 			try:
 				dist = model.similarity(str(company_name), x)
 				posarr.append(dist)
@@ -273,6 +289,7 @@ for company_name in full_company_names:
                         count = 0
                         cluster_avg = 0 
                         for x in cluster:
+				print("word in cluster:", x) 
                                 if x!= 0:
                                         count+=1
                                         cluster_avg += allvalues[str(company_name) + "_" + str(x)]
