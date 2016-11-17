@@ -83,7 +83,7 @@ public class CreateGoodBadClusters {
 	}
 
 	public static void main(String[] args) throws IOException {
-		MakeClusters("Vocab", "Vocab_Clusters",300, 60);
+		MakeClusters("Vocab", "Vocab_Clusters",50, 60);
 	}
 
 }
