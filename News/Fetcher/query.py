@@ -4,7 +4,7 @@ import time
 from eventregistry import *
 from datetime import date, timedelta as td
 
-CompanyNames=["Merck","Procter & Gamble","Walmart","Boeing","JPMorgan Chase","Google","INTC","Apple"]
+CompanyNames=["Merck","Procter_&_Gamble","Walmart","Boeing","JPMorgan_Chase","Google","INTC","Apple"]
 
 print "must be run inside the folder \"NewsFetcher\""
 
@@ -27,16 +27,18 @@ def getArticlesUrls(queryterm,startdate,enddate):
 	q.addConcept(er.getConceptUri(queryterm))
 	# return the list of top 30 articles, including the concepts, categories and article image
 	q.addRequestedResult(RequestArticlesUrlList(page=1,count=150))
-	writefile=open(companyfolderpath+"/"+queryterm+"_"+str(startdate)+"_Urls.txt",'w')	
-	results=er.execQuery(q)
-	#print str(results)
-	dict=results
-	for url in dict['urlList']['results']:
-		writefile.write(url.encode('utf-8') + "\n") #writes url by line to file
-	print("# of Urls: " + str(len(dict['urlList']['results'])))
-	writefile.close()
-	time.sleep(1)
-
+	writefile=open(companyfolderpath+"/"+queryterm+"_"+str(startdate)+"_Urls.txt",'w')
+	try:	
+		results=er.execQuery(q)
+		#print str(results)
+		dict=results
+		for url in dict['urlList']['results']:
+			writefile.write(url.encode('utf-8') + "\n") #writes url by line to file
+		print("# of Urls: " + str(len(dict['urlList']['results'])))
+		writefile.close()
+		time.sleep(1)
+	except:
+		
 
 
 def iterateDays(startyear,startmonth,startdate,endyear,endmonth,enddate):#runs getArticlesUrls over range of dates
