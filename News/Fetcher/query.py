@@ -54,7 +54,8 @@ def iterateDays(startyear,startmonth,startdate,endyear,endmonth,enddate):#runs g
 			getArticlesUrls(company,currentDate,nextDate)
 			
 now= datetime.datetime.now()
+now-td(days=1)
 
-iterateDays(2016,10,5,now.year,now.month,now.day)
+iterateDays(2016,9,5,now.year,now.month,now.day)
 		 
 #getArticlesUrls("Apple",date(2016,9,15),date(2016,9,16))	

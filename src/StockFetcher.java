@@ -20,7 +20,7 @@ public class StockFetcher {
 		String compname = tickerCompName;
 		switch (tickerCompName) {
 		case "INTC":
-			compname = "Intel";
+			compname = "INTC";
 			break;
 		case "AAPL":
 			compname = "Apple";
@@ -32,13 +32,13 @@ public class StockFetcher {
 			compname = "Walmart";
 			break;
 		case "PG ":
-			compname = "p&g";
+			compname = "Procter & Gamble";
 			break;
 		case "BA":
 			compname = "Boeing";
 			break;
 		case "JPM":
-			compname = "Morgan Chase";
+			compname = "JPMorgan Chase";
 			break;
 		case "GOOGL ":
 			compname = "Google";
@@ -121,16 +121,16 @@ public class StockFetcher {
 	
 	
 	public static void main(String[] args) throws IOException {
-		
+	/*	
 		System.out.println("Program outputting most current Stock data to stock_data/tweet_date_data with 3 days of lag time");
-/*		
+	
 		Calendar c = Calendar.getInstance();
 		System.out.println(c.getTime());
 		// c.add(Calendar.DATE, numDay);
 		c.add(Calendar.DATE, -1);
 		
 		fetchStock(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE), 2016, 8, 7, "");
-	*/	
+	*/
 		addTwitterDatetoStockFolder("stock_data/cleaned_data", "stock_data/tweet_date_data", 2);
 	}
 }

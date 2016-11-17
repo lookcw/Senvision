@@ -181,6 +181,11 @@ for cluster in bad_clusters_arr:
 cluster_count = count
 
 for company_name in full_company_names:
+	count=0
+	for filename in os.listdir('News/ArticlesData/' + company_name):
+		count+=1
+	print str(count) + company_name
+for company_name in full_company_names:
 
 	outf = open('./descriptors/' + company_name + '_descriptor.tsv', 'w')
 	outf.write('DATE' + '\t' + 'COMPANY' + '\t') 
@@ -202,10 +207,11 @@ for company_name in full_company_names:
 		#downsampling = 1e-3
 
 		sentences = LineSentence('News/ArticlesData/' + company_name + '/'  + filename)
+		print 'News/ArticlesData/' + company_name + '/'  + filename
 		
 		print("Training model...")
 		model = word2vec.Word2Vec(sentences, workers=num_workers, size=num_features, min_count=min_word_count, window=context)
-
+ 	
 		posarr = []
 		negarr = []
 		print("made it here")
