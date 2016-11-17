@@ -121,7 +121,7 @@ public class StockFetcher {
 	
 	
 	public static void main(String[] args) throws IOException {
-	/*	
+	/*
 		System.out.println("Program outputting most current Stock data to stock_data/tweet_date_data with 3 days of lag time");
 	
 		Calendar c = Calendar.getInstance();

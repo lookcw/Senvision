@@ -13,7 +13,7 @@ public class TweetStockDataPairer {
 		Map<String, String> stockupdown = new HashMap<String, String>();
 		CSVReader StockReader = new CSVReader(new FileReader(StockFile),'\t');
 		CSVWriter XValWriter = new CSVWriter(new FileWriter(XValFile));
-		CSVWriter KnimeInputWriter = new CSVWriter(new FileWriter("KnimeInput/Knimeinput.tsv",true),'\t');
+		//CSVWriter KnimeInputWriter = new CSVWriter(new FileWriter("KnimeInput/Knimeinput.tsv",true),'\t');
 		CSVReader DescriptorReader = new CSVReader(new FileReader(DescriptorFile), '\t');
 		//StockReader.readNext();
 		//DescriptorReader.readNext();
@@ -47,14 +47,14 @@ public class TweetStockDataPairer {
 				}
 				writeLine[readDesLine.length-1] = stockupdown.get(readDesLine[0]);
 				XValWriter.writeNext(writeLine);
-				KnimeInputWriter.writeNext(writeLine);
+				//KnimeInputWriter.writeNext(writeLine);
 			}
 
 		}
 
 		DescriptorReader.close();
 		XValWriter.close();
-		KnimeInputWriter.close();
+		//KnimeInputWriter.close();
 	}
 
 	public static void createPairsFolders(String DescriptorFolder, String StockFolder, String XValOutputFolder) {
@@ -63,7 +63,7 @@ public class TweetStockDataPairer {
 			try {
 
 				createPair(StockFolder + "/" + DescriptorFile.getName().substring(0, DescriptorFile.getName().indexOf("_"))
-								+ "_cleaned.csv", 
+								+ "_cleaned.tsv", 
 						DescriptorFile.getPath(), XValOutputFolder + "/" + DescriptorFile.getName().substring(0,DescriptorFile.getName().indexOf(".tsv"))+".csv");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
