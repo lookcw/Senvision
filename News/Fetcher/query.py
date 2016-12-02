@@ -28,16 +28,17 @@ def getArticlesUrls(queryterm,startdate,enddate):
 	# return the list of top 30 articles, including the concepts, categories and article image
 	q.addRequestedResult(RequestArticlesUrlList(page=1,count=150))
 	writefile=open(companyfolderpath+"/"+queryterm+"_"+str(startdate)+"_Urls.txt",'w')
-	try:	
+	try:
 		results=er.execQuery(q)
 		#print str(results)
-		dict=results
-		for url in dict['urlList']['results']:
+		diction=results
+		for url in diction['urlList']['results']:
 			writefile.write(url.encode('utf-8') + "\n") #writes url by line to file
-		print("# of Urls: " + str(len(dict['urlList']['results'])))
+		print("# of Urls: " + str(len(diction['urlList']['results'])))
 		writefile.close()
 		time.sleep(1)
-	except:
+	except Exception:
+		sys.exit(0)
 		
 
 
@@ -53,11 +54,12 @@ def iterateDays(startyear,startmonth,startdate,endyear,endmonth,enddate):#runs g
 		currentDate= d1 + td(days=i)
 		nextDate=d1+td(days=i+1)
 		for company in CompanyNames:
-			getArticlesUrls(company,currentDate,nextDate)
+			if getArticlesUrls(company,currentDate,nextDate)==3:
+				return
 			
 now= datetime.datetime.now()
 now-td(days=1)
 
-iterateDays(2016,9,5,now.year,now.month,now.day)
+iterateDays(2016,8,5,now.year,now.month,now.day)
 		 
 #getArticlesUrls("Apple",date(2016,9,15),date(2016,9,16))	
