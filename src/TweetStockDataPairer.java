@@ -10,10 +10,9 @@ import com.opencsv.CSVWriter;
 
 public class TweetStockDataPairer {
 	public static void createPair(String StockFile, String DescriptorFile, String XValFile) throws IOException {
-		Map<String, String> stockupdown = new HashMap<String, String>();
+		Map<String, String> stockupdown = new HashMap<String, String>();//putting stock date with date value
 		CSVReader StockReader = new CSVReader(new FileReader(StockFile),'\t');
 		CSVWriter XValWriter = new CSVWriter(new FileWriter(XValFile));
-		//CSVWriter KnimeInputWriter = new CSVWriter(new FileWriter("KnimeInput/Knimeinput.tsv",true),'\t');
 		CSVReader DescriptorReader = new CSVReader(new FileReader(DescriptorFile), '\t');
 		//StockReader.readNext();
 		//DescriptorReader.readNext();
@@ -24,15 +23,14 @@ public class TweetStockDataPairer {
 			readDesLine = DescriptorReader.readNext();
 			stockupdown.put(readStockLine[1], readStockLine[readStockLine.length - 2]);
 			System.out.println(
-					"Stock date: " + readStockLine[1] + "   Stock up down: " + readStockLine[readStockLine.length - 2]);
+					"Tweet Date " + readStockLine[1] + "   Stock up down: " + readStockLine[readStockLine.length - 2]);
 		}
-		
 		String writeLine[];
 		StockReader.close();
 		DescriptorReader.close();
 		DescriptorReader = new CSVReader(new FileReader(DescriptorFile), '\t');
 		readDesLine = DescriptorReader.readNext();
-		writeLine = new String[readDesLine.length];
+		writeLine = new String[readDesLine.length];//writes header line
 		for (int i = 0; i < readDesLine.length-1; i++) {
 			writeLine[i] = readDesLine[i];
 		}
@@ -40,7 +38,6 @@ public class TweetStockDataPairer {
 		XValWriter.writeNext(writeLine);
 		
 		while ((readDesLine = DescriptorReader.readNext()) != null) {
-
 			if (stockupdown.containsKey(readDesLine[0])) {
 				for (int i = 0; i < readDesLine.length-1; i++) {
 					writeLine[i] = readDesLine[i];

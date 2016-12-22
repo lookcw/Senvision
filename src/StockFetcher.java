@@ -6,7 +6,11 @@ import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-
+import org.python.core.PyInteger;
+import org.python.core.PyObject;
+import org.python.core.PyException;
+import org.python.util.PythonInterpreter;
+ 
 import org.apache.commons.io.FileUtils;
 
 import com.opencsv.CSVReader;
@@ -94,6 +98,7 @@ public class StockFetcher {
 		String[] nextLine;
 		nextLine = cR.readNext();
 		//System.out.println(outputfile);
+		System.out.println(nextLine);
 		String[] writeLine=new String[nextLine.length];
 		writeLine[0]=nextLine[0];
 		writeLine[1]="Tweet Prediction Date";;
@@ -107,7 +112,7 @@ public class StockFetcher {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			 Calendar c = Calendar.getInstance();
 			 c.setTime(sdf.parse(nextLine[0]));
-			 c.add(Calendar.DATE, numDaysToAdd);
+			 c.add(Calendar.DATE,-1* numDaysToAdd);
 			 writeLine[1]=sdf.format(c.getTime());
 			 for(int i=1;i<nextLine.length-1;i++){
 				 writeLine[i+1]=nextLine[i];
@@ -121,7 +126,7 @@ public class StockFetcher {
 	
 	
 	public static void main(String[] args) throws IOException {
-	/*
+	
 		System.out.println("Program outputting most current Stock data to stock_data/tweet_date_data with 3 days of lag time");
 	
 		Calendar c = Calendar.getInstance();
@@ -130,7 +135,20 @@ public class StockFetcher {
 		c.add(Calendar.DATE, -1);
 		
 		fetchStock(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE), 2016, 8, 7, "");
-	*/
-		addTwitterDatetoStockFolder("stock_data/cleaned_data", "stock_data/tweet_date_data", 2);
+		 
+        try
+        {
+            PythonInterpreter.initialize(System.getProperties(), System.getProperties(), new String[0]);
+            PythonInterpreter interp = new PythonInterpreter();
+            interp.execfile("stock_data/stocktable4java.py");
+            interp.close();
+        }
+        catch(Exception e)
+        {
+            System.out.println(e.toString());
+            e.printStackTrace();
+        }
+		
+		addTwitterDatetoStockFolder("stock_data/cleaned_data", "stock_data/tweet_date_data", 3);
 	}
 }

@@ -28,8 +28,9 @@ def getArticlesUrls(queryterm,startdate,enddate):
 	# return the list of top 30 articles, including the concepts, categories and article image
 	q.addRequestedResult(RequestArticlesUrlList(page=1,count=150))
 	writefile=open(companyfolderpath+"/"+queryterm+"_"+str(startdate)+"_Urls.txt",'w')
-	try:
-		results=er.execQuery(q)
+	results=er.execQuery(q)
+	print results
+	if (results is dict):
 		#print str(results)
 		diction=results
 		for url in diction['urlList']['results']:
@@ -37,7 +38,7 @@ def getArticlesUrls(queryterm,startdate,enddate):
 		print("# of Urls: " + str(len(diction['urlList']['results'])))
 		writefile.close()
 		time.sleep(1)
-	except Exception:
+	else:
 		sys.exit(0)
 		
 

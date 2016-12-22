@@ -23,7 +23,7 @@ import twitter4j.conf.ConfigurationBuilder;
 
 public class Learning {
 	Twitter twitter;
-	String[] searchterms= {"Merck", "p&g", "Walmart", "Boeing","Morgan Chase","Google","$INTC","$AAPL","$MRK ","$PG ","$WMT ", "$BA","$JPM","$GOOGL "};
+	String[] searchterms= {"Intel","Merck", "p&g", "Walmart", "Boeing","Morgan Chase","Google","$INTC","$AAPL","$MRK ","$PG ","$WMT ", "$BA","$JPM","$GOOGL "};
 	//ENGLISH COMPNAY NAMES MUST COME FIRST && ticker Names must be all uppercase
 	
 	
