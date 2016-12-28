@@ -1,3 +1,4 @@
+from __future__ import division
 import csv
 import os 
 from scipy import stats
@@ -34,8 +35,17 @@ for name in full_company_names:
 
 allwords = Google_wordfreq[0][2:]
 
+path3 = 'tweetcounts/'
+for name in full_company_names:
+	file = open('tweetcounts/' + name + '_tweetcounts.tsv', 'r')
+	reader = csv.reader(file, delimiter='\t')
+	arr = list(reader)
+	foo = name.replace(' ', '').replace('&', '')
+	exec(foo + '_tweetcounts' + " = arr")
+
 stockdata_dict = {}
 wordfreq_dict = {}
+tweetcounts_dict = {}
 
 for name in full_company_names:
 	name = name.replace(' ', '')
@@ -44,6 +54,16 @@ for name in full_company_names:
 	exec("stockarr = " + varname)
 	for row in stockarr[1:]:
 		stockdata_dict[name + '_' + row[1]] = row[8]
+
+for name in full_company_names:
+        name = name.replace(' ', '')
+        name = name.replace('&', '')
+	varname = name + "_tweetcounts"
+	exec ("countarr = " + varname)
+	for row in countarr[1:]:
+		tweetcounts_dict[name + '_' + row[0]] = int(row[2])
+
+#print(tweetcounts_dict)
 
 for name in full_company_names:
 	name = name.replace(' ', '')
@@ -57,8 +77,15 @@ for name in full_company_names:
 			#print('word', freqarr[0][i])
 			#print('date', row[0])
 			#print('value', row[i])
-			wordfreq_dict[name + '_' + freqarr[0][i] + '_' + row[0]] = int(row[i])
+			#print(tweetcounts_dict[name + '_' + row[0]], 'tweet counts')
+			#print(row[i], 'raw frequency')
+			wordfreq_dict[name + '_' + freqarr[0][i] + '_' + row[0]] = int(row[i])/(tweetcounts_dict[name + '_' + row[0]])
+			#if name == "Apple" and freqarr[0][i] == "loses":
+			#	print(int(row[i]), 1000 * (int(row[i])/(tweetcounts_dict[name + '_' + row[0]])))
+			#if (int(row[i])) > 0:
+					#print(name, int(row[i]), 1000 * (int(row[i])/(tweetcounts_dict[name + '_' + row[0]])), freqarr[0][i], row[0])
 
+#print(wordfreq_dict)
 
 for x in wordfreq_dict:
 	dictkey = x.split('_')
@@ -95,7 +122,7 @@ for entity in wordfreq_dict:
 		elif stockdata_dict[company_name + '_' + date] == '=':
 			company_dict[company_name][word][1].append(0)
 		#company_dict[company_name][word][1].append(stockdata_dict[company_name + '_' + date])
-		company_dict[company_name][word][0].append(int(wordfreq_dict[company_name + '_' + word + '_' + date]))
+		company_dict[company_name][word][0].append(float(wordfreq_dict[company_name + '_' + word + '_' + date]))
 	except KeyError:
 		continue
 
@@ -104,13 +131,18 @@ for num in (company_dict['Apple']['win'][0]):
 	sum += num
 print('number of time win appears', sum)
 
-
-#if 1 == 2:
-for word in company_dict['Apple']:
-	if len(company_dict['Apple'][word][0]) > 0:
-		a = np.array(company_dict['Apple'][word][0])
-		b = np.array(company_dict['Apple'][word][1])
-		if stats.pointbiserialr(a,b)[0] > 0.30 or stats.pointbiserialr(a,b)[0] < -.30:
-		#if 1 == 1:
-			print(company_dict['Apple'][word])
-			print(word, stats.pointbiserialr(a,b)[0], stats.pointbiserialr(a,b)[1])
+#print(company_dict['Apple']['loses'])
+finalwords = []
+outf = open('finalwords.txt', 'w')
+for name in full_company_names:
+	name = name.replace(' ', '').replace('&', '')
+	for word in company_dict[name]:
+		if len(company_dict[name][word][0]) > 0:
+			a = np.array(company_dict[name][word][0])
+			b = np.array(company_dict[name][word][1])
+			if stats.pointbiserialr(a,b)[0] > 0.30 or stats.pointbiserialr(a,b)[0] < -.30:
+			#if 1 == 1:
+				#print(company_dict[name][word])
+				print(word, stats.pointbiserialr(a,b)[0], stats.pointbiserialr(a,b)[1])
+				finalwords.append(word)
+				outf.write(word + '\n')
