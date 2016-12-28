@@ -55,7 +55,7 @@ class MySentences(object):
 ######################################################################################################
 #full_company_names = ['Apple', 'Boeing', 'Google', 'Intel', 'Merck', 'Morgan Chase', 'p&g', 'Walmart']
 #full_company_names = ['Google', 'Intel', 'Merck', 'Morgan Chase', 'p&g', 'Walmart']
-full_company_names = ['p&g']
+full_company_names = ['Apple']
 dates = []
 
 
@@ -96,7 +96,8 @@ for company_name in full_company_names:
 			for word in sentence:
 				if word.lower() in good_arr or word.lower() in bad_arr:
 					allvalues[str(company_name) + "_" + str(word.lower())] += 1
-
+		print(allvalues["Apple_loses"])
+                
 ######################################################################################################
 ################                      GENERATING DESCRIPTORS                       ###################
 ######################################################################################################
