@@ -8,39 +8,24 @@ logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=lo
 
 allvalues = {}
 
-#company_name = raw_input("Enter company name: ")
-
 ##########################################################
 # open files containing words ############################
 ##########################################################
 
 good_words = open("Vocab/good_words.txt", "r")
 bad_words =  open("Vocab/bad_words.txt", "r")
-#neutral_words = open("Vocab/neutral_words.txt", "r")
-#good_for_neutral = open("Vocab/good_for_neutral.txt", "r")
-#bad_for_neutral = open("Vocab/bad_for_neutral.txt", "r")
 
 good_clusters = open("Vocab_Clusters/good_words_clustered.txt", "r")
 bad_clusters = open("Vocab_Clusters/bad_words_clustered.txt", "r")
-#neutral_clusters = open("Vocab_Clusters/neutral_words_clustered.txt", "r")
-#neutral_good_clusters = open("Vocab_Clusters/good_for_neutral_clustered.txt", "r")
-#neutral_bad_clusters = open("Vocab_Clusters/bad_for_neutral_clustered.txt", "r")
 
 ###########################################################
 #append all the words and their contexts to various arrays#
 ###########################################################
 good_arr = []
 bad_arr = []
-#neutral_arr = []
-#good_for_neutral_arr = []
-#bad_for_neutral_arr = []
 
 good_clusters_arr = []
 bad_clusters_arr = []
-#neutral_clusters_arr = []
-#neutral_good_clusters_arr = []
-#neutral_bad_clusters_arr = []
-
 
 ##############################################
 # READING INDIVIDUAL WORDS ###################
@@ -61,30 +46,6 @@ for word in bad_arr:
         if word == '':
                 bad_arr.remove(word) 
 
-#reader = csv.reader(neutral_words, delimiter = " ")
-#for row in reader:
-#	for item in row:
-#		neutral_arr.append(item)
-#for word in neutral_arr:
-#        if word == '':
-#                neutral_arr.remove(word)  
-
-#reader = csv.reader(good_for_neutral, delimiter= " ")
-#for row in reader:
-#	for item in row:
-#		good_for_neutral_arr.append(item)
-#for word in good_for_neutral_arr:
-#        if word == '':
-#                good_for_neutral_arr.remove(word)  
-
-#reader = csv.reader(bad_for_neutral, delimiter = " ")
-#for row in reader:
-#	for item in row:
-#		bad_for_neutral_arr.append(item)
-#for word in bad_for_neutral_arr:
-#        if word == '':
-#                bad_for_neutral_arr.remove(word)  
-
 ##############################################
 ###            READING CLUSTERS            ###
 ##############################################
@@ -104,34 +65,6 @@ for cluster in bad_clusters_arr:
                 if word == '':
                         cluster.remove(word) 
 
-#print(good_words)
-#print(bad_words)
-#print(good_clusters_arr)
-#print(bad_clusters_arr)
-#reader = csv.reader(neutral_clusters, delimiter = " ")
-#for row in reader:
-#	neutral_clusters_arr.append(row)
-#for cluster in neutral_clusters_arr:
-#        for word in cluster:
-#                if word == '':
-#                        cluster.remove(word) 
-
-#reader = csv.reader(neutral_good_clusters, delimiter = " ")
-#for row in reader:
-#	neutral_good_clusters_arr.append(row)
-#for cluster in neutral_good_clusters_arr:
-#        for word in cluster:
-#                if word == '':
-#                        cluster.remove(word) 
-
-#reader = csv.reader(neutral_bad_clusters, delimiter = " ")
-#for row in reader:
-#	neutral_bad_clusters_arr.append(row)
-#for cluster in neutral_bad_clusters_arr:
-#        for word in cluster:
-#                if word == '':
-#                        cluster.remove(word) 
-
 
 class MySentences(object):
 	def __init__ (self,dirname):
@@ -148,32 +81,16 @@ class MySentences(object):
 #full_company_names = ['Apple', 'Boeing', 'Google', 'Intel', 'Merck', 'JPMorgan Chase', 'Procter & Gamble', 'Walmart']
 #full_company_names = [name for name in os.listdir("News/ArticlesData") if os.path.isdir(name)]
 full_company_names = []
-full_company_names = ['JPMorgan Chase']
-#for name in os.listdir("News/ArticlesData/"):
-#	full_company_names.append(name)
+#full_company_names = ['JPMorgan Chase']
+for name in os.listdir("News/ArticlesData/"):
+	full_company_names.append(name)
 #print(full_company_names)
-#full_company_names = open("file_containing_company_names.txt", "r")
 dates = []
-#current_year = raw_input("Enter current year: ")
-#first_month = raw_input("Enter first month: ")
-#first_date = raw_input("Enter first date: ")
-#last_month = raw_input("Enter last month: ")
-#last_date = raw_input("Enter last date: ")
-
-#date1 = date(int(current_year), int(first_month), int(first_date))
-#date2 = date(int(current_year), int(last_month), int(last_date))
-
-#delta = date2 - date1
-
-#for i in range(delta.days + 1):
-#	dates.append(str(date1 + td(days=i)))
 
 
 ##########################################################################################
 ###                         loop through all the companies                             ### 
 ##########################################################################################
-#outf = open('./descriptors/DESCRIPTORS.txt', 'w')
-#outf.write('DATE' + '\t' + 'COMPANY' + '\t')
 count = 0
 #print(good_words)
 #print(bad_words)
@@ -202,6 +119,14 @@ print("NUMBER OF CLUSTERS", cluster_count)
 #	print(company name, count)
 
 for company_name in full_company_names:
+	if company_name == 'JPMorgan Chase':
+		company_string = 'J.P. Morgan'
+	elif company_name == 'Procter & Gamble':
+		company_string = 'Procter'
+	elif company_name == 'INTC':
+		company_string = 'Intel'
+	else:
+		company_string = company_name
 	outf = open('./descriptors/' + company_name + '_descriptor.tsv', 'w')
 	outf.write('DATE' + '\t' + 'COMPANY' + '\t') 
 	for i in range(0, cluster_count):
@@ -212,8 +137,8 @@ for company_name in full_company_names:
 		print("looping through news articles...")
 		index1 = filename.index('_')
 		index2 = filename.rfind('A')
-		date = filename[index1+1:index2]
-
+		date = filename[(index1+1):(index2-1)]
+#		print(date)
 		outf.write(str(date) + "\t" + str(company_name) + "\t")
 
 		num_features = 40 #subject to change
@@ -223,7 +148,7 @@ for company_name in full_company_names:
 		#downsampling = 1e-3
 
 		sentences = LineSentence('News/ArticlesData/' + company_name + '/'  + filename)
-		print ('News/ArticlesData/' + company_name + '/'  + filename)
+#		print ('News/ArticlesData/' + company_name + '/'  + filename)
 		
 		print("Training model...")
 		model = word2vec.Word2Vec(sentences, workers=num_workers, size=num_features, min_count=min_word_count, window=context)
@@ -236,38 +161,25 @@ for company_name in full_company_names:
 			#print("...but not here")
 			#print("Good word: ", x)
 			try:
-				dist = model.similarity(str(company_name), x)
+				dist = model.similarity(str(company_string), x)
+				print(dist)
 				posarr.append(dist)
 				allvalues[str(company_name) + "_" + str(x)] = dist
 			except KeyError:
+				print("no distance found for", x)
 				allvalues[str(company_name) + "_" + str(x)] = 0
 				continue
 
 		for x in bad_arr:
 			try:
-				dist = model.similarity(str(company_name), x) 
+				dist = model.similarity(str(company_string), x) 
+				print(dist)
 				negarr.append(dist)
 				allvalues[str(company_name) + "_" + str(x)] = dist 
 			except KeyError:
+				print("no distance found for", x)
 				allvalues[str(company_name) + "_" + str(x)] = 0
 				continue
-
-#		for x in neutral_arr:
-#			for y in good_for_neutral_arr:
-#				try:
-#					dist = model.similarity(str(x), str(y))
-#					allvalues[str(x) + "_" + str(y)] = dist
-#				except KeyError:
-#					allvalues[str(x) + "_" + str(y)] = 0
-#					continue
-#
-#			for y in bad_for_neutral_arr:
-#				try:
-#					dist = model.similarity(str(x), str(y))
-#					allvalues[str(x) + "_" + str(y)] = dist
-#				except KeyError:
-#                                       allvalues[str(x) + "_" + str(y)] = 0 
-#					continue
 
 
 ######################################################################################################
@@ -278,7 +190,7 @@ for company_name in full_company_names:
 			count = 0
 			cluster_avg = 0
 			for x in cluster:
-				print("word in cluster:", x)
+			#	print("word in cluster:", x)
 				if x!= 0:
 					count+=1
 					cluster_avg += allvalues[str(company_name) + "_" + str(x)]
@@ -289,43 +201,12 @@ for company_name in full_company_names:
                         count = 0
                         cluster_avg = 0 
                         for x in cluster:
-				print("word in cluster:", x) 
+			#	print("word in cluster:", x) 
                                 if x!= 0:
                                         count+=1
                                         cluster_avg += allvalues[str(company_name) + "_" + str(x)]
                         cluster_avg /= count
                         DESCRIPTOR.append(cluster_avg)
-
-
-#               for neutral_cluster in neutral_clusters_arr:
-#			for good_cluster in neutral_good_clusters_arr: 
-#				count = 0
-#				cluster_avg = 0
-#				for neutral_word in neutral_cluster:
-#						for good_word in good_cluster:
-#							if allvalues[str(neutral_word) + '_' + str(good_word)] != 0:
-#								count += 1
-#								cluster_avg += allvalues[str(neutral_word) + "_" + str(good_word)]
-#				try:
-#					cluster_avg /= count
-#				except ZeroDivisionError:
-#					cluster_avg = 0
-#				DESCRIPTOR.append(cluster_avg)
-#
-
-#                       for bad_cluster in neutral_bad_clusters_arr: 
-#                               count = 0
-#                               cluster_avg = 0
-#                               for neutral_word in neutral_cluster: 
-#                                               for bad_word in bad_cluster:
-#                                                       if allvalues[str(neutral_word) + '_' + str(bad_word)] != 0:
-#                                                               count += 1
-#                                                               cluster_avg += allvalues[str(neutral_word) + "_" + str(bad_word)]
-#				try:
-#                                	cluster_avg /= count
-#                               except ZeroDivisionError:
-#                                       cluster_avg = 0 
-#                               DESCRIPTOR.append(cluster_avg)
 
 		
 		for value in DESCRIPTOR:

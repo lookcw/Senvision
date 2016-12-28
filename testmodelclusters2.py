@@ -14,14 +14,14 @@ allvalues = {}
 # open files containing words ############################
 ##########################################################
 
-good_words = open("Vocab/goodwords.txt", "r")
-bad_words =  open("Vocab/badwords.txt", "r")
+good_words = open("Vocab/good_words.txt", "r")
+bad_words =  open("Vocab/bad_words.txt", "r")
 #neutral_words = open("Vocab/neutral_words.txt", "r")
 #good_for_neutral = open("Vocab/good_for_neutral.txt", "r")
 #bad_for_neutral = open("Vocab/bad_for_neutral.txt", "r")
 
-good_clusters = open("Vocab_Clusters/goodwords_clustered.txt", "r")
-bad_clusters = open("Vocab_Clusters/badwords_clustered.txt", "r")
+good_clusters = open("Vocab_Clusters/good_words_clustered.txt", "r")
+bad_clusters = open("Vocab_Clusters/bad_words_clustered.txt", "r")
 #neutral_clusters = open("Vocab_Clusters/neutral_words_clustered.txt", "r")
 #neutral_good_clusters = open("Vocab_Clusters/good_for_neutral_clustered.txt", "r")
 #neutral_bad_clusters = open("Vocab_Clusters/bad_for_neutral_clustered.txt", "r")
@@ -205,11 +205,8 @@ for company_name in full_company_names:
 
 		posarr = []
 		negarr = []
-		print("made it here")
 
 		for x in good_arr:
-			print("...but not here")
-			print("Good word: ", x)
 			try:
 				dist = model.similarity(str(company_name), x)
 				posarr.append(dist)
@@ -227,24 +224,6 @@ for company_name in full_company_names:
 				allvalues[str(company_name) + "_" + str(x)] = 0
 				continue
 
-#		for x in neutral_arr:
-#			for y in good_for_neutral_arr:
-#				try:
-#					dist = model.similarity(str(x), str(y))
-#					allvalues[str(x) + "_" + str(y)] = dist
-#				except KeyError:
-#					allvalues[str(x) + "_" + str(y)] = 0
-#					continue
-
-#			for y in bad_for_neutral_arr:
-#				try:
-#					dist = model.similarity(str(x), str(y))
-#					allvalues[str(x) + "_" + str(y)] = dist
-#				except KeyError:
-#                                       allvalues[str(x) + "_" + str(y)] = 0 
-#					continue
-
-
 ######################################################################################################
 ################                      GENERATING DESCRIPTORS                       ###################
 ######################################################################################################
@@ -253,7 +232,6 @@ for company_name in full_company_names:
 			count = 0
 			cluster_avg = 0
 			for x in cluster:
-				print("word in cluster:", x)
 				if x!= 0:
 					count+=1
 					cluster_avg += allvalues[str(company_name) + "_" + str(x)]
@@ -270,38 +248,6 @@ for company_name in full_company_names:
                         cluster_avg /= count
                         DESCRIPTOR.append(cluster_avg)
 
-
-#                for neutral_cluster in neutral_clusters_arr:
-#			for good_cluster in neutral_good_clusters_arr: 
-#				count = 0
-#				cluster_avg = 0
-#				for neutral_word in neutral_cluster:
-#						for good_word in good_cluster:
-#							if allvalues[str(neutral_word) + '_' + str(good_word)] != 0:
-#								count += 1
-#								cluster_avg += allvalues[str(neutral_word) + "_" + str(good_word)]
-#				try:
-#					cluster_avg /= count
-#				except ZeroDivisionError:
-#					cluster_avg = 0
-#				DESCRIPTOR.append(cluster_avg)
-#
-#
-#                        for bad_cluster in neutral_bad_clusters_arr: 
-#                                count = 0
-#                                cluster_avg = 0
-#                                for neutral_word in neutral_cluster: 
-#                                                for bad_word in bad_cluster:
-#                                                        if allvalues[str(neutral_word) + '_' + str(bad_word)] != 0:
- #                                                               count += 1
-  #                                                              cluster_avg += allvalues[str(neutral_word) + "_" + str(bad_word)]
-#				try:
- #                               	cluster_avg /= count
-  #                              except ZeroDivisionError:
-   #                                     cluster_avg = 0 
-    #                            DESCRIPTOR.append(cluster_avg)
-#
-		
 		for value in DESCRIPTOR:
 			outf.write(str(value) + '\t')
 		outf.write('\n')	
