@@ -37,6 +37,5 @@ for subdir, dirs, files in os.walk(vocab_folder):
 	with vocab as f:
 	    for line in f:
 	    	print line,
-	    	print writeSyns(line)
 	        csvwriter.writerow(writeSyns(line))
 
