@@ -1,13 +1,34 @@
 from __future__ import division
 import os
 import csv
+import nltk
 from datetime import date, timedelta as td
-from gensim.models import word2vec
-from gensim.models.word2vec import LineSentence
 import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
 allvalues = {}
+
+path = '../stock_data/tweet_date_data/'
+full_company_names = []
+for fname in os.listdir(path):
+	full_company_names.append(fname.replace('_cleaned.tsv', ''))
+
+for fname in os.listdir(path):
+	file = open(path + fname, 'r')
+	reader = csv.reader(file, delimiter='\t')
+	arr = list(reader)
+	foo = fname.replace('_cleaned.tsv', '')
+	foo = foo.replace('&', '')
+	foo = foo.replace(' ', '')
+	exec (foo + '_stockdata' + " = arr")
+
+for name in full_company_names:
+	name = name.replace(' ', '')
+	name = name.replace('&', '')
+	varname = name + "_stockdata"
+	exec("stockarr = " + varname)
+	for row in stockarr[1:]:
+		stockdata_dict[name + '_' + row[1]] = row[8]
 
 ##########################################################
 ############## open files containing words ###############
@@ -15,7 +36,7 @@ allvalues = {}
 
 good_words = open("Vocab/good_words.txt", "r")
 bad_words =  open("Vocab/bad_words.txt", "r")
-correlated_words = open("finalwords.txt", "r")
+correlated_words = open("newsfinalwords.txt", "r")
 
 #good_clusters = open("Vocab_Clusters/goodwords_clustered.txt", "r")
 #bad_clusters = open("Vocab_Clusters/badwords_clustered.txt", "r")
@@ -84,27 +105,10 @@ for word in correlated_arr:
 #                 if word == '':
 #                         cluster.remove(word)
 
-class MySentences(object):
- 	def __init__ (self,dirname):
- 		self.dirname = dirname
- 	def __iter__ (self):
- 		for fname in os.listdir(self.dirname):
- 			for line in open(os.path.join(self.dirname,fname)):
- 				yield line.split()
-
-
-######################################################################################################
-###                            COMPANY_NAMES AND DATE COLLECTION                                   ###
-######################################################################################################
-full_company_names = ['Apple', 'Boeing', 'Google', 'Intel', 'Merck', 'Morgan Chase', 'p&g', 'Walmart']
-#full_company_names = open("file_containing_company_names.txt", "r")
-dates = []
 
 ##########################################################################################
 ###                         loop through all the companies                             ### 
 ##########################################################################################
-#outf = open('./descriptors/DESCRIPTORS.txt', 'w')
-#outf.write('DATE' + '\t' + 'COMPANY' + '\t')
 count = 0
 #for cluster in good_clusters_arr:
 #	count+=1
@@ -126,9 +130,7 @@ for company_name in full_company_names:
 	outf.write('\n')
 
 	for filename in os.listdir('../AllTweets/filteredTweets/' + company_name):
-		index1 = filename.index('_')
-		index2 = filename.index('T')
-		date = filename[index1+1:index2]
+		date = filename.split('_')[1]
 
 		outf.write(str(date) + "\t" + str(company_name) + "\t")
 
