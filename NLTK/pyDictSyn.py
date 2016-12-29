@@ -8,15 +8,19 @@ vocab_folder="../CorrelationAnalysis/Vocab/"
 all_synonyms_folder="../CorrelationAnalysis/synonyms/"
 dictionary=PyDictionary()
 
+def is_ascii(s):
+    return all(ord(c) < 128 for c in s)
+
 def writeSyns(word):
 	towrite=[]
 	syns=""
 	dict= (dictionary.synonym(word,"lxml"))
-	if dict:
+	if synonym:
 		for x in dict:
 			towrite.append(x.rstrip("\n"))
 			for syn in dict[x]:
-				syns+= str(syn) + "_"
+				if is_ascii(syn):
+					syns+= str(syn) + "_"
 		towrite.append(syns)
 		return towrite
 	return towrite
