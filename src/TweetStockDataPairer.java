@@ -10,15 +10,20 @@ import com.opencsv.CSVWriter;
 
 public class TweetStockDataPairer {
 	public static void createPair(String StockFile, String DescriptorFile, String XValFile) throws IOException {
-		Map<String, String> stockupdown = new HashMap<String, String>();//putting stock date with date value
-		CSVReader StockReader = new CSVReader(new FileReader(StockFile),'\t');
+		Map<String, String> stockupdown = new HashMap<String, String>();// putting
+																		// stock
+																		// date
+																		// with
+																		// date
+																		// value
+		CSVReader StockReader = new CSVReader(new FileReader(StockFile), '\t');
 		CSVWriter XValWriter = new CSVWriter(new FileWriter(XValFile));
 		CSVReader DescriptorReader = new CSVReader(new FileReader(DescriptorFile), '\t');
-		//StockReader.readNext();
-		//DescriptorReader.readNext();
+		// StockReader.readNext();
+		// DescriptorReader.readNext();
 		String[] readDesLine;
 		String[] readStockLine;
-		
+
 		while ((readStockLine = StockReader.readNext()) != null) {
 			readDesLine = DescriptorReader.readNext();
 			stockupdown.put(readStockLine[1], readStockLine[readStockLine.length - 2]);
@@ -30,38 +35,42 @@ public class TweetStockDataPairer {
 		DescriptorReader.close();
 		DescriptorReader = new CSVReader(new FileReader(DescriptorFile), '\t');
 		readDesLine = DescriptorReader.readNext();
-		writeLine = new String[readDesLine.length];//writes header line
-		for (int i = 0; i < readDesLine.length-1; i++) {
+		writeLine = new String[readDesLine.length];// writes header line
+		for (int i = 0; i < readDesLine.length - 1; i++) {
 			writeLine[i] = readDesLine[i];
 		}
-		writeLine[readDesLine.length-1] = "+/-/=";
+		writeLine[readDesLine.length - 1] = "+/-/=";
 		XValWriter.writeNext(writeLine);
-		
+
 		while ((readDesLine = DescriptorReader.readNext()) != null) {
 			if (stockupdown.containsKey(readDesLine[0])) {
-				for (int i = 0; i < readDesLine.length-1; i++) {
+				for (int i = 0; i < readDesLine.length - 1; i++) {
 					writeLine[i] = readDesLine[i];
 				}
-				writeLine[readDesLine.length-1] = stockupdown.get(readDesLine[0]);
+				writeLine[readDesLine.length - 1] = stockupdown.get(readDesLine[0]);
 				XValWriter.writeNext(writeLine);
-				//KnimeInputWriter.writeNext(writeLine);
+				// KnimeInputWriter.writeNext(writeLine);
 			}
 
 		}
 
 		DescriptorReader.close();
 		XValWriter.close();
-		//KnimeInputWriter.close();
+		// KnimeInputWriter.close();
 	}
 
 	public static void createPairsFolders(String DescriptorFolder, String StockFolder, String XValOutputFolder) {
 		for (File DescriptorFile : new File(DescriptorFolder).listFiles()) {
-			System.out.println("Compnay: "+DescriptorFile.getName());
+			System.out.println("Compnay: " + DescriptorFile.getName());
 			try {
 
-				createPair(StockFolder + "/" + DescriptorFile.getName().substring(0, DescriptorFile.getName().indexOf("_"))
-								+ "_cleaned.tsv", 
-						DescriptorFile.getPath(), XValOutputFolder + "/" + DescriptorFile.getName().substring(0,DescriptorFile.getName().indexOf(".tsv"))+".csv");
+				createPair(
+						StockFolder + "/" + DescriptorFile.getName().substring(0, DescriptorFile.getName().indexOf("_"))
+								+ "_cleaned.tsv",
+						DescriptorFile.getPath(),
+						XValOutputFolder + "/"
+								+ DescriptorFile.getName().substring(0, DescriptorFile.getName().indexOf(".tsv"))
+								+ ".csv");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -70,6 +79,6 @@ public class TweetStockDataPairer {
 	}
 
 	public static void main(String[] args) {
-		createPairsFolders("descriptors", "stock_data/tweet_date_data", "XValSets");
+		createPairsFolders("CorrelationAnalysis/descriptors", "stock_data/tweet_date_data", "XValSets");
 	}
 }

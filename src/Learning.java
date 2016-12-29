@@ -42,7 +42,7 @@ public class Learning {
 	public String tickerToName(String tickerCompName){
 		String compname=tickerCompName;
 		 switch (tickerCompName) {
-        case "$INTC":  compname = "Intel";
+        case "$INTC":  compname = "INTC";
                  break;
         case "$AAPL":  compname = "Apple";
                  break;
@@ -50,11 +50,11 @@ public class Learning {
                  break;
         case "$WMT ":  compname= "Walmart";
                  break;
-        case "$PG ":  compname = "p&g";
+        case "$PG ":  compname = "Procter & Gamble";
                  break;
         case "$BA" :  compname = "Boeing";
                  break;
-        case "$JPM": compname="Morgan Chase";
+        case "$JPM": compname="JPMorgan Chase";
        		 break;
         case "$GOOGL ": compname="Google";
         break;
