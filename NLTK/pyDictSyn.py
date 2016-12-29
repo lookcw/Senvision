@@ -15,7 +15,7 @@ def writeSyns(word):
 	towrite=[]
 	syns=""
 	dict= (dictionary.synonym(word,"lxml"))
-	if synonym:
+	if dict:
 		for x in dict:
 			towrite.append(x.rstrip("\n"))
 			for syn in dict[x]:
