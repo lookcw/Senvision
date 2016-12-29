@@ -4,9 +4,19 @@ import csv
 from datetime import date, timedelta as td
 import nltk
 import logging
+import argparse
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
 allvalues = {}
+
+##########################################################
+# argument parsing
+##########################################################
+parser = argparse.ArgumentParser()
+parser.add_argument("company", help="company to run program for", type=int)
+args = parser.parse_args()
+company_running = args.company
+print(company_running)
 
 ##########################################################
 # open files containing words ############################
@@ -47,6 +57,7 @@ for word in bad_arr:
 full_company_names = []
 for name in os.listdir("../News/ArticlesData/"):
 	full_company_names.append(name)
+full_company_names = [full_company_names[company_running]]
 print(full_company_names)
 
 for company_name in full_company_names:
