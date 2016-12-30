@@ -134,7 +134,7 @@ public class StockFetcher {
 		// c.add(Calendar.DATE, numDay);
 		c.add(Calendar.DATE, -1);
 		
-		fetchStock(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE), 2016, 8, 7, "");
+		fetchStock(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE), 2016, 7, 5, "");
 		 
         try
         {
