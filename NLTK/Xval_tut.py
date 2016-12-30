@@ -23,7 +23,7 @@ if identifier == "default identifier":
 	print "error: put in identifier with -iden arg"
 	sys.exit(0)
 now = datetime.datetime.now()
-if identifier!=0:
+if identifier!="0":
 	result_writer.writerow([now,identifier])
 for subdir, dirs, files in os.walk(descriptor_dir):
     for file in files:
