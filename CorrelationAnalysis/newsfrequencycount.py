@@ -13,7 +13,8 @@ allvalues = {}
 # argument parsing
 ##########################################################
 parser = argparse.ArgumentParser()
-parser.add_argument("company", help="company to run program for", type=int)
+#parser.add_argument("company", help="company to run program for", type=int)
+parser.add_argument("company", type=str)
 args = parser.parse_args()
 company_running = args.company
 print(company_running)
@@ -57,8 +58,7 @@ for word in bad_arr:
 full_company_names = []
 for name in os.listdir("../News/ArticlesData/"):
 	full_company_names.append(name)
-full_company_names = [full_company_names[company_running]]
-print(full_company_names)
+full_company_names = [company_running]
 
 for company_name in full_company_names:
         for word in good_arr:
