@@ -24,7 +24,7 @@ public class StockFetcher {
 		String compname = tickerCompName;
 		switch (tickerCompName) {
 		case "INTC":
-			compname = "INTC";
+			compname = "Intel";
 			break;
 		case "AAPL":
 			compname = "Apple";
@@ -36,13 +36,13 @@ public class StockFetcher {
 			compname = "Walmart";
 			break;
 		case "PG ":
-			compname = "Procter & Gamble";
+			compname = "Procter&Gamble";
 			break;
 		case "BA":
 			compname = "Boeing";
 			break;
 		case "JPM":
-			compname = "JPMorgan Chase";
+			compname = "JPMorganChase";
 			break;
 		case "GOOGL ":
 			compname = "Google";

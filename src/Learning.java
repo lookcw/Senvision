@@ -42,6 +42,8 @@ public class Learning {
 	public String tickerToName(String tickerCompName){
 		String compname=tickerCompName;
 		 switch (tickerCompName) {
+		case "p&g": compname="Procter&Gamble";
+		break;
         case "$INTC":  compname = "INTC";
                  break;
         case "$AAPL":  compname = "Apple";
@@ -50,15 +52,17 @@ public class Learning {
                  break;
         case "$WMT ":  compname= "Walmart";
                  break;
-        case "$PG ":  compname = "Procter & Gamble";
+        case "$PG ":  compname = "Procter&Gamble";
                  break;
         case "$BA" :  compname = "Boeing";
                  break;
-        case "$JPM": compname="JPMorgan Chase";
+        case "$JPM": compname="JPMorganChase";
        		 break;
         case "$GOOGL ": compname="Google";
         break;
         case "$GOOGL": compname="Google";
+        break;
+        case "Morgan Chase": compname="JPMorganChase";
         break;
     }
 		 System.out.println(compname+"old: "+tickerCompName);
@@ -180,10 +184,7 @@ String tweetNoURL= removeUrl(stat);
 		
 		return commentstr.replaceAll("https?://\\S+\\s?", "");
     }
-	
-	
-	
-	
+
 	
 	/**
 	 * Start may not be after enddate
