@@ -7,6 +7,7 @@ import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
 allvalues = {}
+stockdata_dict = {}
 
 path = '../stock_data/tweet_date_data/'
 full_company_names = []
@@ -36,7 +37,6 @@ for name in full_company_names:
 
 good_words = open("Vocab/good_words.txt", "r")
 bad_words =  open("Vocab/bad_words.txt", "r")
-correlated_words = open("newsfinalwords.txt", "r")
 
 #good_clusters = open("Vocab_Clusters/goodwords_clustered.txt", "r")
 #bad_clusters = open("Vocab_Clusters/badwords_clustered.txt", "r")
@@ -47,9 +47,6 @@ correlated_words = open("newsfinalwords.txt", "r")
 ###########################################################
 good_arr = []
 bad_arr = []
-correlated_arr = []
-good_correlated_arr = []
-bad_correlated_arr = []
 
 #good_clusters_arr = []
 #bad_clusters_arr = []
@@ -72,18 +69,6 @@ for word in bad_arr:
 	if word == '':
 		bad_arr.remove(word) 
 
-reader = csv.reader(correlated_words, delimiter = "\n")
-for row in reader:
-	correlated_arr.append(row[0])
-for word in correlated_arr:
-	if word == '':
-		correlated_arr.remove(word)
-
-for word in correlated_arr:
-	if word in good_arr:
-		good_correlated_arr.append(word)
-	elif word in bad_arr:
-		bad_correlated_arr.append(word)
 
 
 ###################################################
@@ -118,6 +103,24 @@ count = 0
 
 
 for company_name in full_company_names:
+
+	correlated_words = open(company_name + "tweetfinalwords.txt", "r")
+	correlated_arr = []
+	good_correlated_arr = []
+	bad_correlated_arr = []
+
+	reader = csv.reader(correlated_words, delimiter = "\n")
+	for row in reader:
+		correlated_arr.append(row[0])
+	for word in correlated_arr:
+		if word == '':
+			correlated_arr.remove(word)
+
+	for word in correlated_arr:
+		if word in good_arr:
+			good_correlated_arr.append(word)
+		elif word in bad_arr:
+			bad_correlated_arr.append(word)
 
 	outf = open('./descriptors/' + company_name + '_descriptor.tsv', 'w')
 	outf.write('DATE' + '\t' + 'COMPANY' + '\t') 

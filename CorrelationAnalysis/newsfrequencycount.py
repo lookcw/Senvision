@@ -25,12 +25,14 @@ print(company_running)
 
 good_words = open("Vocab/good_words.txt", "r")
 bad_words =  open("Vocab/bad_words.txt", "r")
+synonyms = open("synonyms/all_words.csv", "r")
 
 ###########################################################
 #append all the words and their contexts to various arrays#
 ###########################################################
 good_arr = []
 bad_arr = []
+syn_arr = []
 
 ##############################################
 # READING INDIVIDUAL WORDS ###################
@@ -51,6 +53,13 @@ for word in bad_arr:
         if word == '':
                 bad_arr.remove(word) 
 
+reader = csv.reader(synonyms, delimiter = " ")
+for row in reader:
+	for item in row:
+		syn_arr.append(item)
+for word in syn_arr:
+        if word == '':
+                syn_arr.remove(word) 
 
 ######################################################################################################
 ###                            COMPANY_NAMES AND DATE COLLECTION                                   ###
@@ -61,10 +70,12 @@ for name in os.listdir("../News/ArticlesData/"):
 full_company_names = [company_running]
 
 for company_name in full_company_names:
-        for word in good_arr:
-                allvalues[str(company_name) + "_" + str(word)] = 0
-        for word in bad_arr:
-                allvalues[str(company_name) + "_" + str(word)] = 0
+        # for word in good_arr:
+        #         allvalues[str(company_name) + "_" + str(word)] = 0
+        # for word in bad_arr:
+        #         allvalues[str(company_name) + "_" + str(word)] = 0
+        for word in syn_arr:
+        	allvalues[str(company_name) + "_" + str(word)] = 0	
 
 #print (allvalues)
 
@@ -73,6 +84,9 @@ for company_name in full_company_names:
 ##########################################################################################
 for company_name in full_company_names:
 #if 1 == 2:
+	outfarr = []
+	datecount = 0
+
 	if company_name == 'JPMorgan_Chase':
 		company_string = 'J.P. Morgan'
 	elif company_name == 'Procter_&_Gamble':
@@ -84,45 +98,55 @@ for company_name in full_company_names:
 
 
 	outf = open('./newsfrequencies/' + company_name + '_wordfrequencies.tsv', 'w')
-	outf.write('DATE' + '\t' + 'COMPANY' + '\t')
-	for word in good_arr:
-		outf.write(str(word) + "\t")
-	for word in bad_arr:
-		outf.write(str(word) + "\t")
-	outf.write('\n')
-
+	outfarr.append([])
+	outfarr[0].append('DATE')
+	outfarr[0].append('COMPANY')
+	# for word in good_arr:
+	# 	outfarr[0].append(word)
+	# for word in bad_arr:
+	# 	outfarr[0].append(word)
+	for word in syn_arr:
+		outfarr[0].append(word)
 
 	for filename in os.listdir('../News/ArticlesData/' + company_name):
 
+		datecount+=1
+		outfarr.append([])
 		date = filename.split('_')[1]
 
-		outf.write(str(date) + "\t" + str(company_name) + "\t")
+		outfarr[datecount].append(date)
+		outfarr[datecount].append(company_name)
 
 		file1 = open('../News/ArticlesData/' + company_name + '/'  + filename, 'rU')
-		#reader = csv.reader(file1, dialect=csv.excel_tab)
 		corpusReader = nltk.corpus.PlaintextCorpusReader('../News/ArticlesData/'+ company_name, filename)
 		articlelinecount = len(corpusReader.sents())
 
 		for sentence in corpusReader.sents():
 			for word in sentence:
-				if word.lower() in good_arr or word.lower() in bad_arr:
+				# if word.lower() in good_arr or word.lower() in bad_arr:
+				if word.lower() in syn_arr:
 					allvalues[str(company_name) + "_" + str(word.lower())] += 1
 
                 
-######################################################################################################
-################                      GENERATING DESCRIPTORS                       ###################
-######################################################################################################
+#####################################################################################################################
+########################                      GENERATING DESCRIPTORS                      ###########################
+#####################################################################################################################
 
 		DESCRIPTOR_FREQUENCY = []
 
-		for word in good_arr:
+		#for word in good_arr:
+		for word in syn_arr:
 			DESCRIPTOR_FREQUENCY.append(allvalues[str(company_name) + "_" + str(word.lower())]/articlelinecount)
-		for word in bad_arr:
-			DESCRIPTOR_FREQUENCY.append(allvalues[str(company_name) + "_" + str(word.lower())]/articlelinecount)
+		# for word in bad_arr:
+		# 	DESCRIPTOR_FREQUENCY.append(allvalues[str(company_name) + "_" + str(word.lower())]/articlelinecount)
 
 		for value in DESCRIPTOR_FREQUENCY:
-			outf.write(str(value) + '\t')
-		outf.write('\n')
+			outfarr[datecount].append(str(value))
 
 		for value in allvalues:
 			allvalues[value] = 0	
+	
+		writer = csv.writer(outf, delimiter='\t')
+		for row in outfarr:
+			writer.writerow(row)
+
