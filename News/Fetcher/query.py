@@ -40,7 +40,7 @@ def getArticlesUrls(queryterm,startdate,enddate):
 	q.addConcept(er.getConceptUri(queryterm))
 	# return the list of top 30 articles, including the concepts, categories and article image
 	q.addRequestedResult(RequestArticlesUrlList(page=1,count=150))
-	writefile=open(companyfolderpath+"/"+queryterm+"_"+str(startdate)+"_Urls.txt",'w')
+	writefile=open(companyfolderpath+"/"+folder_name+"_"+str(startdate)+"_Urls.txt",'w')
 	results=er.execQuery(q)
 	print results
 	if('urlList' not in results.keys()):

@@ -25,7 +25,7 @@ def process_content():
 		words=nltk.word_tokenize(i)
 		tagged = nltk.pos_tag(words)
 		named_Ent=nltk.ne_chunk(tagged)
-		print named_Ent
+		named_Ent.draw()
 
 
 
