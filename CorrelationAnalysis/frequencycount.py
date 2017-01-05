@@ -1,3 +1,4 @@
+from __future__ import division
 import nltk
 import argparse
 import os
@@ -99,22 +100,38 @@ for company_name in full_company_names:
 
 
 	for filename in os.listdir('../AllTweets/filteredTweets/' + company_name):
+
 		datecount+=1
 		outfarr.append([])
-		date = filename.split('_')[1]
+		filename = filename.replace('+', '\+')
+		date = filename.split('_')[1].replace('Tweets.txt', '').replace('Tweets+.txt', '')
+		#print(date)
+		#print(filename)
 
 		outfarr[datecount].append(date)
 		outfarr[datecount].append(company_name)
 
-		file1 = open('../AllTweets/filteredTweets/' + company_name + '/'  + filename, 'rU')
-		corpusReader = nltk.corpus.PlaintextCorpusReader('../AllTweets/filteredTweets/'+ company_name, filename)	
+		corpusReader = nltk.corpus.PlaintextCorpusReader('../AllTweets/filteredTweets/'+ company_name, filename)
 		tweetcount = len(corpusReader.sents())
 
-		for sentence in corpusReader.sents():
-			for word in sentence:
-				# if word.lower() in good_arr or word.lower() in bad_arr:
-				if word.lower() in syn_arr:
-					allvalues[str(company_name) + "_" + str(word.lower())] += 1
+		all_words = []
+		for w in corpusReader.words():
+			all_words.append(w.lower())
+		all_words = nltk.FreqDist(all_words)
+		#print(all_words.most_common(15))
+		#print(all_words["stupid"])
+
+		for word in syn_arr:
+			try:
+				allvalues[str(company_name) + "_" + str(word.lower())] = all_words[word.lower()]
+			except KeyError:
+				allvalues[str(company_name) + "_" + str(word.lower())] = 0
+
+		# for sentence in corpusReader.sents():
+		# 	for word in sentence:
+		# 		# if word.lower() in good_arr or word.lower() in bad_arr:
+		# 		if word.lower() in syn_arr:
+		# 			allvalues[str(company_name) + "_" + str(word.lower())] += 1
                 
 ######################################################################################################
 ################                      GENERATING DESCRIPTORS                       ###################
@@ -123,9 +140,9 @@ for company_name in full_company_names:
 
 		#for word in good_arr:
 		for word in syn_arr:
-			DESCRIPTOR_FREQUENCY.append(allvalues[str(company_name) + "_" + str(word.lower())]/articlelinecount)
+			DESCRIPTOR_FREQUENCY.append(allvalues[str(company_name) + "_" + str(word.lower())]/tweetcount)
 		# for word in bad_arr:
-		# 	DESCRIPTOR_FREQUENCY.append(allvalues[str(company_name) + "_" + str(word.lower())]/articlelinecount)
+		# 	DESCRIPTOR_FREQUENCY.append(allvalues[str(company_name) + "_" + str(word.lower())]/tweetcount)
 
 		for value in DESCRIPTOR_FREQUENCY:
 			outfarr[datecount].append(str(value))

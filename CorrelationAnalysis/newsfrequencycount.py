@@ -101,6 +101,7 @@ for company_name in full_company_names:
 	outfarr.append([])
 	outfarr[0].append('DATE')
 	outfarr[0].append('COMPANY')
+
 	# for word in good_arr:
 	# 	outfarr[0].append(word)
 	# for word in bad_arr:
@@ -112,20 +113,36 @@ for company_name in full_company_names:
 
 		datecount+=1
 		outfarr.append([])
+		filename.replace('+', '\+')
 		date = filename.split('_')[1]
+		#print(date)
+		#print(filename)
 
 		outfarr[datecount].append(date)
 		outfarr[datecount].append(company_name)
 
-		file1 = open('../News/ArticlesData/' + company_name + '/'  + filename, 'rU')
 		corpusReader = nltk.corpus.PlaintextCorpusReader('../News/ArticlesData/'+ company_name, filename)
 		articlelinecount = len(corpusReader.sents())
 
-		for sentence in corpusReader.sents():
-			for word in sentence:
-				# if word.lower() in good_arr or word.lower() in bad_arr:
-				if word.lower() in syn_arr:
-					allvalues[str(company_name) + "_" + str(word.lower())] += 1
+		all_words = []
+		for w in corpusReader.words():
+			all_words.append(w.lower())
+		all_words = nltk.FreqDist(all_words)
+		#print(all_words.most_common(15))
+		#print(all_words["stupid"])
+
+		for word in syn_arr:
+			try:
+				allvalues[str(company_name) + "_" + str(word.lower())] = all_words[word.lower()]
+			except KeyError:
+				allvalues[str(company_name) + "_" + str(word.lower())] = 0
+
+
+		# for sentence in corpusReader.sents():
+		# 	for word in sentence:
+		# 		# if word.lower() in good_arr or word.lower() in bad_arr:
+		# 		if word.lower() in syn_arr:
+		# 			allvalues[str(company_name) + "_" + str(word.lower())] += 1
 
                 
 #####################################################################################################################
@@ -146,7 +163,6 @@ for company_name in full_company_names:
 		for value in allvalues:
 			allvalues[value] = 0	
 	
-		writer = csv.writer(outf, delimiter='\t')
-		for row in outfarr:
-			writer.writerow(row)
-
+	writer = csv.writer(outf, delimiter='\t')
+	for row in outfarr:
+		writer.writerow(row)
