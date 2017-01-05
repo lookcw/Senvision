@@ -31,7 +31,7 @@ for subdir, dirs, files in os.walk(vocab_folder):
     for file in files:
 	vocab_file=vocab_folder+file
 	all_synonyms_file=all_synonyms_folder+	 file[0:file.find("_")+1]+"_synonyms.csv"
-	output=open(all_synonyms_file,'w')
+	output=open(all_synonyms_file,'w')	
 	csvwriter=csv.writer(output,delimiter=",")
 	vocab=open(vocab_file,"r")
 	with vocab as f:

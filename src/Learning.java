@@ -65,7 +65,7 @@ public class Learning {
         case "Morgan Chase": compname="JPMorganChase";
         break;
     }
-		 System.out.println(compname+"old: "+tickerCompName);
+		 System.out.println(compname+" to "+tickerCompName);
 		 return compname;
 	}
 	
@@ -119,8 +119,7 @@ else{
 		 BufferedWriter bW;
 		 PrintWriter pW;
 		 if(queryterm.toUpperCase()==queryterm){//companynames first
-			 System.out.println(queryterm);
-			 System.out.println(queryterm+" Should append now");
+			 System.out.println(queryterm+" Second part");
 			  bW = new BufferedWriter(new FileWriter(filetomake,true));
 		 }
 		 else
@@ -226,7 +225,7 @@ String tweetNoURL= removeUrl(stat);
 	
 	
 	public static void main(String[] args) throws TwitterException, IOException, ParseException, InterruptedException{
-		
+		System.out.println("please");
 	Learning l= new Learning();
 	 Calendar c = Calendar.getInstance();
 	 Calendar d = Calendar.getInstance();
