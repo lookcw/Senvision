@@ -13,15 +13,16 @@ def is_ascii(s):
 
 def writeSyns(word):
 	towrite=[]
-	syns=""
+	syns=[]
 	dict= (dictionary.synonym(word,"lxml"))
 	if dict:
 		for x in dict:
 			towrite.append(x.rstrip("\n"))
 			for syn in dict[x]:
 				if is_ascii(syn):
-					syns+= str(syn) + "_"
-		towrite.append(syns)
+					syns.append(syn)
+		stringsyns="_".join(syns)
+		towrite.append(stringsyns)
 		return towrite
 	return towrite
 
@@ -30,7 +31,7 @@ def writeSyns(word):
 for subdir, dirs, files in os.walk(vocab_folder):
     for file in files:
 	vocab_file=vocab_folder+file
-	all_synonyms_file=all_synonyms_folder+	 file[0:file.find("_")+1]+"_synonyms.csv"
+	all_synonyms_file=all_synonyms_folder+	 file[0:file.find("_")+1]+"synonyms.csv"
 	output=open(all_synonyms_file,'w')	
 	csvwriter=csv.writer(output,delimiter=",")
 	vocab=open(vocab_file,"r")
