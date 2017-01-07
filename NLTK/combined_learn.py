@@ -11,8 +11,8 @@ from sklearn.svm import SVC, LinearSVC, NuSVC
 from nltk.classify import ClassifierI
 from statistics import mode
 import csv
-
-
+import ast
+from sklearn import cross_validation
 class VoteClassifier(ClassifierI):
     def __init__(self, *classifiers):
         self._classifiers = classifiers
@@ -52,10 +52,18 @@ class VoteClassifier(ClassifierI):
   #     return features
 
 #print((find_features(movie_reviews.words('neg/cv000_29416.txt'))))
-descriptor_file=open("tweet_exist_descriptors/Merck_descriptor.tsv",'r')
+descriptor_file=open("tweet_exist_descriptors/Walmart_descriptor.tsv",'r')
 descriptor_reader=csv.reader(descriptor_file,delimiter='\t')
+
 featuresets=list(descriptor_reader)
-print featuresets.shape
+for x in range(len(featuresets)):
+  featuresets[x][0]=ast.literal_eval(featuresets[x][0])
+
+cv = cross_validation.KFold(len(featuresets), n_folds=10, shuffle=False, random_state=None)
+
+for traincv, evalcv in cv:
+   classifier = nltk.NaiveBayesClassifier.train(train_features[traincv[0]:traincv[len(traincv)-1]])
+   print 'accuracy: %.3f' % nltk.classify.util.accuracy(classifier, train_features[evalcv[0]:evalcv[len(evalcv)-1]])
 training_set = featuresets[:26]
 testing_set =  featuresets[26:]
 
@@ -66,8 +74,8 @@ testing_set =  featuresets[26:]
 # classifier_f.close()
 
 
-
-
+classifier=nltk.NaiveBayesClassifier.train(training_set)
+print("NaiveBayes_classifier accuracy percent:", (nltk.classify.accuracy(NaiveBayes_classifier, testing_set))*100)
 # print("Original Naive Bayes Algo accuracy percent:", (nltk.classify.accuracy(classifier, testing_set))*100)
 # classifier.show_most_informative_features(15)
 
@@ -95,14 +103,14 @@ LinearSVC_classifier = SklearnClassifier(LinearSVC())
 LinearSVC_classifier.train(training_set)
 print("LinearSVC_classifier accuracy percent:", (nltk.classify.accuracy(LinearSVC_classifier, testing_set))*100)
 
-NuSVC_classifier = SklearnClassifier(NuSVC())
-NuSVC_classifier.train(training_set)
-print("NuSVC_classifier accuracy percent:", (nltk.classify.accuracy(NuSVC_classifier, testing_set))*100)
+# NuSVC_classifier = SklearnClassifier(NuSVC())
+# NuSVC_classifier.train(training_set)
+# print("NuSVC_classifier accuracy percent:", (nltk.classify.accuracy(NuSVC_classifier, testing_set))*100)
 
 
-voted_classifier = VoteClassifier(classifier,
-                                  NuSVC_classifier,
-                                  LinearSVC_classifier,
+voted_classifier = VoteClassifier(#classifier,
+                                  #NuSVC_classifier,
+                                  #LinearSVC_classifier,
                                   SGDClassifier_classifier,
                                   MNB_classifier,
                                   BernoulliNB_classifier,

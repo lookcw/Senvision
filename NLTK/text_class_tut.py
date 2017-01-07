@@ -49,8 +49,6 @@ subdirs = [x[0] for x in os.walk(tweet_dir)]
 def find_features_comp(subdir):
 	print subdir
 	comp=subdir.split("/")[-1]
-	if comp!="Intel":
-		return
 	files = os.walk(subdir).next()[2]
 	#######opening files per comp
 	stock_file=open("../stock_data/tweet_date_data/"+comp+"_cleaned.tsv",'r')
@@ -64,7 +62,7 @@ def find_features_comp(subdir):
 	stock_dict={}
 	descriptors=[]
 	for line in stock_lines:
-		stock_dict[line[1]]=line[-1]
+		stock_dict[line[1]]=line[-2]
 	if (len(files) > 0): 
 		for file in files:
 			all_words=[]
