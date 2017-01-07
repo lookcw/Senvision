@@ -1,49 +1,95 @@
 import nltk
 import random
 from nltk.corpus import movie_reviews
+from nltk.tokenize import word_tokenize
 import os
-
-documents = [(list(movie_reviews.words(fileid)), category)
-             for category in movie_reviews.categories()
-             for fileid in movie_reviews.fileids(category)]
-
-print type(movie_reviews.words('neg/cv000_29416.txt'))
-random.shuffle(documents)
+import io
+import csv
+import codecs
 
 
-descriptor_dir = '../AllTweets/filteredTweets'	
+# documents = [(list(movie_reviews.words(fileid)), category)
+#              for category in movie_reviews.categories()
+#              for fileid in movie_reviews.fileids(category)]
 
-                                                                                                 
-all_words=[]                                                                                         
-subdirs = [x[0] for x in os.walk(descriptor_dir)]                                                                            
-for subdir in subdirs:                                                                                            
-    files = os.walk(subdir).next()[2]                                                                             
-    if (len(files) > 0):                                                                                          
-        for file in files:    
-        	filename=subdir + "/" + file
-        	filename = filename.replace('+', '\+')
-        	corpusReader = nltk.corpus.PlaintextCorpusReader(filename)
-        	date = filename.split('_')[1].replace('Tweets.txt', '').replace('Tweets+.txt', '')
-        	for w in corpusReader.words():
-				all_words.append(w.lower())
+# print movie_reviews.words('neg/cv000_29416.txt')
+# print type (movie_reviews.words('neg/cv000_29416.txt'))
+# random.shuffle(documents)
+
+def is_ascii(s):
+    return all(ord(c) < 128 for c in s)
+
+tweet_dir = '../AllTweets/filteredTweets'
+
+num_common_words=3000                                  
+subdirs = [x[0] for x in os.walk(tweet_dir)]                                                                                      
+# subdirs = [x[0] for x in os.walk(tweet_dir)]                                                                            
+# for subdir in subdirs:     
+# 	all_words=[]
+# 	files = os.walk(subdir).next()[2]
+# 	if (len(files) > 0):
+# 		for file in files:
+# 			filename=subdir + "/" + file
+# 			file = file.replace('+', '\+')
+# 			print file
+# 			corpusReader = nltk.corpus.PlaintextCorpusReader(subdir,file)
+# 			comp=file.split('_')[0]
+# 			date = file.split('_')[1].replace('Tweets.txt', '').replace('Tweets+.txt', '')
+# 			for w in corpusReader.words():
+# 				if is_ascii(w):
+# 					all_words.append(w.lower())
+# 	all_words = nltk.FreqDist(all_words)
+# 	print type(all_words)
+# 	word_features = [x[0] for x in all_words.most_common(3000)]
+# 	write_file=open("Common_words/"+subdir.split("/")[-1]+"_top_"+str(num_common_words)+"_words.tsv",'w')
+# 	writer=csv.writer(write_file,delimiter='\t')
+# 	writer.writerow(word_features)
 
 
-all_words = nltk.FreqDist(all_words)
+def find_features_comp(subdir):
+	print subdir
+	comp=subdir.split("/")[-1]
+	if comp!="Intel":
+		return
+	files = os.walk(subdir).next()[2]
+	#######opening files per comp
+	stock_file=open("../stock_data/tweet_date_data/"+comp+"_cleaned.tsv",'r')
+	stock_reader=csv.reader(stock_file,delimiter='\t')
+	common_words=open("Common_words/"+comp+"_top_"+str(num_common_words)+"_words.tsv",'r')
+	word_reader=csv.reader(common_words,delimiter='\t')
+	descriptor_file=open("tweet_exist_descriptors/"+comp+"_descriptor.tsv",'w')
+	descriptor_writer=csv.writer(descriptor_file,delimiter='\t')
+	word_features=next(word_reader)
+	stock_lines=list(stock_reader)
+	stock_dict={}
+	descriptors=[]
+	for line in stock_lines:
+		stock_dict[line[1]]=line[-1]
+	if (len(files) > 0): 
+		for file in files:
+			all_words=[]
+			filec = file.replace('+', '\+')
+			corpusReader = nltk.corpus.PlaintextCorpusReader(subdir,filec)
+			for w in corpusReader.words():
+				if is_ascii(w):
+ 					all_words.append(w.lower())
+ 			all_words = nltk.FreqDist(all_words)
+			date = file.split('_')[1].replace('Tweets.txt', '').replace('Tweets+.txt', '')
+			with codecs.open(subdir+"/"+file,'r',encoding='utf8') as f:
+				tweet_words = f.read()
+			words=word_tokenize(tweet_words)
+			features = {}
+			for w in word_features:
+				k=w in words
+				features[w]=k
+				#features[w] = (all_words[w])
+			if date in stock_dict:
+				descriptors.append([features,stock_dict[date]])
+				descriptor_writer.writerow([features,stock_dict[date]])
 
-word_features = list(all_words.keys())[:3000]
+for subdir in subdirs[1:]:
+	find_features_comp(subdir)
 
-def find_features(document):
-    words = set(document)
-    features = {}
-    for w in word_features:
-        features[w] = (w in words)
-
-    return features
-
-for subdir in subdirs:                                                                                            
-    files = os.walk(subdir).next()[2]                                                                             
-    if (len(files) > 0):                                                                                          
-        for file in files:
         	
 
 	

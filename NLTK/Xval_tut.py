@@ -4,6 +4,8 @@ from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import cross_val_predict
 from sklearn import metrics
 from sklearn import svm
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.naive_bayes import GaussianNBs
 import datetime
 import csv
 import sys
@@ -37,6 +39,7 @@ for subdir, dirs, files in os.walk(descriptor_dir):
 	target=array[:][:,-1] #extract target
 	#(X_train,X_test,y_train,y_test)=train_test_split(data,target,test_size=0.2,random_state=0)
 	clf=svm.SVC(kernel='rbf',C=100,decision_function_shape=None) #create svm
+
 	scores = cross_val_score(clf,data,target,cv=5,scoring='accuracy')#cv its number of folds 
 	predicted=cross_val_predict(clf,data,target,cv=5)
 	if identifier!="0":
