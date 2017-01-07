@@ -31,7 +31,7 @@ for filename in os.listdir("./auto_pulled_data"):
 		elif float(row[1]) < float(row[4]):
 			row.append('+')
 		elif float(row[1]) == float(row[4]):
-			row.append('=')
+			row.append('-')
 
 		pcent_change = ( (float(row[4]) - float(row[1])) / float(row[1]) ) * 100
 		row.append(pcent_change)
