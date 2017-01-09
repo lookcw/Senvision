@@ -19,6 +19,12 @@ args = parser.parse_args()
 company_running = args.company
 print(company_running)
 
+full_company_names = []
+for name in os.listdir("../News/ArticlesData/"):
+	full_company_names.append(name)
+	
+full_company_names = [company_running]
+
 ##########################################################
 # open files containing words ############################
 ##########################################################
@@ -64,11 +70,6 @@ for word in syn_arr:
 ######################################################################################################
 ###                            COMPANY_NAMES AND DATE COLLECTION                                   ###
 ######################################################################################################
-full_company_names = []
-for name in os.listdir("../News/ArticlesData/"):
-	full_company_names.append(name)
-full_company_names = [company_running]
-
 for company_name in full_company_names:
         # for word in good_arr:
         #         allvalues[str(company_name) + "_" + str(word)] = 0

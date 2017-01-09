@@ -70,26 +70,6 @@ for word in bad_arr:
 		bad_arr.remove(word) 
 
 
-###################################################
-############## READING CLUSTERS ###################
-###################################################
-#reader = csv.reader(good_clusters, delimiter = " ")
-#for row in reader:
-# 	good_clusters_arr.append(row)
-# for cluster in good_clusters_arr:
-# 	for word in cluster:
-# 		if word == '':
-# 			cluster.remove(word)
-
-# reader = csv.reader(bad_clusters, delimiter = " ")
-# for row in reader:
-# 	bad_clusters_arr.append(row)
-# for cluster in bad_clusters_arr:
-#         for word in cluster:
-#                 if word == '':
-#                         cluster.remove(word)
-
-
 ##########################################################################################
 ###                         loop through all the companies                             ### 
 ##########################################################################################
