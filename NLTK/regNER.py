@@ -74,11 +74,10 @@ def find_features_comp(subdir):
 			chunked_sentences = nltk.ne_chunk_sents(tagged_sentences, binary=True)
 			for tree in chunked_sentences:
 			    entity_names.extend(extract_entity_names(tree))
- 			all_words = nltk.FreqDist(entity_names)
 			date = file.split('_')[1]
 			features = {}
 			for w in word_features:
-				k=w in words
+				k=w in entity_names
 				features[w]=k
 				#features[w] = (all_words[w])
 			if date in stock_dict:

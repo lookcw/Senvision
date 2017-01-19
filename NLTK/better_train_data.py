@@ -43,8 +43,8 @@ documents = []
 
 
 #  j is adject, r is adverb, and v is verb
-#allowed_word_types = ["J","R","V"]
-allowed_word_types = ["J"]
+allowed_word_types = ["J","R","V"]
+#allowed_word_types = ["J"]
 
 for p in short_pos.split('\n'):
     documents.append( (p, "pos") )
