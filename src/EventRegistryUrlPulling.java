@@ -60,7 +60,6 @@ public class EventRegistryUrlPulling {
 			}
 		}
 		
-		
 	}
 	public static void main(String[] args) throws IOException{
 			WriteArticles("News/Urls","News/ArticlesData");
