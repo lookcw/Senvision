@@ -1,0 +1,495 @@
+Traceback (most recent call last):
+  File "regNER.py", line 6, in <module>
+    import unicodecsv as csv
+ImportError: No module named unicodecsv
+../News/ArticlesData/Google
+Google_2016-10-12_Articles.txt
+Traceback (most recent call last):
+  File "regNER.py", line 89, in <module>
+    find_features_comp(subdir)
+  File "regNER.py", line 71, in find_features_comp
+    sentences = nltk.sent_tokenize(sample)
+  File "/usr/local/lib/python2.7/dist-packages/nltk/tokenize/__init__.py", line 90, in sent_tokenize
+    tokenizer = load('tokenizers/punkt/{0}.pickle'.format(language))
+  File "/usr/local/lib/python2.7/dist-packages/nltk/data.py", line 801, in load
+    opened_resource = _open(resource_url)
+  File "/usr/local/lib/python2.7/dist-packages/nltk/data.py", line 919, in _open
+    return find(path_, path + ['']).open()
+  File "/usr/local/lib/python2.7/dist-packages/nltk/data.py", line 641, in find
+    raise LookupError(resource_not_found)
+LookupError: 
+**********************************************************************
+  Resource u'tokenizers/punkt/english.pickle' not found.  Please
+  use the NLTK Downloader to obtain the resource:  >>>
+  nltk.download()
+  Searched in:
+    - '/home/lookcw/nltk_data'
+    - '/usr/share/nltk_data'
+    - '/usr/local/share/nltk_data'
+    - '/usr/lib/nltk_data'
+    - '/usr/local/lib/nltk_data'
+    - u''
+**********************************************************************
+../News/ArticlesData/Google
+Google_2016-10-12_Articles.txt
+Traceback (most recent call last):
+  File "regNER.py", line 89, in <module>
+    find_features_comp(subdir)
+  File "regNER.py", line 71, in find_features_comp
+    sentences = nltk.sent_tokenize(sample)
+  File "/usr/local/lib/python2.7/dist-packages/nltk/tokenize/__init__.py", line 90, in sent_tokenize
+    tokenizer = load('tokenizers/punkt/{0}.pickle'.format(language))
+  File "/usr/local/lib/python2.7/dist-packages/nltk/data.py", line 801, in load
+    opened_resource = _open(resource_url)
+  File "/usr/local/lib/python2.7/dist-packages/nltk/data.py", line 919, in _open
+    return find(path_, path + ['']).open()
+  File "/usr/local/lib/python2.7/dist-packages/nltk/data.py", line 641, in find
+    raise LookupError(resource_not_found)
+LookupError: 
+**********************************************************************
+  Resource u'tokenizers/punkt/english.pickle' not found.  Please
+  use the NLTK Downloader to obtain the resource:  >>>
+  nltk.download()
+  Searched in:
+    - '/home/lookcw/nltk_data'
+    - '/usr/share/nltk_data'
+    - '/usr/local/share/nltk_data'
+    - '/usr/lib/nltk_data'
+    - '/usr/local/lib/nltk_data'
+    - u''
+**********************************************************************
+../News/ArticlesData/Google
+Google_2016-10-12_Articles.txt
+Google_2017-01-13_Articles.txt
+Google_2016-10-13_Articles.txt
+Google_2016-10-24_Articles.txt
+Google_2016-10-05_Articles.txt
+Google_2017-01-05_Articles.txt
+Google_2017-01-01_Articles.txt
+Google_2016-09-18_Articles.txt
+Google_2016-11-04_Articles.txt
+Google_2016-09-06_Articles.txt
+Google_2016-10-26_Articles.txt
+Google_2016-10-28_Articles.txt
+Google_2016-11-05_Articles.txt
+Google_2016-08-24_Articles.txt
+Google_2016-12-17_Articles.txt
+Google_2016-10-02_Articles.txt
+Google_2016-12-22_Articles.txt
+Google_2016-11-07_Articles.txt
+Google_2017-01-16_Articles.txt
+Google_2016-09-23_Articles.txt
+Google_2016-09-05_Articles.txt
+Google_2016-12-15_Articles.txt
+Google_2016-08-27_Articles.txt
+Google_2016-12-28_Articles.txt
+Google_2017-01-18_Articles.txt
+Google_2016-10-20_Articles.txt
+Google_2016-11-09_Articles.txt
+Google_2016-09-08_Articles.txt
+Google_2016-08-14_Articles.txt
+Google_2016-10-01_Articles.txt
+Google_2017-01-12_Articles.txt
+Google_2016-09-14_Articles.txt
+Google_2016-11-19_Articles.txt
+Google_2016-10-04_Articles.txt
+Google_2016-10-31_Articles.txt
+Google_2016-08-06_Articles.txt
+Google_2016-11-13_Articles.txt
+Google_2016-09-22_Articles.txt
+Google_2017-01-06_Articles.txt
+Google_2016-12-31_Articles.txt
+Google_2016-10-07_Articles.txt
+Google_2016-10-18_Articles.txt
+Google_2016-09-07_Articles.txt
+Google_2016-12-30_Articles.txt
+Google_2016-11-11_Articles.txt
+Google_2016-12-25_Articles.txt
+Google_2016-11-20_Articles.txt
+Google_2016-09-17_Articles.txt
+Google_2016-08-16_Articles.txt
+Google_2016-09-15_Articles.txt
+Google_2016-10-11_Articles.txt
+Google_2017-01-17_Articles.txt
+Google_2016-08-30_Articles.txt
+Google_2016-09-25_Articles.txt
+Google_2016-09-16_Articles.txt
+Google_2016-10-27_Articles.txt
+Google_2016-10-29_Articles.txt
+Google_2016-09-29_Articles.txt
+Google_2016-10-22_Articles.txt
+Google_2016-09-04_Articles.txt
+Google_2016-12-29_Articles.txt
+Google_2016-09-26_Articles.txt
+Google_2016-08-19_Articles.txt
+Google_2016-10-14_Articles.txt
+Google_2016-08-23_Articles.txt
+Google_2016-08-13_Articles.txt
+Google_2017-01-19_Articles.txt
+Google_2016-10-08_Articles.txt
+Google_2016-08-08_Articles.txt
+Google_2016-12-23_Articles.txt
+Google_2016-08-09_Articles.txt
+Google_2016-11-17_Articles.txt
+Google_2016-11-10_Articles.txt
+Google_2016-11-08_Articles.txt
+Google_2016-08-10_Articles.txt
+Google_2016-12-26_Articles.txt
+Google_2017-01-14_Articles.txt
+Google_2016-10-30_Articles.txt
+Google_2017-01-04_Articles.txt
+Google_2016-12-21_Articles.txt
+Google_2016-10-25_Articles.txt
+Google_2016-11-02_Articles.txt
+Google_2016-10-10_Articles.txt
+Google_2016-08-11_Articles.txt
+Google_2017-01-09_Articles.txt
+Google_2016-09-12_Articles.txt
+Google_2016-11-15_Articles.txt
+Google_2016-08-21_Articles.txt
+Google_2016-09-09_Articles.txt
+Google_2016-11-06_Articles.txt
+Google_2016-08-28_Articles.txt
+Google_2016-08-07_Articles.txt
+Google_2016-11-03_Articles.txt
+Google_2016-10-19_Articles.txt
+Google_2016-11-14_Articles.txt
+Google_2016-12-24_Articles.txt
+Google_2016-12-16_Articles.txt
+Google_2016-08-12_Articles.txt
+Google_2016-10-06_Articles.txt
+Google_2016-10-03_Articles.txt
+Google_2016-09-28_Articles.txt
+Google_2016-11-12_Articles.txt
+Google_2016-09-13_Articles.txt
+Google_2016-08-26_Articles.txt
+Google_2016-11-16_Articles.txt
+Google_2016-12-27_Articles.txt
+Google_2016-10-15_Articles.txt
+Google_2016-09-24_Articles.txt
+Google_2016-09-02_Articles.txt
+Google_2016-12-19_Articles.txt
+Google_2016-09-21_Articles.txt
+Google_2017-01-07_Articles.txt
+Google_2017-01-10_Articles.txt
+Google_2017-01-02_Articles.txt
+Google_2016-09-19_Articles.txt
+Google_2017-01-15_Articles.txt
+Google_2016-09-27_Articles.txt
+Google_2016-09-01_Articles.txt
+Google_2016-08-18_Articles.txt
+Google_2016-09-20_Articles.txt
+Google_2016-10-23_Articles.txt
+Google_2016-08-25_Articles.txt
+Google_2016-10-21_Articles.txt
+Google_2016-12-18_Articles.txt
+Google_2016-11-01_Articles.txt
+Google_2017-01-11_Articles.txt
+Google_2016-12-20_Articles.txt
+Google_2017-01-03_Articles.txt
+Google_2016-11-21_Articles.txt
+Google_2016-08-29_Articles.txt
+Google_2016-09-10_Articles.txt
+Google_2016-11-18_Articles.txt
+Google_2017-01-08_Articles.txt
+Google_2016-10-09_Articles.txt
+Google_2016-08-15_Articles.txt
+Google_2016-10-16_Articles.txt
+Google_2016-09-30_Articles.txt
+Google_2016-10-17_Articles.txt
+Google_2016-09-03_Articles.txt
+Google_2016-08-17_Articles.txt
+Google_2016-08-20_Articles.txt
+Google_2016-08-22_Articles.txt
+Google_2016-08-05_Articles.txt
+Google_2016-09-11_Articles.txt
+../News/ArticlesData/Merck
+Merck_2017-01-12_Articles.txt
+Merck_2016-08-21_Articles.txt
+Merck_2016-09-07_Articles.txt
+Merck_2016-12-29_Articles.txt
+Merck_2016-10-10_Articles.txt
+Merck_2016-09-19_Articles.txt
+Merck_2016-10-29_Articles.txt
+Merck_2016-09-15_Articles.txt
+Merck_2016-10-23_Articles.txt
+Merck_2016-09-23_Articles.txt
+Merck_2016-12-16_Articles.txt
+Merck_2016-08-31_Articles.txt
+Merck_2016-10-01_Articles.txt
+Merck_2016-09-28_Articles.txt
+Merck_2016-11-15_Articles.txt
+Merck_2017-01-14_Articles.txt
+Merck_2016-08-30_Articles.txt
+Merck_2016-10-02_Articles.txt
+Merck_2016-09-21_Articles.txt
+Merck_2016-11-11_Articles.txt
+Merck_2016-08-06_Articles.txt
+Merck_2016-08-10_Articles.txt
+Merck_2016-11-14_Articles.txt
+Merck_2016-10-14_Articles.txt
+Merck_2016-12-20_Articles.txt
+Merck_2016-08-27_Articles.txt
+Merck_2016-11-06_Articles.txt
+Merck_2016-11-18_Articles.txt
+Merck_2016-08-17_Articles.txt
+Merck_2016-08-15_Articles.txt
+Merck_2016-12-18_Articles.txt
+Merck_2016-10-09_Articles.txt
+Merck_2016-08-07_Articles.txt
+Merck_2016-12-19_Articles.txt
+Merck_2016-10-04_Articles.txt
+Merck_2016-08-26_Articles.txt
+Merck_2016-08-25_Articles.txt
+Merck_2016-09-06_Articles.txt
+Merck_2016-08-19_Articles.txt
+Merck_2016-11-02_Articles.txt
+Merck_2016-09-03_Articles.txt
+Merck_2017-01-15_Articles.txt
+Merck_2016-11-03_Articles.txt
+Merck_2016-11-21_Articles.txt
+Merck_2016-10-07_Articles.txt
+Merck_2016-12-23_Articles.txt
+Merck_2016-11-10_Articles.txt
+Merck_2016-09-18_Articles.txt
+Merck_2017-01-02_Articles.txt
+Merck_2016-09-09_Articles.txt
+Merck_2016-11-16_Articles.txt
+Merck_2017-01-13_Articles.txt
+Merck_2017-01-08_Articles.txt
+Merck_2016-10-06_Articles.txt
+Merck_2017-01-10_Articles.txt
+Merck_2016-08-18_Articles.txt
+Merck_2016-12-30_Articles.txt
+Merck_2016-11-07_Articles.txt
+Merck_2017-01-05_Articles.txt
+Merck_2017-01-09_Articles.txt
+Merck_2016-10-16_Articles.txt
+Merck_2016-10-11_Articles.txt
+Merck_2016-08-29_Articles.txt
+Merck_2016-09-27_Articles.txt
+Merck_2016-12-27_Articles.txt
+Merck_2016-10-22_Articles.txt
+Merck_2016-09-01_Articles.txt
+Merck_2016-11-04_Articles.txt
+Merck_2016-09-10_Articles.txt
+Merck_2016-08-13_Articles.txt
+Merck_2016-09-20_Articles.txt
+Merck_2016-10-25_Articles.txt
+Merck_2016-08-14_Articles.txt
+Merck_2016-10-30_Articles.txt
+Merck_2016-10-24_Articles.txt
+Merck_2016-12-17_Articles.txt
+Merck_2016-12-24_Articles.txt
+Merck_2016-09-26_Articles.txt
+Merck_2017-01-06_Articles.txt
+Merck_2016-08-11_Articles.txt
+Merck_2016-11-09_Articles.txt
+Merck_2016-09-11_Articles.txt
+Merck_2016-12-28_Articles.txt
+Merck_2016-10-08_Articles.txt
+Merck_2016-09-22_Articles.txt
+Merck_2016-11-08_Articles.txt
+Merck_2017-01-11_Articles.txt
+Merck_2016-12-15_Articles.txt
+Merck_2016-10-12_Articles.txt
+Merck_2016-09-05_Articles.txt
+Merck_2016-11-01_Articles.txt
+Merck_2016-09-24_Articles.txt
+Merck_2016-08-24_Articles.txt
+Merck_2016-09-16_Articles.txt
+Merck_2016-10-27_Articles.txt
+Merck_2016-10-03_Articles.txt
+Merck_2016-08-12_Articles.txt
+Merck_2016-08-08_Articles.txt
+Merck_2016-11-13_Articles.txt
+Merck_2016-10-19_Articles.txt
+Merck_2016-10-26_Articles.txt
+Merck_2017-01-04_Articles.txt
+Merck_2016-08-28_Articles.txt
+Merck_2016-10-21_Articles.txt
+Merck_2016-12-25_Articles.txt
+Merck_2016-09-30_Articles.txt
+Merck_2016-09-04_Articles.txt
+Merck_2016-09-08_Articles.txt
+Merck_2016-10-28_Articles.txt
+Merck_2016-08-09_Articles.txt
+Merck_2016-09-17_Articles.txt
+Merck_2016-11-17_Articles.txt
+Merck_2016-08-22_Articles.txt
+Merck_2016-11-12_Articles.txt
+Merck_2017-01-03_Articles.txt
+Merck_2016-09-14_Articles.txt
+Merck_2016-10-18_Articles.txt
+Merck_2016-09-29_Articles.txt
+Merck_2016-12-26_Articles.txt
+Merck_2016-09-25_Articles.txt
+Merck_2016-10-13_Articles.txt
+Merck_2016-10-05_Articles.txt
+Merck_2016-08-20_Articles.txt
+Merck_2016-11-05_Articles.txt
+Merck_2016-08-05_Articles.txt
+Merck_2016-10-15_Articles.txt
+Merck_2016-10-31_Articles.txt
+Merck_2017-01-07_Articles.txt
+Merck_2016-08-23_Articles.txt
+Merck_2016-10-20_Articles.txt
+Merck_2016-12-22_Articles.txt
+Merck_2016-08-16_Articles.txt
+Merck_2016-10-17_Articles.txt
+Merck_2016-11-20_Articles.txt
+Merck_2016-12-21_Articles.txt
+Merck_2016-09-13_Articles.txt
+Merck_2016-09-02_Articles.txt
+Merck_2016-11-19_Articles.txt
+Merck_2016-09-12_Articles.txt
+../News/ArticlesData/JPMorganChase
+JPMorganChase_2016-12-15_Articles.txt
+JPMorganChase_2016-10-25_Articles.txt
+JPMorganChase_2016-09-22_Articles.txt
+JPMorganChase_2016-10-12_Articles.txt
+JPMorganChase_2016-08-17_Articles.txt
+JPMorganChase_2016-11-12_Articles.txt
+JPMorganChase_2016-09-29_Articles.txt
+JPMorganChase_2016-08-30_Articles.txt
+JPMorganChase_2016-11-20_Articles.txt
+JPMorganChase_2016-10-26_Articles.txt
+JPMorganChase_2016-08-16_Articles.txt
+JPMorganChase_2016-12-24_Articles.txt
+JPMorganChase_2016-09-06_Articles.txt
+JPMorganChase_2016-09-21_Articles.txt
+JPMorganChase_2016-12-26_Articles.txt
+JPMorganChase_2016-10-29_Articles.txt
+JPMorganChase_2016-10-03_Articles.txt
+JPMorganChase_2016-11-15_Articles.txt
+JPMorganChase_2016-11-04_Articles.txt
+JPMorganChase_2016-08-09_Articles.txt
+JPMorganChase_2016-09-12_Articles.txt
+JPMorganChase_2016-11-07_Articles.txt
+JPMorganChase_2016-10-02_Articles.txt
+JPMorganChase_2016-09-25_Articles.txt
+JPMorganChase_2016-11-19_Articles.txt
+JPMorganChase_2016-09-11_Articles.txt
+JPMorganChase_2016-10-10_Articles.txt
+JPMorganChase_2016-08-12_Articles.txt
+JPMorganChase_2017-01-10_Articles.txt
+JPMorganChase_2016-09-26_Articles.txt
+JPMorganChase_2016-10-04_Articles.txt
+JPMorganChase_2016-09-01_Articles.txt
+JPMorganChase_2016-11-16_Articles.txt
+JPMorganChase_2016-10-30_Articles.txt
+JPMorganChase_2016-11-05_Articles.txt
+JPMorganChase_2016-10-18_Articles.txt
+JPMorganChase_2016-08-14_Articles.txt
+JPMorganChase_2016-08-24_Articles.txt
+JPMorganChase_2017-01-13_Articles.txt
+JPMorganChase_2016-08-13_Articles.txt
+JPMorganChase_2016-10-27_Articles.txt
+JPMorganChase_2016-12-23_Articles.txt
+JPMorganChase_2016-11-10_Articles.txt
+JPMorganChase_2016-09-23_Articles.txt
+JPMorganChase_2016-09-03_Articles.txt
+JPMorganChase_2016-08-27_Articles.txt
+JPMorganChase_2016-11-09_Articles.txt
+JPMorganChase_2016-11-06_Articles.txt
+JPMorganChase_2016-08-22_Articles.txt
+JPMorganChase_2017-01-15_Articles.txt
+JPMorganChase_2016-08-08_Articles.txt
+JPMorganChase_2016-10-31_Articles.txt
+JPMorganChase_2016-12-28_Articles.txt
+JPMorganChase_2016-08-23_Articles.txt
+JPMorganChase_2016-11-03_Articles.txt
+JPMorganChase_2017-01-14_Articles.txt
+JPMorganChase_2017-01-18_Articles.txt
+JPMorganChase_2016-10-06_Articles.txt
+JPMorganChase_2016-09-17_Articles.txt
+JPMorganChase_2016-12-30_Articles.txt
+JPMorganChase_2016-08-11_Articles.txt
+JPMorganChase_2016-12-27_Articles.txt
+JPMorganChase_2016-09-18_Articles.txt
+JPMorganChase_2016-11-02_Articles.txt
+JPMorganChase_2017-01-06_Articles.txt
+JPMorganChase_2016-09-19_Articles.txt
+JPMorganChase_2017-01-05_Articles.txt
+JPMorganChase_2017-01-01_Articles.txt
+JPMorganChase_2016-12-16_Articles.txt
+JPMorganChase_2016-10-09_Articles.txt
+JPMorganChase_2017-01-12_Articles.txt
+JPMorganChase_2017-01-04_Articles.txt
+JPMorganChase_2016-10-14_Articles.txt
+JPMorganChase_2016-12-25_Articles.txt
+JPMorganChase_2016-09-15_Articles.txt
+JPMorganChase_2016-08-21_Articles.txt
+JPMorganChase_2016-09-05_Articles.txt
+JPMorganChase_2016-10-13_Articles.txt
+JPMorganChase_2016-08-18_Articles.txt
+JPMorganChase_2016-11-14_Articles.txt
+JPMorganChase_2016-10-15_Articles.txt
+JPMorganChase_2016-08-19_Articles.txt
+JPMorganChase_2017-01-09_Articles.txt
+JPMorganChase_2016-08-28_Articles.txt
+JPMorganChase_2016-09-04_Articles.txt
+JPMorganChase_2016-09-07_Articles.txt
+JPMorganChase_2016-12-18_Articles.txt
+JPMorganChase_2016-08-06_Articles.txt
+JPMorganChase_2016-10-05_Articles.txt
+JPMorganChase_2016-12-19_Articles.txt
+JPMorganChase_2016-08-07_Articles.txt
+JPMorganChase_2016-10-17_Articles.txt
+JPMorganChase_2017-01-08_Articles.txt
+JPMorganChase_2016-12-29_Articles.txt
+JPMorganChase_2016-10-21_Articles.txt
+JPMorganChase_2016-10-07_Articles.txt
+JPMorganChase_2016-08-05_Articles.txt
+JPMorganChase_2017-01-11_Articles.txt
+JPMorganChase_2016-09-27_Articles.txt
+JPMorganChase_2016-09-08_Articles.txt
+JPMorganChase_2016-12-21_Articles.txt
+JPMorganChase_2016-10-22_Articles.txt
+JPMorganChase_2016-08-26_Articles.txt
+JPMorganChase_2016-12-31_Articles.txt
+JPMorganChase_2016-11-17_Articles.txt
+JPMorganChase_2016-09-14_Articles.txt
+JPMorganChase_2016-09-16_Articles.txt
+JPMorganChase_2016-08-20_Articles.txt
+JPMorganChase_2016-10-24_Articles.txt
+JPMorganChase_2016-11-08_Articles.txt
+JPMorganChase_2016-12-20_Articles.txt
+JPMorganChase_2016-10-16_Articles.txt
+JPMorganChase_2016-09-24_Articles.txt
+JPMorganChase_2016-12-17_Articles.txt
+JPMorganChase_2016-08-25_Articles.txt
+JPMorganChase_2016-11-11_Articles.txt
+JPMorganChase_2016-11-13_Articles.txt
+JPMorganChase_2016-09-30_Articles.txt
+JPMorganChase_2016-11-21_Articles.txt
+JPMorganChase_2016-10-11_Articles.txt
+JPMorganChase_2017-01-19_Articles.txt
+JPMorganChase_2016-10-20_Articles.txt
+JPMorganChase_2016-10-08_Articles.txt
+JPMorganChase_2016-10-28_Articles.txt
+JPMorganChase_2016-11-18_Articles.txt
+JPMorganChase_2016-09-13_Articles.txt
+JPMorganChase_2016-09-10_Articles.txt
+JPMorganChase_2016-08-29_Articles.txt
+JPMorganChase_2016-09-20_Articles.txt
+JPMorganChase_2017-01-03_Articles.txt
+JPMorganChase_2016-10-01_Articles.txt
+JPMorganChase_2016-12-22_Articles.txt
+JPMorganChase_2017-01-07_Articles.txt
+JPMorganChase_2016-08-15_Articles.txt
+JPMorganChase_2017-01-02_Articles.txt
+JPMorganChase_2016-09-28_Articles.txt
+JPMorganChase_2016-09-09_Articles.txt
+JPMorganChase_2016-10-23_Articles.txt
+JPMorganChase_2016-11-01_Articles.txt
+JPMorganChase_2016-09-02_Articles.txt
+JPMorganChase_2016-08-10_Articles.txt
+JPMorganChase_2016-10-19_Articles.txt
+../News/ArticlesData/removeshortdays.sh
+Traceback (most recent call last):
+  File "regNER.py", line 88, in <module>
+    find_features_comp(subdir)
+  File "regNER.py", line 51, in find_features_comp
+    stock_file=open("../stock_data/tweet_date_data/"+comp+"_cleaned.tsv",'r')
+IOError: [Errno 2] No such file or directory: '../stock_data/tweet_date_data/removeshortdays.sh_cleaned.tsv'
