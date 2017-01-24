@@ -49,7 +49,7 @@ for argument in sys.argv[1:]:
     identifier = sys.argv[n+1]  
   n+=1
 
-if data_type!="tweet" and data_type!="news":
+if data_type!="tweet" and data_type!="news" and data_type!="NER":
   print "set -type to tweet or news"
   sys.exit(0)
 if identifier == "default identifier":
@@ -60,6 +60,8 @@ if data_type=="tweet":
   data_dir="tweet_exist_descriptors"
 if data_type=="news":
   data_dir="news_exist_descriptors"
+if data_type=="NER":
+  data_dir="news_NER_descriptors"
 now = datetime.datetime.now()
 results_file=open('../Results/NLTK_results.csv','a')
 result_writer=csv.writer(results_file,delimiter=',')
@@ -117,6 +119,7 @@ for file in files:
 
     voted_classifier = VoteClassifier(#SVC_classifier,
       LinearSVC_classifier,
+      RandomForest_classifier,
                                       SGDClassifier_classifier,
                                       LogisticRegression_classifier)
     normal_acc.append((nltk.classify.accuracy(RandomForest_classifier, testing_set))*(len(testing_set)/float(elements)))
@@ -130,3 +133,7 @@ for file in files:
 # print("Classification:", voted_classifier.classify(testing_set[3][0]), "Confidence %:",voted_classifier.confidence(testing_set[3][0])*100)
 # print("Classification:", voted_classifier.classify(testing_set[4][0]), "Confidence %:",voted_classifier.confidence(testing_set[4][0])*100)
 # print("Classification:", voted_classifier.classify(testing_set[5][0]), "Confidence %:",voted_classifier.confidence(testing_set[5][0])*100)
+with codecs.open("../../../Downloads/positive.txt","r",encoding='latin-1') as f:
+        short_pos = f.read()
+with codecs.open("../../../Downloads/negative.txt","r",encoding='latin-1') as f:
+        short_neg = f.read()
