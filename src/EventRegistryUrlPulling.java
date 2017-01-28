@@ -43,6 +43,7 @@ public class EventRegistryUrlPulling {
 			if (!new File(outputFolder+"/"+company).exists()){
 				new File(outputFolder+"/"+company).mkdir();
 			}
+			System.out.println(compFolder);
 			for(File urlList: new File(compFolder.getPath()).listFiles()){
 				String date= urlList.getName().substring(urlList.getName().indexOf("_")+1,urlList.getName().indexOf("_Urls.txt"));
 				if (!new File(outputFolder+"/"+company+"/"+company+"_"+date+"_Articles.txt").exists()){
