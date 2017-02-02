@@ -25,7 +25,7 @@ for w in movie_reviews.words():
 
 all_words = nltk.FreqDist(all_words)
 
-word_features = list(all_words.keys())[:3000]
+word_features = list(all_words.keys())[:1000]
 
 def find_features(document):
     words = set(document)
@@ -42,7 +42,7 @@ featuresets = [(find_features(rev), category) for (rev, category) in documents]
 training_set = featuresets[:1900]
 testing_set =  featuresets[1900:]
 
-
+	
 LinearSVC_classifier = SklearnClassifier(LinearSVC( ))
 LinearSVC_classifier.train(training_set)
 print("LinearSVC_classifier accuracy percent:", (nltk.classify.accuracy(LinearSVC_classifier, testing_set))*100)
