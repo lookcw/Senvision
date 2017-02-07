@@ -44,7 +44,7 @@ public class Learning {
 		 switch (tickerCompName) {
 		case "p&g": compname="Procter&Gamble";
 		break;
-        case "$INTC":  compname = "INTC";
+        case "$INTC":  compname = "Intel";
                  break;
         case "$AAPL":  compname = "Apple";
                  break;
