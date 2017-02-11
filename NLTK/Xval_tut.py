@@ -5,13 +5,13 @@ from sklearn.model_selection import cross_val_predict
 from sklearn import metrics
 from sklearn import svm
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.naive_bayes import GaussianNBs
+from sklearn.naive_bayes import GaussianNB
 import datetime
 import csv
 import sys
 
 
-descriptor_dir = '../CorrelationAnalysis/newsdescriptors/'	
+descriptor_dir = '../CorrelationAnalysis/tweetdescriptors/'	
 results_file=open('../Results/sklearn_results.csv','a')
 result_writer=csv.writer(results_file,delimiter=',')
 n = 1
@@ -35,7 +35,7 @@ for subdir, dirs, files in os.walk(descriptor_dir):
 	print array.shape
 	comp_name=array[1][1]
 	array=array[1:]#take out company names names
-	data=array[:][:,2:-] #extract the training data without target
+	data=array[:][:,2:-1] #extract the training data without target
 	target=array[:][:,-1] #extract target
 	#(X_train,X_test,y_train,y_test)=train_test_split(data,target,test_size=0.2,random_state=0)
 	clf=svm.SVC(kernel='rbf',C=100,decision_function_shape=None) #create svm

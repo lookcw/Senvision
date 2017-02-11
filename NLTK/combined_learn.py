@@ -50,7 +50,7 @@ for argument in sys.argv[1:]:
   n+=1
 
 if data_type!="tweet" and data_type!="news" and data_type!="NER":
-  print "set -type to tweet or news"
+  print "set -type to tweet or news or NER"
   sys.exit(0)
 if identifier == "default identifier":
   print "error: put in identifier with -iden arg"
@@ -85,15 +85,20 @@ for file in files:
   for i in range(0,num_folds):
     first_index=int((i*elements/float(num_folds)))
     second_index=int(((i+1)*elements/float(num_folds)))
-    training_set=featuresets[:first_index]+featuresets[second_index:]
+    training_set=[]
+    for i in (featuresets[:first_index]+featuresets[second_index:]):
+      training_set.append(i[1],i[2])
+    print training_set
     testing_set=featuresets[first_index:second_index]
+    blind_testing_set=[]
+    for i in testing_set:
+      blind_testing_set.append(i[1])
 
 
     classifier=nltk.NaiveBayesClassifier.train(training_set)
     #print("NaiveBayes_classifier accuracy percent:", (nltk.classify.accuracy(NaiveBayes_classifier, testing_set))*100)
     # print("Original Naive Bayes Algo accuracy percent:", (nltk.classify.accuracy(classifier, testing_set))*100)
     # classifier.show_most_informative_features(15)
-
     MNB_classifier = SklearnClassifier(MultinomialNB())
     MNB_classifier.train(training_set)
 
@@ -118,11 +123,13 @@ for file in files:
     # NuSVC_classifier.train(training_set)
 
     voted_classifier = VoteClassifier(#SVC_classifier,
-      LinearSVC_classifier,
+      #LinearSVC_classifier,
       RandomForest_classifier,
                                       SGDClassifier_classifier,
                                       LogisticRegression_classifier)
-    normal_acc.append((nltk.classify.accuracy(RandomForest_classifier, testing_set))*(len(testing_set)/float(elements)))
+    normal_acc.append((nltk.classify.accuracy(voted_classifier, testing_set))*(len(testing_set)/float(elements)))
+    print LinearSVC_classifier.classify_many(blind_testing_set)
+
     print("voted_classifier accuracy percent:", (nltk.classify.accuracy(RandomForest_classifier, testing_set))*100)
   print sum(normal_acc)
   if identifier!=0:
