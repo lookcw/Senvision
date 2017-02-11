@@ -103,6 +103,7 @@ for file in files:
     training_set=[]
     dates=[]
     blind_testing_set=[]
+    true=[]
     #split the sets into training and testing sets
     for n in (featuresets[:first_index]+featuresets[second_index:]):#adding training data and +/- for 
       training_set.append([dict(n[1]),n[2]])
@@ -113,7 +114,8 @@ for file in files:
 
 
     for n in testing_set:
-      blind_testing_set.append(n[0]) 
+      blind_testing_set.append(n[0])
+      true.append(n[1])
 #train data
 
     classifier=nltk.NaiveBayesClassifier.train(training_set)
@@ -142,21 +144,23 @@ for file in files:
     # NuSVC_classifier = SklearnClassifier(NuSVC())
     # NuSVC_classifier.train(training_set)
 
-    voted_classifier = VoteClassifier(MNB_classifier,
-      LinearSVC_classifier,
+    voted_classifier = VoteClassifier(
       RandomForest_classifier,
                                       SGDClassifier_classifier,
                                       LogisticRegression_classifier)
     normal_acc.append((nltk.classify.accuracy(voted_classifier, testing_set))*(len(testing_set)/float(elements)))
-    plusminus=LinearSVC_classifier.classify_many(blind_testing_set)
+    print len(testing_set)
+    plusminus=voted_classifier.classify_many(blind_testing_set)
     predictions=[]
-    for i in range(len(dates))  :
+
+    for i in range(len(dates)):
       predictions.append([(comp_name+"_"+dates[i]),plusminus[i]])
-      predictions_writer.writerow([(comp_name+"_"+dates[i]),plusminus[i]])
+      predictions_writer.writerow([(comp_name+"_"+dates[i]),str(plusminus[i])])
+      print [plusminus[i],true[i]]
 
 
-    print predictions
-    print("voted_classifier accuracy percent:", (nltk.classify.accuracy(RandomForest_classifier, testing_set))*100)
+    #print predictions
+    print("voted_classifier accuracy percent:", (nltk.classify.accuracy(voted_classifier, testing_set))*100)
   print sum(normal_acc)
   if identifier!=0:
     result_writer.writerow([comp_name,sum(normal_acc)])
