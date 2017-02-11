@@ -17,6 +17,7 @@ import numpy as np
 import sys
 import os
 import datetime
+import codecs
 
 class VoteClassifier(ClassifierI):
     def __init__(self, *classifiers):
@@ -49,61 +50,82 @@ for argument in sys.argv[1:]:
     identifier = sys.argv[n+1]  
   n+=1
 
-if data_type!="tweet" and data_type!="news" and data_type!="NER":
+if data_type!="tweet" and data_type!="news" and data_type!="tweet_NER" and data_type!="news_NER":
   print "set -type to tweet or news or NER"
   sys.exit(0)
 if identifier == "default identifier":
   print "error: put in identifier with -iden arg"
   sys.exit(0)
 
+#setting types of data accepted to determine what folder to get descriptors from. 
 if data_type=="tweet":
   data_dir="tweet_exist_descriptors"
 if data_type=="news":
   data_dir="news_exist_descriptors"
-if data_type=="NER":
+if data_type=="news_NER":
   data_dir="news_NER_descriptors"
+if data_type=="tweet_NER":
+  data_dir="twitter_NER_descriptors"
 now = datetime.datetime.now()
+
+#open prediction and results file to write to
 results_file=open('../Results/NLTK_results.csv','a')
 result_writer=csv.writer(results_file,delimiter=',')
 files = os.walk(data_dir).next()[2]
+predictions_file=open('../Results/NLTK_predictions.csv','w')
+predictions_writer=csv.writer(predictions_file,delimiter=',')
+#write identifier at start of results file
 if identifier!=0:
   result_writer.writerow([now,identifier])
 
+#perform cross validation
 for file in files:
   comp_name=file.split("_")[0]
   print comp_name
+
+  #get descriptor data from files
   descriptor_file=open(data_dir+"/"+file,'r')
   descriptor_reader=csv.reader(descriptor_file,delimiter='\t')
   featuresets=list(descriptor_reader)
+  print featuresets[0][0]
   for x in range(len(featuresets)):
-    featuresets[x][0]=ast.literal_eval(featuresets[x][0])
-    if featuresets[x][1]=="=":
-      featuresets[x][1]="-"
+    featuresets[x][1]=ast.literal_eval(featuresets[x][1])
+    if featuresets[x][-1]=="=":
+      featuresets[x][-1]="-"
   num_folds=10
   elements=len(featuresets)
   normal_acc=[]
+  #calculate indicies to split by for cross validaton
   for i in range(0,num_folds):
     first_index=int((i*elements/float(num_folds)))
     second_index=int(((i+1)*elements/float(num_folds)))
+    testing_set=[]
     training_set=[]
-    for i in (featuresets[:first_index]+featuresets[second_index:]):
-      training_set.append(i[1],i[2])
-    print training_set
-    testing_set=featuresets[first_index:second_index]
+    dates=[]
     blind_testing_set=[]
-    for i in testing_set:
-      blind_testing_set.append(i[1])
+    true=[]
+    #split the sets into training and testing sets
+    for n in (featuresets[:first_index]+featuresets[second_index:]):#adding training data and +/- for 
+      training_set.append([dict(n[1]),n[2]])
+    for n in (featuresets[first_index:second_index]):
+      testing_set.append([n[1],n[2]])
+      dates.append(n[0])
 
+
+
+    for n in testing_set:
+      blind_testing_set.append(n[0])
+      true.append(n[1])
+#train data
 
     classifier=nltk.NaiveBayesClassifier.train(training_set)
-    #print("NaiveBayes_classifier accuracy percent:", (nltk.classify.accuracy(NaiveBayes_classifier, testing_set))*100)
-    # print("Original Naive Bayes Algo accuracy percent:", (nltk.classify.accuracy(classifier, testing_set))*100)
-    # classifier.show_most_informative_features(15)
+
     MNB_classifier = SklearnClassifier(MultinomialNB())
     MNB_classifier.train(training_set)
 
     BernoulliNB_classifier = SklearnClassifier(BernoulliNB())
     BernoulliNB_classifier.train(training_set)
+
     RandomForest_classifier = SklearnClassifier(RandomForestClassifier())
     RandomForest_classifier.train(training_set)
 
@@ -113,8 +135,8 @@ for file in files:
     SGDClassifier_classifier = SklearnClassifier(SGDClassifier())
     SGDClassifier_classifier.train(training_set)
 
-    SVC_classifier = SklearnClassifier(SVC())
-    SVC_classifier.train(training_set)
+    #SVC_classifier = SklearnClassifier(SVC())
+    #SVC_classifier.train(training_set)
 
     LinearSVC_classifier = SklearnClassifier(LinearSVC())
     LinearSVC_classifier.train(training_set)
@@ -122,15 +144,23 @@ for file in files:
     # NuSVC_classifier = SklearnClassifier(NuSVC())
     # NuSVC_classifier.train(training_set)
 
-    voted_classifier = VoteClassifier(#SVC_classifier,
-      #LinearSVC_classifier,
+    voted_classifier = VoteClassifier(
       RandomForest_classifier,
                                       SGDClassifier_classifier,
                                       LogisticRegression_classifier)
     normal_acc.append((nltk.classify.accuracy(voted_classifier, testing_set))*(len(testing_set)/float(elements)))
-    print LinearSVC_classifier.classify_many(blind_testing_set)
+    print len(testing_set)
+    plusminus=voted_classifier.classify_many(blind_testing_set)
+    predictions=[]
 
-    print("voted_classifier accuracy percent:", (nltk.classify.accuracy(RandomForest_classifier, testing_set))*100)
+    for i in range(len(dates)):
+      predictions.append([(comp_name+"_"+dates[i]),plusminus[i]])
+      predictions_writer.writerow([(comp_name+"_"+dates[i]),str(plusminus[i])])
+      print [plusminus[i],true[i]]
+
+
+    #print predictions
+    print("voted_classifier accuracy percent:", (nltk.classify.accuracy(voted_classifier, testing_set))*100)
   print sum(normal_acc)
   if identifier!=0:
     result_writer.writerow([comp_name,sum(normal_acc)])
