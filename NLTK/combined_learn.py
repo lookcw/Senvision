@@ -74,6 +74,7 @@ result_writer=csv.writer(results_file,delimiter=',')
 files = os.walk(data_dir).next()[2]
 predictions_file=open('../Results/NLTK_predictions.csv','w')
 predictions_writer=csv.writer(predictions_file,delimiter=',')
+predictions_writer.writerow(["Date","Company","Pred"])
 #write identifier at start of results file
 if identifier!=0:
   result_writer.writerow([now,identifier])
@@ -154,8 +155,8 @@ for file in files:
     predictions=[]
 
     for i in range(len(dates)):
-      predictions.append([(comp_name+"_"+dates[i]),plusminus[i]])
-      predictions_writer.writerow([(comp_name+"_"+dates[i]),str(plusminus[i])])
+      predictions.append([date[i],comp_name+,str(plusminus[i])])
+      predictions_writer.writerow([date[i],comp_name+,str(plusminus[i])])
       print [plusminus[i],true[i]]
 
 
