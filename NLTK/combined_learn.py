@@ -51,7 +51,7 @@ for argument in sys.argv[1:]:
   n+=1
 
 if data_type!="tweet" and data_type!="news" and data_type!="tweet_NER" and data_type!="news_NER":
-  print "set -type to tweet or news or NER"
+  print "set -type to tweet or news or tweet_NER or news_NER_descriptors"
   sys.exit(0)
 if identifier == "default identifier":
   print "error: put in identifier with -iden arg"
@@ -76,7 +76,7 @@ predictions_file=open('../Results/NLTK_predictions.csv','w')
 predictions_writer=csv.writer(predictions_file,delimiter=',')
 predictions_writer.writerow(["date","symbol","Pred"])
 #write identifier at start of results file
-if identifier!=0:
+if identifier!="0":
   result_writer.writerow([now,identifier])
 
 #perform cross validation
@@ -148,15 +148,15 @@ for file in files:
     voted_classifier = VoteClassifier(
       RandomForest_classifier,
                                       SGDClassifier_classifier,
-                                      LogisticRegression_classifier)
+                                      LogisticRegression_classifier,BernoulliNB_classifier,MNB_classifier)
     normal_acc.append((nltk.classify.accuracy(voted_classifier, testing_set))*(len(testing_set)/float(elements)))
     print len(testing_set)
     plusminus=voted_classifier.classify_many(blind_testing_set)
     predictions=[]
 
     for i in range(len(dates)):
-      predictions.append([date[i],comp_name+,str(plusminus[i])])
-      predictions_writer.writerow([date[i],comp_name+,str(plusminus[i])])
+      predictions.append([dates[i],comp_name,str(plusminus[i])])
+      predictions_writer.writerow([dates[i],comp_name,str(plusminus[i])])
       print [plusminus[i],true[i]]
 
 
