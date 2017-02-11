@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry excluding="../AllTweets/*|../AllTweets/**|AllTweets/*|AllTweets/**" kind="src" path="src"/>
+	<classpathentry kind="lib" path="Packages/commons-validator-1.5.1.jar"/>
+	<classpathentry kind="lib" path="Packages/json-simple-1.1.1.jar"/>
+	<classpathentry kind="lib" path="Packages/jython-standalone-2.7.0.jar"/>
+	<classpathentry kind="lib" path="Packages/modules-0.3.2.jar"/>
+	<classpathentry kind="lib" path="Packages/opencsv-3.8.jar"/>
+	<classpathentry kind="lib" path="Packages/org.apache.commons.io.jar"/>
+	<classpathentry kind="lib" path="Packages/rome-1.0.jar"/>
+	<classpathentry kind="lib" path="Packages/rome-fetcher-1.0.jar"/>
+	<classpathentry kind="lib" path="Packages/rome-modules-1.0.jar"/>
+	<classpathentry kind="lib" path="/home/lookcw/git/tweetanalysis/Packages/Twitter/lib/twitter4j-core-4.0.4.jar"/>
+	<classpathentry kind="lib" path="/home/lookcw/git/tweetanalysis/Packages/jsoup-1.10.2.jar"/>
+	<classpathentry kind="output" path="Twitter_Collections/bin"/>
+</classpath>
