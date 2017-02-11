@@ -74,7 +74,7 @@ result_writer=csv.writer(results_file,delimiter=',')
 files = os.walk(data_dir).next()[2]
 predictions_file=open('../Results/NLTK_predictions.csv','w')
 predictions_writer=csv.writer(predictions_file,delimiter=',')
-predictions_writer.writerow(["Date","Company","Pred"])
+predictions_writer.writerow(["date","symbol","Pred"])
 #write identifier at start of results file
 if identifier!=0:
   result_writer.writerow([now,identifier])
