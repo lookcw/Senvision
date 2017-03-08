@@ -38,11 +38,11 @@ output=''
 if data_type=="tweet":
 	data_dir='../AllTweets/filteredTweets' #the tweet data
 	common_words_file="Tweet_Common_NER" #the tweet common words from the above 
-	output="news_NER_descriptors" #the folder the desciptors will be put into.
+	output="twitter_NER_descriptors" #the folder the desciptors will be put into.
 if data_type=="news":
 	data_dir='../News/ArticlesData'
 	common_words_file="News_Common_NER"
-	output=="twitter_NER_descriptors"
+	output="news_NER_descriptors"
 
 #find x most common NER
 num_common_words=1000                                                                                                                  
@@ -51,22 +51,20 @@ subdirs = [x[0] for x in os.walk(data_dir)]
 entity_names=[]
 #calculate common words
 if(com=='y'):
-	for subdir in subdirs:
+	for subdir in subdirs:#actions per company
 		print subdir
 		entity_names = []
-		files = os.walk(subdir).next()[2]# 	
+		files = os.walk(subdir).next()[2]#extracts file names and puts them in an array
 		if (len(files) > 0):
 			for file in files:
 				filename=subdir + "/" + file
 				print filename
-				with codecs.open(filename, 'r',encoding='latin-1') as f:
+				with open(filename, 'r',encoding='latin-1') as f:
 					sample = f.read()
 				sentences = nltk.sent_tokenize(sample)
-				print "got here"
 				tokenized_sentences = [nltk.word_tokenize(sentence) for sentence in sentences]
 				tagged_sentences = [nltk.pos_tag(sentence) for sentence in tokenized_sentences]
 				chunked_sentences = nltk.ne_chunk_sents(tagged_sentences, binary=True)
-				print "got here2	"
 				for tree in chunked_sentences:
 				    entity_names.extend(extract_entity_names(tree))
 		all_NER = nltk.FreqDist(entity_names)
