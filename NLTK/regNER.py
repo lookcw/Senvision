@@ -55,23 +55,24 @@ if(com=='y'):
 		print subdir
 		entity_names = []
 		files = os.walk(subdir).next()[2]#extracts file names and puts them in an array
-		if (len(files) > 0):
-			for file in files:
-				filename=subdir + "/" + file
-				print filename
-				with codecs.open(filename, 'r',encoding='utf_8') as f:
-					sample = f.read()
-				sentences = nltk.sent_tokenize(sample)
-				tokenized_sentences = [nltk.word_tokenize(sentence) for sentence in sentences]
-				tagged_sentences = [nltk.pos_tag(sentence) for sentence in tokenized_sentences]
-				chunked_sentences = nltk.ne_chunk_sents(tagged_sentences, binary=True)
-				for tree in chunked_sentences:
-				    entity_names.extend(extract_entity_names(tree))
-		all_NER = nltk.FreqDist(entity_names)
-		NER_features = [x[0] for x in all_NER.most_common(num_common_words)]
-		write_file=open(common_words_file+"/"+subdir.split("/")[-1]+"_top_"+str(num_common_words)+"_words.tsv",'w')
-		writer=csv.writer(write_file,delimiter='\t')
-		writer.writerow(NER_features)
+		if  "Walmart" in subdir:
+			if (len(files) > 0):
+				for file in files:
+					filename=subdir + "/" + file
+					print filename
+					with codecs.open(filename, 'r',encoding='utf_8') as f:
+						sample = f.read()
+					sentences = nltk.sent_tokenize(sample)
+					tokenized_sentences = [nltk.word_tokenize(sentence) for sentence in sentences]
+					tagged_sentences = [nltk.pos_tag(sentence) for sentence in tokenized_sentences]
+					chunked_sentences = nltk.ne_chunk_sents(tagged_sentences, binary=True)
+					for tree in chunked_sentences:
+					    entity_names.extend(extract_entity_names(tree))
+			all_NER = nltk.FreqDist(entity_names)
+			NER_features = [x[0] for x in all_NER.most_common(num_common_words)]
+			write_file=open(common_words_file+"/"+subdir.split("/")[-1]+"_top_"+str(num_common_words)+"_words.tsv",'w')
+			writer=csv.writer(write_file,delimiter='\t')
+			writer.writerow(NER_features)
 
 #descriptor writer per file,
 def find_features_comp(subdir):
@@ -142,8 +143,10 @@ def find_features_comp(subdir):
 					descriptors.append([date,features,stock_dict[date]])
 					descriptor_writer.writerow([date,features,stock_dict[date]])
 
+
 for subdir in subdirs[1:]:
-	find_features_comp(subdir)
+	if "Walmart" in subdir:
+		find_features_comp(subdir)
 # Print all entity names
 print entity_names
 
