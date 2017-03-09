@@ -59,7 +59,7 @@ if(com=='y'):
 			for file in files:
 				filename=subdir + "/" + file
 				print filename
-				with open(filename, 'r',encoding='latin-1') as f:
+				with codecs.open(filename, 'r',encoding='latin-1') as f:
 					sample = f.read()
 				sentences = nltk.sent_tokenize(sample)
 				tokenized_sentences = [nltk.word_tokenize(sentence) for sentence in sentences]
