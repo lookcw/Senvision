@@ -10,11 +10,6 @@ import unicodecsv as csv
 import sys
 
 
-reload(sys)  
-sys.setdefaultencoding('utf-8')
-
-
-
 
 #accepting data_type and whether need to find most common word arguments.
 n=1
@@ -65,15 +60,14 @@ if(com=='y'):
 				for file in files:
 					filename=subdir + "/" + file
 					print filename
-					with codecs.open(filename, 'r','latin-1') as f:
+					with codecs.open(filename, 'r',encoding='latin-1') as f:
 						sample = f.read()
-					sentences = nltk.sent_tokenize(sample)
+					sentences = nltk.sent_tokenize(sample).decode('utf-8')
 					tokenized_sentences = [nltk.word_tokenize(sentence) for sentence in sentences]
 					tagged_sentences = [nltk.pos_tag(sentence) for sentence in tokenized_sentences]
 					chunked_sentences = nltk.ne_chunk_sents(tagged_sentences, binary=True)
 					for tree in chunked_sentences:
-						entity_names.extend(extract_entity_names(tree))
-
+					    entity_names.extend(extract_entity_names(tree))
 			all_NER = nltk.FreqDist(entity_names)
 			NER_features = [x[0] for x in all_NER.most_common(num_common_words)]
 			write_file=open(common_words_file+"/"+subdir.split("/")[-1]+"_top_"+str(num_common_words)+"_words.tsv",'w')
@@ -129,7 +123,7 @@ def find_features_comp(subdir):
 			filename=subdir + "/" + file
 			print dates_done
 			if date not in dates_done and com!="y":
-				with codecs.open(filename, 'r','latin-1') as f:
+				with codecs.open(filename, 'r',encoding='latin-1') as f:
 					sample = f.read()
 
 				#start nltk analysis
@@ -151,7 +145,8 @@ def find_features_comp(subdir):
 
 
 for subdir in subdirs[1:]:
-	find_features_comp(subdir)
+	if "Walmart" in subdir:
+		find_features_comp(subdir)
 # Print all entity names
 print entity_names
 
