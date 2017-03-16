@@ -65,7 +65,6 @@ if(com=='y'):
 		if  "Walmart" in subdir:
 			if (len(files) > 0):
 				for file in files:
-<<<<<<< HEAD
 					filename=subdir + "/" + file
 					print filename
 					with codecs.open(filename, 'r','latin-1') as f:
@@ -76,20 +75,16 @@ if(com=='y'):
 					chunked_sentences = nltk.ne_chunk_sents(tagged_sentences, binary=True)
 					for tree in chunked_sentences:
 						entity_names.extend(extract_entity_names(tree))
-
-=======
-					if "02-01" in file:
-						filename=subdir + "/" + file
-						print filename
-						with codecs.open(filename, 'r',encoding='utf_8') as f:
-							sample = f.read()
-						sentences = nltk.sent_tokenize(sample)
-						tokenized_sentences = [nltk.word_tokenize(sentence) for sentence in sentences]
-						tagged_sentences = [nltk.pos_tag(sentence) for sentence in tokenized_sentences]
-						chunked_sentences = nltk.ne_chunk_sents(tagged_sentences, binary=True)
-						for tree in chunked_sentences:
-						    entity_names.extend(extract_entity_names(tree))
->>>>>>> 086ffeb9ce378988aa9920a4f5943aeccd46e402
+					filename=subdir + "/" + file
+					print filename
+					with codecs.open(filename, 'r',encoding='utf_8') as f:
+						sample = f.read()
+					sentences = nltk.sent_tokenize(sample)
+					tokenized_sentences = [nltk.word_tokenize(sentence) for sentence in sentences]
+					tagged_sentences = [nltk.pos_tag(sentence) for sentence in tokenized_sentences]
+					chunked_sentences = nltk.ne_chunk_sents(tagged_sentences, binary=True)
+					for tree in chunked_sentences:
+					    entity_names.extend(extract_entity_names(tree))
 			all_NER = nltk.FreqDist(entity_names)
 			NER_features = [x[0] for x in all_NER.most_common(num_common_words)]
 			write_file=open(common_words_file+"/"+subdir.split("/")[-1]+"_top_"+str(num_common_words)+"_words.tsv",'w')
