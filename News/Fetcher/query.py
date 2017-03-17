@@ -67,23 +67,22 @@ def iterateDays(startyear,startmonth,startdate,endyear,endmonth,enddate):#runs g
 
 	delta = d2 - d1
 	
-<<<<<<< HEAD
+
 	for i in range(delta.days + 1):
 		# currentDate= d1 + td(days=i)//////////////////////
 		# `		nextDate=d1+td(days=i+1)
-	``\		for company in CompanyNames:
-=======
+			for company in CompanyNames:
+
 	for i in range(delta.days):
 		currentDate= d1 + td(days=i)
 		nextDate=d1+td(days=i+1)
 		for company in CompanyNames:
->>>>>>> 7c57d74eb108b120de09bd8691c36fd99a80419e
 			print company
 			if getArticlesUrls(company,currentDate,nextDate)==3:
 				return
 			
 now= datetime.datetime.now()
-now-td(days=2)
+now-=td(days=2)
 
 iterateDays(2016,12,15,now.year,now.month,now.day)
 		 
