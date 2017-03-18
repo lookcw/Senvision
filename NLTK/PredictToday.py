@@ -5,10 +5,23 @@ import os
 import sys
 import csv
 import codecs
+import nltk
 
-#turns date into date string with format year-month-day
-def datetime_to_string(date):
-	return str(date.years)+"-"+str(date.months)+"-"+str(date.days)
+
+
+#returns array of entity names in a string
+def extract_entity_names(t):
+    entity_names = []
+
+    if hasattr(t, 'label') and t.label:
+        if t.label() == 'NE':
+            entity_names.append(' '.join([child[0] for child in t]))
+        else:
+            for child in t:
+                entity_names.extend(extract_entity_names(child))
+
+    return entity_names
+
 
 #############################inputting data########################
 n=1
@@ -46,6 +59,9 @@ subdirs = [x[0] for x in os.walk(data_dir)]
 def find_features_comp(subdir):
 	comp=subdir.split("/")[-1]
 	files = os.walk(subdir).next()[2]
+	stock_dict={}
+	descriptors=[]
+
 
 	#######opening files per comp
 	stock_file=open("../stock_data/tweet_date_data/"+comp+"_cleaned.tsv",'r')
@@ -55,14 +71,16 @@ def find_features_comp(subdir):
 	descriptor_file=open(output+"/"+comp+"_future_descriptor.tsv",'w')
 	descriptor_writer=csv.writer(descriptor_file,delimiter='\t')
 	word_features=next(word_reader) #the common words 
-	stock_lines=list(stock_reader)
-	stock_dict={}
 
-	#set key of date equal to value of +/-
-	for line in stock_lines:
+	for line in stock_reader:
 		stock_dict[line[1]]=line[-2]
 
 
+	#set key of date equal to value of +/-
+	# for line in stock_lines:
+	# 	stock_dict[line[1]]=line[-2]
+	# 	print line[1]
+	print len(stock_dict)
 	#create descriptors and add value to end
 	if (len(files) > 0): 
 		for date in recents:	
@@ -74,28 +92,25 @@ def find_features_comp(subdir):
 				filename=os.path.join(subdir,comp+"_"+str(date.date())+"_Articles.txt")
 			with codecs.open(filename, 'r','latin-1') as f:
 					sample = f.read()
-			try:
-				print "went into try "
+			print "went into try "
+			print filename
+			print "helllo"
+			#####################################start nltk analysis######################################
+			sentences = nltk.sent_tokenize(sample)
+			tokenized_sentences = [nltk.word_tokenize(sentence) for sentence in sentences]
+			tagged_sentences = [nltk.pos_tag(sentence) for sentence in tokenized_sentences]
+			chunked_sentences = nltk.ne_chunk_sents(tagged_sentences, binary=True)
+			for tree in chunked_sentences:
+			    entity_names.extend(extract_entity_names(tree))
+			features = {}
+			for w in word_features:
+				k=w in entity_names
+				features[w]=k
+			######################################write nltk results######################################
+			descriptors.append([date,features])
+			descriptor_writer.writerow([date,features])
 
-				print "helllo"
-				#####################################start nltk analysis######################################
-				sentences = nltk.sent_tokenize(sample)
-				tokenized_sentences = [nltk.word_tokenize(sentence) for sentence in sentences]
-				tagged_sentences = [nltk.pos_tag(sentence) for sentence in tokenized_sentences]
-				chunked_sentences = nltk.ne_chunk_sents(tagged_sentences, binary=True)
-				for tree in chunked_sentences:
-				    entity_names.extend(extract_entity_names(tree))
-				features = {}
-				for w in word_features:
-					k=w in entity_names
-					features[w]=k
-				######################################write nltk results######################################
-				print stock_dictx
-				if date in stock_dict:
-					descriptors.append([date,features,stock_dict[date]])
-					descriptor_writer.writerow([date,features,stock_dict[date]])
-			except:
-				print filename+" does not exist"
+#			print filename+" does not exist"
 
 
 for subdir in subdirs[1:]:
