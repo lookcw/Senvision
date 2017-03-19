@@ -141,8 +141,8 @@ for subdir in subdirs[1:]:
 
 
 
-files = os.walk(descriptor_dir).next()[2]
-predictions_file=open('../Results/NLTK_predictions.csv','w')
+files = os.walk(output_descriptors).next()[2]
+predictions_file=open('../Results/Future_Predictions','w')
 predictions_writer=csv.writer(predictions_file,delimiter=',')
 predictions_writer.writerow(["date","symbol","Pred"])
 #write identifier at start of results file
@@ -154,8 +154,10 @@ for file in files:
   print comp_name
 
   #get descriptor data from files
-  descriptor_file=open(descriptor_dir+"/"+file,'r')
-  descriptor_reader=csv.reader(descriptor_file,delimiter='\t')
+  training_descriptor_file=open(descriptor_dir+"/"+comp_name+"_descriptor.tsv",'r')
+  training_descriptor_reader=csv.reader(training_descriptor_file,delimiter='\t')
+  testing_descriptor_file=open(output_descriptors+"/"+file,'r')
+  testing_descriptor_reader=csv.reader(testing_descriptor_file,delimiter='\t')
   featuresets=list(descriptor_reader)
   print featuresets[0][0]
   for x in range(len(featuresets)):
@@ -169,18 +171,11 @@ for file in files:
     training_set=[]
     dates=[]
     #split the sets into training and testing sets
-    for n in (featuresets[:first_index]+featuresets[second_index:]):#adding training data and +/- for 
+    for n in (featuresets):#adding training data and +/- for 
       training_set.append([dict(n[1]),n[2]])
-    for n in (featuresets[first_index:second_index]):
-      testing_set.append([n[1],n[2]])
-      dates.append(n[0])
-
-
-
-    for n in testing_set:
-      blind_testing_set.append(n[0])
-      true.append(n[1])
-#train data
+    for line in testing_descriptor_reader:
+    	testing_set.append(dict(n[1],n[2]))
+	#train data
 
     classifier=nltk.NaiveBayesClassifier.train(training_set)
 
@@ -212,15 +207,14 @@ for file in files:
       RandomForest_classifier,
                                       SGDClassifier_classifier,
                                       LogisticRegression_classifier,BernoulliNB_classifier,MNB_classifier)
-    normal_acc.append((nltk.classify.accuracy(voted_classifier, testing_set))*(len(testing_set)/float(elements)))
     print len(testing_set)
-    plusminus=voted_classifier.classify_many(blind_testing_set)
+    plusminus=voted_classifier.classify_many(testing_set)
     predictions=[]
 
     for i in range(len(dates)):
       predictions.append([dates[i],comp_name,str(plusminus[i])])
       predictions_writer.writerow([dates[i],comp_name,str(plusminus[i])])
-      print [plusminus[i],true[i]]
+      print [date[i], comp_name, plusminus[i])
 
 
     #print predictions

@@ -156,7 +156,7 @@ def find_features_comp(subdir):
 					k=w in entity_names
 					features[w]=k
 				#write nltk results
-				print stock_dictx
+				print stock_dict
 				if date in stock_dict:
 					descriptors.append([date,features,stock_dict[date]])
 					descriptor_writer.writerow([date,features,stock_dict[date]])
