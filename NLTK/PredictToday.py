@@ -7,6 +7,16 @@ import csv
 import codecs
 import nltk
 
+from nltk.classify.scikitlearn import SklearnClassifier
+import pickle
+
+from sklearn.naive_bayes import MultinomialNB, BernoulliNB
+from sklearn.linear_model import LogisticRegression, SGDClassifier
+from sklearn.svm import SVC, LinearSVC, NuSVC
+from sklearn.ensemble import RandomForestClassifier
+
+from nltk.classify import ClassifierI
+from statistics import mode
 
 
 #returns array of entity names in a string
@@ -35,12 +45,13 @@ if ((data_type!="tweet" and data_type!="news")):
 if data_type=="tweet":
 	data_dir='../AllTweets/filteredTweets' #the tweet data
 	common_words_file="Tweet_Common_NER" #the tweet common words from the above 
-	output="Future_Predictions/Tweet_Predictions" #the folder the desciptors will be put into.
+	output_descriptors="Future_Predictions/Tweet_Predictions" #the folder the desciptors will be put into.
+	descriptor_dir="twitter_NER_descriptors"
 if data_type=="news":
 	data_dir='../News/ArticlesData'
 	common_words_file="News_Common_NER"
-	output="Future_Predictions/News_Predictions"
-
+	output_descriptors="Future_Predictions/News_Predictions"
+	descriptor_dir="news_NER_descriptors"
 
 ##########################Picking recent dates#########################
 now = datetime.datetime.now()
@@ -68,7 +79,7 @@ def find_features_comp(subdir):
 	stock_reader=csv.reader(stock_file,delimiter='\t') #reader for the stock data file
 	common_words=open(common_words_file+"/"+comp+"_top_"+str(num_common_words)+"_words.tsv",'r')
 	word_reader=csv.reader(common_words,delimiter='\t')#reader for common words
-	descriptor_file=open(output+"/"+comp+"_future_descriptor.tsv",'w')
+	descriptor_file=open(output_descriptors+"/"+comp+"_future_descriptor.tsv",'w')
 	descriptor_writer=csv.writer(descriptor_file,delimiter='\t')
 	word_features=next(word_reader) #the common words 
 
@@ -116,3 +127,100 @@ def find_features_comp(subdir):
 for subdir in subdirs[1:]:
 	find_features_comp(subdir)
 # Print all entity names
+
+
+
+
+
+#################################################################
+######################sklearn predictions########################
+#################################################################
+
+
+
+
+
+
+files = os.walk(descriptor_dir).next()[2]
+predictions_file=open('../Results/NLTK_predictions.csv','w')
+predictions_writer=csv.writer(predictions_file,delimiter=',')
+predictions_writer.writerow(["date","symbol","Pred"])
+#write identifier at start of results file
+
+
+#perform cross validation
+for file in files:
+  comp_name=file.split("_")[0]
+  print comp_name
+
+  #get descriptor data from files
+  descriptor_file=open(descriptor_dir+"/"+file,'r')
+  descriptor_reader=csv.reader(descriptor_file,delimiter='\t')
+  featuresets=list(descriptor_reader)
+  print featuresets[0][0]
+  for x in range(len(featuresets)):
+    featuresets[x][1]=ast.literal_eval(featuresets[x][1])
+    if featuresets[x][-1]=="=":
+      featuresets[x][-1]="-"
+  elements=len(featuresets)
+  normal_acc=[]
+
+    testing_set=[]
+    training_set=[]
+    dates=[]
+    #split the sets into training and testing sets
+    for n in (featuresets[:first_index]+featuresets[second_index:]):#adding training data and +/- for 
+      training_set.append([dict(n[1]),n[2]])
+    for n in (featuresets[first_index:second_index]):
+      testing_set.append([n[1],n[2]])
+      dates.append(n[0])
+
+
+
+    for n in testing_set:
+      blind_testing_set.append(n[0])
+      true.append(n[1])
+#train data
+
+    classifier=nltk.NaiveBayesClassifier.train(training_set)
+
+    MNB_classifier = SklearnClassifier(MultinomialNB())
+    MNB_classifier.train(training_set)
+
+    BernoulliNB_classifier = SklearnClassifier(BernoulliNB())
+    BernoulliNB_classifier.train(training_set)
+
+    RandomForest_classifier = SklearnClassifier(RandomForestClassifier())
+    RandomForest_classifier.train(training_set)
+
+    LogisticRegression_classifier = SklearnClassifier(LogisticRegression())
+    LogisticRegression_classifier.train(training_set)
+
+    SGDClassifier_classifier = SklearnClassifier(SGDClassifier())
+    SGDClassifier_classifier.train(training_set)
+
+    #SVC_classifier = SklearnClassifier(SVC())
+    #SVC_classifier.train(training_set)
+
+    LinearSVC_classifier = SklearnClassifier(LinearSVC())
+    LinearSVC_classifier.train(training_set)
+
+    # NuSVC_classifier = SklearnClassifier(NuSVC())
+    # NuSVC_classifier.train(training_set)
+
+    voted_classifier = VoteClassifier(
+      RandomForest_classifier,
+                                      SGDClassifier_classifier,
+                                      LogisticRegression_classifier,BernoulliNB_classifier,MNB_classifier)
+    normal_acc.append((nltk.classify.accuracy(voted_classifier, testing_set))*(len(testing_set)/float(elements)))
+    print len(testing_set)
+    plusminus=voted_classifier.classify_many(blind_testing_set)
+    predictions=[]
+
+    for i in range(len(dates)):
+      predictions.append([dates[i],comp_name,str(plusminus[i])])
+      predictions_writer.writerow([dates[i],comp_name,str(plusminus[i])])
+      print [plusminus[i],true[i]]
+
+
+    #print predictions
