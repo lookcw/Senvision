@@ -218,7 +218,7 @@ String tweetNoURL= removeUrl(stat);
 		Thread.sleep(1000*60*16);
 		 }
 		 
-		 }
+		 
 			current.add(current.DATE, 1);
 	 }
 	}

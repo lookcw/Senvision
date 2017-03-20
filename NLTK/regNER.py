@@ -137,10 +137,9 @@ def find_features_comp(subdir):
 			if(data_type=="news"):
 				date = file.split('_')[1]
 			filename=subdir + "/" + file
-			print dates_done
 			print "reached before if statement"
-			if date not in dates_done and com!="y":
-				print "in writing loop"
+			if date not in dates_done and com!="y" and date in stock_dict:
+				print "Running NLTK"
 				with codecs.open(filename, 'r','latin-1') as f:
 					sample = f.read()
 				#start nltk analysis
@@ -156,7 +155,6 @@ def find_features_comp(subdir):
 					k=w in entity_names
 					features[w]=k
 				#write nltk results
-				print stock_dict
 				if date in stock_dict:
 					descriptors.append([date,features,stock_dict[date]])
 					descriptor_writer.writerow([date,features,stock_dict[date]])
