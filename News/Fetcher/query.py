@@ -65,15 +65,11 @@ def iterateDays(startyear,startmonth,startdate,endyear,endmonth,enddate):#runs g
 	d1 = date(startyear, startmonth, startdate)
 	d2 = date(endyear, endmonth, enddate)
 
-	delta = d2 - d1
 	
 
+	delta = d2 - d1
+	
 	for i in range(delta.days + 1):
-		# currentDate= d1 + td(days=i)//////////////////////
-		# `		nextDate=d1+td(days=i+1)
-			for company in CompanyNames:
-
-	for i in range(delta.days):
 		currentDate= d1 + td(days=i)
 		nextDate=d1+td(days=i+1)
 		for company in CompanyNames:
