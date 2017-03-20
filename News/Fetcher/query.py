@@ -29,7 +29,7 @@ def getArticlesUrls(queryterm,startdate,enddate):
 		print "skipping "+ folder_name+ " "+str(startdate)
 		return
 	print "running " +queryterm+ " " +str(startdate)
-	er = EventRegistry()
+	er = EventRegistry(apiKey="f3472b56-284f-4c86-9312-c08eeafaa579")
 	q = QueryArticles(lang=["eng"],isDuplicateFilter="skipDuplicates",hasDuplicateFilter="skipHasDuplicates")
 	if not os.path.exists(companyfolderpath): #checks if folder exists. If not, make it
 		os.makedirs(companyfolderpath)
