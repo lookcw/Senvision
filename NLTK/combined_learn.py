@@ -50,12 +50,10 @@ for argument in sys.argv[1:]:
     identifier = sys.argv[n+1]  
   n+=1
 
-if data_type!="tweet" and data_type!="news" and data_type!="tweet_NER" and data_type!="news_NER":
+if data_type!="tweet" and data_type!="news":
   print "set -type to tweet or news or tweet_NER or news_NER_descriptors"
   sys.exit(0)
-if identifier == "default identifier":
-  print "error: put in identifier with -iden arg"
-  sys.exit(0)
+
 
 #setting types of data accepted to determine what folder to get descriptors from. 
 if data_type=="tweet":
