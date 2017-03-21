@@ -15,6 +15,10 @@ from sklearn.naive_bayes import MultinomialNB, BernoulliNB
 from sklearn.linear_model import LogisticRegression, SGDClassifier
 from sklearn.svm import SVC, LinearSVC, NuSVC
 from sklearn.ensemble import RandomForestClassifier
+#from sklearn.gaussian_process import GuassianProcessClassifier
+from sklearn.neighbors import KNeighborsClassifier
+
+
 import ast
 
 from nltk.classify import ClassifierI
@@ -120,6 +124,7 @@ def find_features_comp(subdir):
 				    entity_names.extend(extract_entity_names(tree))
 				features = {}
 				for w in word_features:
+					print w in entity_names
 					k=w in entity_names
 					features[w]=k
 				######################################write nltk results######################################
@@ -131,9 +136,9 @@ def find_features_comp(subdir):
 #			print filename+" does not exist"
 
 
-for subdir in subdirs[1:]:
-	find_features_comp(subdir)
-# Print all entity names
+# for subdir in subdirs[1:]:
+# 	find_features_comp(subdir)
+# # Print all entity names
 
 
 
@@ -162,7 +167,7 @@ class VoteClassifier(ClassifierI):
             votes.append(v)
 
         choice_votes = votes.count(mode(votes))
-        conf = choice_votes / len(votes)
+        conf = choice_votes / float(len(votes))
         return conf
 
 
@@ -209,10 +214,13 @@ for file in files:
 	MNB_classifier = SklearnClassifier(MultinomialNB())
 	MNB_classifier.train(training_set)
 
+	#Maxent_classifier = SklearnClassifier(MaxentClassifier())
+	#Maxent_classifier.train(training_set)
+
 	BernoulliNB_classifier = SklearnClassifier(BernoulliNB())
 	BernoulliNB_classifier.train(training_set)
 
-	RandomForest_classifier = SklearnClassifier(RandomForestClassifier())
+	RandomForest_classifier = SklearnClassifier(RandomForestClassifier(n_estimators=100))
 	RandomForest_classifier.train(training_set)
 
 	LogisticRegression_classifier = SklearnClassifier(LogisticRegression())
@@ -221,11 +229,14 @@ for file in files:
 	SGDClassifier_classifier = SklearnClassifier(SGDClassifier())
 	SGDClassifier_classifier.train(training_set)
 
-	#SVC_classifier = SklearnClassifier(SVC())
-	#SVC_classifier.train(training_set)
+	SVC_classifier = SklearnClassifier(SVC(kernel='rbf'))
+	SVC_classifier.train(training_set)
 
 	LinearSVC_classifier = SklearnClassifier(LinearSVC())
 	LinearSVC_classifier.train(training_set)
+
+	NearestNeighbors_classifier=SklearnClassifier(KNeighborsClassifier(n_neighbors=2, algorithm='ball_tree'))
+	NearestNeighbors_classifier.train(training_set)
 
 	# NuSVC_classifier = SklearnClassifier(NuSVC())
 	# NuSVC_classifier.train(training_set)
@@ -233,12 +244,16 @@ for file in files:
 	voted_classifier = VoteClassifier(
 	  RandomForest_classifier,
 	                                  SGDClassifier_classifier,
-	                                  LogisticRegression_classifier,BernoulliNB_classifier,MNB_classifier)
+	                                  LogisticRegression_classifier,BernoulliNB_classifier,MNB_classifier,NearestNeighbors_classifier,SVC_classifier)
 	print len(testing_set)
 	plusminus=voted_classifier.classify_many(testing_set)
-	#print voted_classifier.prob_classify_many(testing_set)
+	#print LinearSVC_classifier.prob_classify_many(testing_set)
+	#print SGDClassifier_classifier.prob_classify_many(testing_set)
+	#k=LogisticRegression_classifier.prob_classify_many(testing_set)
+	for k in testing_set:
+		print "confidence ",voted_classifier.confidence(k)
 	predictions=[]
-
+	#puts predictions in filecd 
 	for i in range(len(test_featuresets)):
 		date=parse(test_featuresets[i][0])
 		date+=td(days=3)
