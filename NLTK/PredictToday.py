@@ -136,9 +136,9 @@ def find_features_comp(subdir):
 #			print filename+" does not exist"
 
 
-# for subdir in subdirs[1:]:
-# 	find_features_comp(subdir)
-# # Print all entity names
+for subdir in subdirs[1:]:
+	find_features_comp(subdir)
+# Print all entity names
 
 
 
@@ -174,7 +174,7 @@ class VoteClassifier(ClassifierI):
 files = os.walk(output_descriptors).next()[2]
 predictions_file=open('../Results/Future_Predictions.csv','w')
 predictions_writer=csv.writer(predictions_file,delimiter=',')
-predictions_writer.writerow(["date","symbol","Pred"])
+predictions_writer.writerow(["date","symbol","Pred","Conf"])
 #write identifier at start of results file
 predictions=[]
 
