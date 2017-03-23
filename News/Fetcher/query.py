@@ -78,7 +78,7 @@ def iterateDays(startyear,startmonth,startdate,endyear,endmonth,enddate):#runs g
 				return
 			
 now= datetime.datetime.now()
-now-=td(days=2)
+now-=td(days=1)
 
 iterateDays(2016,12,15,now.year,now.month,now.day)
 		 

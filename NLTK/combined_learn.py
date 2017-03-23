@@ -8,6 +8,7 @@ from sklearn.naive_bayes import MultinomialNB, BernoulliNB
 from sklearn.linear_model import LogisticRegression, SGDClassifier
 from sklearn.svm import SVC, LinearSVC, NuSVC
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.neighbors import KNeighborsClassifier
 
 from nltk.classify import ClassifierI
 from statistics import mode
@@ -56,13 +57,9 @@ if data_type!="tweet" and data_type!="news":
 
 
 #setting types of data accepted to determine what folder to get descriptors from. 
-if data_type=="tweet":
-  data_dir="tweet_exist_descriptors"
 if data_type=="news":
-  data_dir="news_exist_descriptors"
-if data_type=="news_NER":
   data_dir="news_NER_descriptors"
-if data_type=="tweet_NER":
+if data_type=="tweet":
   data_dir="twitter_NER_descriptors"
 now = datetime.datetime.now()
 
@@ -125,7 +122,7 @@ for file in files:
     BernoulliNB_classifier = SklearnClassifier(BernoulliNB())
     BernoulliNB_classifier.train(training_set)
 
-    RandomForest_classifier = SklearnClassifier(RandomForestClassifier())
+    RandomForest_classifier = SklearnClassifier(RandomForestClassifier(n_estimators=100))
     RandomForest_classifier.train(training_set)
 
     LogisticRegression_classifier = SklearnClassifier(LogisticRegression())
@@ -134,8 +131,8 @@ for file in files:
     SGDClassifier_classifier = SklearnClassifier(SGDClassifier())
     SGDClassifier_classifier.train(training_set)
 
-    #SVC_classifier = SklearnClassifier(SVC())
-    #SVC_classifier.train(training_set)
+    SVC_classifier = SklearnClassifier(SVC(kernel='rbf'))
+    SVC_classifier.train(training_set)
 
     LinearSVC_classifier = SklearnClassifier(LinearSVC())
     LinearSVC_classifier.train(training_set)
@@ -143,10 +140,13 @@ for file in files:
     # NuSVC_classifier = SklearnClassifier(NuSVC())
     # NuSVC_classifier.train(training_set)
 
+    NearestNeighbors_classifier=SklearnClassifier(KNeighborsClassifier(n_neighbors=7, algorithm='ball_tree'))
+    NearestNeighbors_classifier.train(training_set)
+
     voted_classifier = VoteClassifier(
       RandomForest_classifier,
                                       SGDClassifier_classifier,
-                                      LogisticRegression_classifier,BernoulliNB_classifier,MNB_classifier)
+                                      LogisticRegression_classifier,BernoulliNB_classifier,MNB_classifier,NearestNeighbors_classifier,SVC_classifier)
     normal_acc.append((nltk.classify.accuracy(voted_classifier, testing_set))*(len(testing_set)/float(elements)))
     print len(testing_set)
     plusminus=voted_classifier.classify_many(blind_testing_set)
@@ -157,7 +157,7 @@ for file in files:
       predictions_writer.writerow([dates[i],comp_name,str(plusminus[i])])
       print [plusminus[i],true[i]]
 
-
+    
     #print predictions
     print("voted_classifier accuracy percent:", (nltk.classify.accuracy(voted_classifier, testing_set))*100)
   print sum(normal_acc)
