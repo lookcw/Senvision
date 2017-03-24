@@ -1,4 +1,8 @@
-#returns a file with the predictions of the next three days of the given companies whether they will go up or down.
+#makes a file with the predictions of the next three days of the given companies whether they will go up or down in the results folder
+#puts the descriptors of the future dates in the 
+
+
+
 import datetime
 from datetime import timedelta as td
 from dateutil.parser import parse
@@ -53,13 +57,13 @@ if data_type=="tweet":
 	common_words_file="Tweet_Common_NER" #the tweet common words from the above 
 	output_descriptors="Future_Predictions/Tweet_descriptors" #the folder the desciptors will be put into.
 	descriptor_dir="twitter_NER_descriptors"
-	predictions="Twitter_Future_Predictions.tsv"
+	predictions="Twitter_Future_Predictions.csv"
 if data_type=="news":
 	data_dir='../News/ArticlesData'
 	common_words_file="News_Common_NER"
 	output_descriptors="Future_Predictions/News_descriptors"
 	descriptor_dir="news_NER_descriptors"
-	predictions="Twitter_Future_Predictions.tsv"
+	predictions="News_Future_Predictions.csv"
 
 ##########################Picking recent dates#########################
 now = datetime.datetime.now()
@@ -104,6 +108,7 @@ def find_features_comp(subdir):
 	if (len(files) > 0): 
 		for date in recents:	
 			entity_names=[]
+			features = {}
 			file=""
 			if(data_type=="tweet"):
 				filename=os.path.join(subdir,comp+"_"+str(date.date())+"Tweets.txt")
@@ -114,7 +119,6 @@ def find_features_comp(subdir):
 						sample = f.read()
 				print "went into try "
 				print filename
-				print "helllo"
 				#####################################start nltk analysis######################################
 				sentences = nltk.sent_tokenize(sample)
 				tokenized_sentences = [nltk.word_tokenize(sentence) for sentence in sentences]
@@ -122,16 +126,14 @@ def find_features_comp(subdir):
 				chunked_sentences = nltk.ne_chunk_sents(tagged_sentences, binary=True)
 				for tree in chunked_sentences:
 				    entity_names.extend(extract_entity_names(tree))
-				features = {}
 				for w in word_features:
-					#print w in entity_names
 					k=w in entity_names
 					features[w]=k
 				######################################write nltk results######################################
-				descriptors.append([date.date(),features])
+				#descriptors.append([date.date(),features])
 				descriptor_writer.writerow([date.date(),features])
 			except:
-				filename+ " doesnt exist"
+				print filename+ " doesnt exist"
 
 #			print filename+" does not exist"
 
@@ -172,9 +174,9 @@ class VoteClassifier(ClassifierI):
 
 
 files = os.walk(output_descriptors).next()[2]
-predictions_file=open('../Results/Future_Predictions.csv','w')
+predictions_file=open('../Results/'+predictions,'w')
 predictions_writer=csv.writer(predictions_file,delimiter=',')
-predictions_writer.writerow(["date","symbol","Pred"])
+predictions_writer.writerow(["date","symbol","Pred","Conf"])
 #write identifier at start of results file
 predictions=[]
 
@@ -206,7 +208,7 @@ for file in files:
 	for n in (featuresets):#adding training data and +/- for 
 		training_set.append([dict(n[1]),n[2]])
 	for line in test_featuresets:
-		testing_set.append(n[1])
+		testing_set.append(ast.literal_eval(line[1]))
 	#train data
 
 	classifier=nltk.NaiveBayesClassifier.train(training_set)
@@ -251,18 +253,16 @@ for file in files:
 	#print SGDClassifier_classifier.prob_classify_many(testing_set)
 	#k=LogisticRegression_classifier.prob_classify_many(testing_set)
 	total_conf=0.0
-	for k in testing_set:
-		voted_classifier.confidence(k)
-
 	#puts predictions in filecd 
 	for i in range(len(test_featuresets)):
 		date=parse(test_featuresets[i][0])
 		date+=td(days=3)
 		#datetime.datetime.today().strftime('%Y-%m-%d')
 		#print date
-		predictions.append([date.strftime('%Y-%m-%d'),comp_name,str(plusminus[i]),voted_classifier.confidence(testing_set[i])])
+		conf =voted_classifier.confidence(testing_set[i])
+		predictions.append([date.strftime('%Y-%m-%d'),comp_name,str(plusminus[i]),conf])
 		
-		print [date.strftime('%Y-%m-%d'), comp_name, plusminus[i],voted_classifier.confidence(testing_set[i])]
+		print [date.strftime('%Y-%m-%d'), comp_name, plusminus[i],conf]
 
 	#print predictions
 
@@ -270,7 +270,7 @@ for file in files:
 ##########################################################
 #####Figuring out percentage to invest per comp###########
 ##########################################################
-
+print predictions
 totals={} #dictionary to store totals per day.
 percentages={}
 for i in predictions:
@@ -282,19 +282,14 @@ for i in predictions:
 for i in predictions:
 	if i[2]=="+":
 		if i[0] in percentages:
-			print i[0] in percentages
 			percentages[i[0]].append([i[0],i[1],i[2],i[-1]/totals[i[0]]])
 		else:
 			percentages[i[0]]=[[i[0],i[1],i[2],i[-1]/totals[i[0]]]]
 	else:
 		if i[0] in percentages:
-			print i[0] in percentages
 			percentages[i[0]].append([i[0],i[1],i[2],0])
 		else:
 			percentages[i[0]]=[[i[0],i[1],i[2],0]]
-
-print percentages
-
 
 for i in percentages:
 	for k in percentages[i]:
