@@ -27,6 +27,9 @@ import ast
 
 from nltk.classify import ClassifierI
 from statistics import mode
+reload(sys)
+sys.setdefaultencoding('utf-8')
+
 
 
 #returns array of entity names in a string
@@ -114,26 +117,26 @@ def find_features_comp(subdir):
 				filename=os.path.join(subdir,comp+"_"+str(date.date())+"Tweets.txt")
 			if(data_type=="news"):
 				filename=os.path.join(subdir,comp+"_"+str(date.date())+"_Articles.txt")
-
-			with codecs.open(filename, 'r','latin-1') as f:
-					sample = f.read()
-			print "went into try "
-			print filename
-			#####################################start nltk analysis######################################
-			sentences = nltk.sent_tokenize(sample)
-			tokenized_sentences = [nltk.word_tokenize(sentence) for sentence in sentences]
-			tagged_sentences = [nltk.pos_tag(sentence) for sentence in tokenized_sentences]
-			chunked_sentences = nltk.ne_chunk_sents(tagged_sentences, binary=True)
-			for tree in chunked_sentences:
-			    entity_names.extend(extract_entity_names(tree))
-			for w in word_features:
-				k=w in entity_names
-				features[w]=k
-			######################################write nltk results######################################
-			#descriptors.append([date.date(),features])
-			print "cry"
-			descriptor_writer.writerow([date.date(),features])
-			print filename+ " doesnt exist"
+			try:
+				with codecs.open(filename, 'r','latin-1') as f:
+						sample = f.read()
+				print "went into try "
+				print filename
+				#####################################start nltk analysis######################################
+				sentences = nltk.sent_tokenize(sample)
+				tokenized_sentences = [nltk.word_tokenize(sentence) for sentence in sentences]
+				tagged_sentences = [nltk.pos_tag(sentence) for sentence in tokenized_sentences]
+				chunked_sentences = nltk.ne_chunk_sents(tagged_sentences, binary=True)
+				for tree in chunked_sentences:
+				    entity_names.extend(extract_entity_names(tree))
+				for w in word_features:
+					k=w in entity_names
+					features[w]=k
+				######################################write nltk results######################################
+				#descriptors.append([date.date(),features])
+				descriptor_writer.writerow([date.date(),features])
+			except:
+				print filename+ " doesnt exist"
 
 #			print filename+" does not exist"
 
