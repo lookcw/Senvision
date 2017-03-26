@@ -138,9 +138,9 @@ def find_features_comp(subdir):
 #			print filename+" does not exist"
 
 
-# for subdir in subdirs[1:]:
-# 	find_features_comp(subdir)
-# # Print all entity names
+for subdir in subdirs[1:]:
+	find_features_comp(subdir)
+# Print all entity names
 
 
 
