@@ -26,14 +26,14 @@ for filename in os.listdir("stock_data/auto_pulled_data"):
 
 	#strip down to first few dates
 	for row in arr:
-		if float(row[1]) > float(row[4]):
+		if float(row[1]) > float(row[7]):
 			row.append('-')
-		elif float(row[1]) < float(row[4]):
+		elif float(row[1]) < float(row[7]):
 			row.append('+')
-		elif float(row[1]) == float(row[4]):
+		elif float(row[1]) == float(row[7]):
 			row.append('=')
 
-		pcent_change = ( (float(row[4]) - float(row[1])) / float(row[1]) ) * 100
+		pcent_change = ( (float(row[7]) - float(row[1])) / float(row[1]) ) * 100
 		row.append(pcent_change)
 
 	outf = open('stock_data/cleaned_data/' + str(filename).replace(".csv","") + "_cleaned.csv", "w")
