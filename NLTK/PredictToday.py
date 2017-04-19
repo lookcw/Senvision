@@ -1,16 +1,13 @@
 #makes a file with the predictions of the next three days of the given companies whether they will go up or down in the results folder
 #puts the descriptors of the future dates in the 
-
-
-
 import datetime
 from datetime import timedelta as td
 from dateutil.parser import parse
 import os
 import sys
-import csv
 import codecs
 import nltk
+import csv
 
 from nltk.classify.scikitlearn import SklearnClassifier
 import pickle
@@ -278,18 +275,18 @@ totals={} #dictionary to store totals per day.
 percentages={}
 for i in predictions:
 	if i[2]=="+":
-		if i[0] in totals:
+		if i[0] in totals and i[0] !="Google":
 			totals[i[0]]+=i[-1]
-		else:
+		elif i[0]!="Google	" :
 			totals[i[0]]=i[-1]
 for i in predictions:
 	if i[2]=="+":
-		if i[0] in percentages:
+		if i[0] in percentages and i[0] != "Google":
 			percentages[i[0]].append([i[0],i[1],i[2],i[-1]/totals[i[0]]])
-		else:
+		elif i[0]!="Google":
 			percentages[i[0]]=[[i[0],i[1],i[2],i[-1]/totals[i[0]]]]
 	else:
-		if i[0] in percentages:
+		if i[0] in percentages and i[0] != "Google":
 			percentages[i[0]].append([i[0],i[1],i[2],0])
 		else:
 			percentages[i[0]]=[[i[0],i[1],i[2],0]]

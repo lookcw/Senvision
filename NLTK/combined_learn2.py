@@ -17,6 +17,9 @@ import numpy as np
 import sys
 import os
 import datetime
+from random import shuffle
+
+
 
 class VoteClassifier(ClassifierI):
     def __init__(self, *classifiers):
@@ -75,6 +78,7 @@ for file in files:
   descriptor_file=open(data_dir+"/"+file,'r')
   descriptor_reader=csv.reader(descriptor_file,delimiter='\t')
   featuresets=list(descriptor_reader)
+  shuffle(featuresets)
   for x in range(len(featuresets)):
     featuresets[x][0]=ast.literal_eval(featuresets[x][0])
     if featuresets[x][1]=="=":
