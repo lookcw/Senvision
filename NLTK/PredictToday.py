@@ -277,7 +277,7 @@ for i in predictions:
 	if i[2]=="+":
 		if i[0] in totals and i[0] !="Google":
 			totals[i[0]]+=i[-1]
-		elif i[0]!="Google	" :
+		elif i[0]!="Google" :
 			totals[i[0]]=i[-1]
 for i in predictions:
 	if i[2]=="+":
@@ -288,7 +288,7 @@ for i in predictions:
 	else:
 		if i[0] in percentages and i[0] != "Google":
 			percentages[i[0]].append([i[0],i[1],i[2],0])
-		else:
+		elif i[0]!="Google":
 			percentages[i[0]]=[[i[0],i[1],i[2],0]]
 
 for i in percentages:
