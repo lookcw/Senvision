@@ -146,6 +146,6 @@ public class StockFetcher {
             e.printStackTrace();
         }
 		
-		addTwitterDatetoStockFolder("stock_data/cleaned_data", "stock_data/tweet_date_data", 3);
+		addTwitterDatetoStockFolder("stock_data/cleaned_data", "stock_data/tweet_date_data", 2);
 	}
 }

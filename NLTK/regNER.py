@@ -55,7 +55,7 @@ subdirs = [x[0] for x in os.walk(data_dir)]
 entity_names=[]
 #calculate common words
 if(com=='y'):
-	for subdir in subdirs:#actions per company
+	for subdir in subdirs[1:]:#actions per company
 		print subdir
 		entity_names = []
 		files = os.walk(subdir).next()[2]#extracts file names and puts them in an array
@@ -66,8 +66,10 @@ if(com=='y'):
 				with codecs.open(filename, 'r','latin-1') as f:
 					sample = f.read()
 				sentences = nltk.sent_tokenize(sample)
+				print "past sentences"
 				tokenized_sentences = [nltk.word_tokenize(sentence) for sentence in sentences]
 				tagged_sentences = [nltk.pos_tag(sentence) for sentence in tokenized_sentences]
+				print "whyy"
 				chunked_sentences = nltk.ne_chunk_sents(tagged_sentences, binary=True)
 				for tree in chunked_sentences:
 					entity_names.extend(extract_entity_names(tree))
@@ -150,6 +152,7 @@ def find_features_comp(subdir):
 
 
 for subdir in subdirs[1:]:
+	print subdir
 	find_features_comp(subdir)
 # Print all entity names
 print entity_names

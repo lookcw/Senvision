@@ -230,9 +230,9 @@ String tweetNoURL= removeUrl(stat);
 	 Calendar c = Calendar.getInstance();
 	 Calendar d = Calendar.getInstance();
 		c.add(Calendar.DATE,4);
-		c.add(Calendar.MONTH,1);
+	//	c.add(Calendar.MONTH,);
 		d.add(Calendar.DATE,-8);
-		d.add(Calendar.MONTH,1);
+	//	d.add(Calendar.MONTH,0);
 //	System.out.println(removeUrl("asdf asdfa wefadf ghttps://mail.google.com/mail/u/0/#inbox/1579b537485463c8 https://mail.google.com/mail/u/0/#inbox/1579b537485463c8)"));
 	l.runTweetCollection(d.get(Calendar.YEAR)+"-"+d.get(Calendar.MONTH)+"-"+d.get(Calendar.DATE), c.get(Calendar.YEAR)+"-"+c.get(Calendar.MONTH)+"-"+c.get(Calendar.DATE));
 	   }

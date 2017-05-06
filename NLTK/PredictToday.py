@@ -67,8 +67,8 @@ if data_type=="news":
 
 ##########################Picking recent dates#########################
 now = datetime.datetime.now()
-day2before=now-td(days=2)
-day3before=now-td(days=3)
+day2before=now-td(days=1)
+day3before=now-td(days=2)
 
 
 
@@ -288,7 +288,7 @@ for i in predictions:
 	else:
 		if i[0] in percentages and i[0] != "Google":
 			percentages[i[0]].append([i[0],i[1],i[2],0])
-		elif i[0]!="Google":
+		elif i[0]!="Google"	:
 			percentages[i[0]]=[[i[0],i[1],i[2],0]]
 
 for i in percentages:
