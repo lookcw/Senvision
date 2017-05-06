@@ -46,9 +46,9 @@ if data_type=="tweet":
 if data_type=="news":
 	data_dir='../News/ArticlesData'
 	common_words_file="News_Common_NER"
-	output="news_NER_descriptors"
+	output="news_NER_descriptors_2_days"
 
-#find x most common NER
+#find x most common NERx
 num_common_words=1000                                                                                                                  
 subdirs = [x[0] for x in os.walk(data_dir)]
 
