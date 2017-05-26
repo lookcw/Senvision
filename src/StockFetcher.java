@@ -137,7 +137,7 @@ public class StockFetcher {
         {
             PythonInterpreter.initialize(System.getProperties(), System.getProperties(), new String[0]);
             PythonInterpreter interp = new PythonInterpreter();
-            interp.execfile("stock_data/stocktable4java.py");
+            interp.execfile("../stock_data/stocktable4java.py");
             interp.close();
         }
         catch(Exception e)
@@ -146,6 +146,6 @@ public class StockFetcher {
             e.printStackTrace();
         }
 		
-		addTwitterDatetoStockFolder("stock_data/cleaned_data", "stock_data/tweet_date_data", 2);
+		addTwitterDatetoStockFolder("stock_data/cleaned_data", "stock_data/tweet_date_data", 3);
 	}
 }

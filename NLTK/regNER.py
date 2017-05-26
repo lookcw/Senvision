@@ -56,7 +56,7 @@ entity_names=[]
 #calculate common words
 if(com=='y'):
 	for subdir in subdirs[1:]:#actions per company
-		print subdir
+		print "calculating common NER",subdir
 		entity_names = []
 		files = os.walk(subdir).next()[2]#extracts file names and puts them in an array
 		if (len(files) > 0):
@@ -116,11 +116,11 @@ def find_features_comp(subdir):
 	for line in stock_lines:
 		stock_dict[line[1]]=line[-2]
 
-
+	print stock_dict
 	#create descriptors and add value to end
 	if (len(files) > 0): 
 		for file in files:
-			print file
+			#print file
 			entity_names=[]
 			filec = file.replace('+', '\+')
 			if(data_type=="tweet"):
@@ -128,7 +128,7 @@ def find_features_comp(subdir):
 			if(data_type=="news"):
 				date = file.split('_')[1]
 			filename=subdir + "/" + file
-			print "reached before if statement"
+			#print "reached before if statement"
 			if date not in dates_done and com!="y" and date in stock_dict:
 				print "Running NLTK"
 				with codecs.open(filename, 'r','latin-1') as f:
