@@ -68,7 +68,7 @@ public class StockFetcher {
 			// url="http://ichart.finance.yahoo.com/table.csv?s=AAPL&d=9&e=12&f=2013&g=d&a=8&b=7&c=1984&ignore=.csv";
 			URL website;
 			website = new URL(url);
-			File f = new File("../stock_data/auto_pulled_data/" + tickerToName(stockSymbol) + ".csv");
+			File f = new File("stock_data/auto_pulled_data/" + tickerToName(stockSymbol) + ".csv");
 			FileUtils.copyURLToFile(website, f);
 			
 		}
@@ -137,7 +137,7 @@ public class StockFetcher {
         {
             PythonInterpreter.initialize(System.getProperties(), System.getProperties(), new String[0]);
             PythonInterpreter interp = new PythonInterpreter();
-            interp.execfile("../stock_data/stocktable4java.py");
+            interp.execfile("stock_data/stocktable4java.py");
             interp.close();
         }
         catch(Exception e)
@@ -146,6 +146,6 @@ public class StockFetcher {
             e.printStackTrace();
         }
 		
-		addTwitterDatetoStockFolder("stock_data/cleaned_data", "stock_data/tweet_date_data", 3);
+		addTwitterDatetoStockFolder("stock_data/cleaned_data", "stock_data/tweet_date_data", 2);
 	}
 }
