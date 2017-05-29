@@ -63,12 +63,13 @@ public class StockFetcher {
 			String url = "http://ichart.finance.yahoo.com/table.csv?" + "s=" + stockSymbol.trim() + "&d=" + c.get(Calendar.MONTH)
 					+ "&e=" + c.get(Calendar.DATE) + "&f=" + c.get(Calendar.YEAR) + "&g=d&a=" + startDateMonth + "&b=" + startDateDay
 					+ "&c=" + startDateYear + "&ignore=.csv";
+			System.out.println(url);
 
 			// String
 			// url="http://ichart.finance.yahoo.com/table.csv?s=AAPL&d=9&e=12&f=2013&g=d&a=8&b=7&c=1984&ignore=.csv";
 			URL website;
 			website = new URL(url);
-			File f = new File("stock_data/auto_pulled_data/" + tickerToName(stockSymbol) + ".csv");
+			File f = new File("stock_data/cleaned_data/" + tickerToName(stockSymbol) + ".csv");
 			FileUtils.copyURLToFile(website, f);
 			
 		}
@@ -101,7 +102,7 @@ public class StockFetcher {
 		writeLine[1]="Tweet Prediction Date";;
 		for(int i=1;i<nextLine.length-1;i++){
 			writeLine[i+1]=nextLine[i];
-		}
+		}//adding new label of Tweet Prediction date
 		cW.writeNext(writeLine);
 		while((nextLine=cR.readNext())!=null){
 			writeLine = new String[nextLine.length];
