@@ -5,9 +5,9 @@ import codecs
 #noticed: closing price != opening price next day
 #companies = ['apple', 'boeing', 'google', 'intel', 'merck', 'jpm', 'walmart', 'pandg']
 
-for filename in os.listdir("./auto_pulled_data"):
+for filename in os.listdir("./alldata"):
 	arr = []
-	f = open('./auto_pulled_data/' + str(filename), "r")
+	f = open('./alldata/' + str(filename), "r")
 	try:
 		reader = csv.reader(f, delimiter=",")
 		for row in reader:
@@ -24,16 +24,18 @@ for filename in os.listdir("./auto_pulled_data"):
 	headings.append("% change")
 	arr.remove(arr[0])
 
+
 	#strip down to first few dates
 	for row in arr:
-		if float(row[7]) > float(row[4]):
+		print(len(row), filename)
+		if float(row[11]) > float(row[8]):
 			row.append('-')
-		elif float(row[7]) < float(row[4]):
+		elif float(row[11]) < float(row[8]):
 			row.append('+')
-		elif float(row[7]) == float(row[4]):
+		elif float(row[11]) == float(row[8]):
 			row.append('-')
 
-		pcent_change = ( (float(row[4]) - float(row[1])) / float(row[1]) ) * 100
+		pcent_change = ( (float(row[8]) - float(row[1])) / float(row[1]) ) * 100
 		row.append(pcent_change)
 
 	outf = open('./cleaned_data/' + str(filename).replace(".csv","") + "_cleaned.csv", "w")
