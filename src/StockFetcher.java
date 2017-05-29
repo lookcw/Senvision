@@ -131,21 +131,7 @@ public class StockFetcher {
 		System.out.println(c.getTime());
 		// c.add(Calendar.DATE, numDay);
 		c.add(Calendar.DATE, -1);
-		
-		fetchStock(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE), 2016, 7, 5, "");
-		 
-        try
-        {
-            PythonInterpreter.initialize(System.getProperties(), System.getProperties(), new String[0]);
-            PythonInterpreter interp = new PythonInterpreter();
-            interp.execfile("stock_data/stocktable4java.py");
-            interp.close();
-        }
-        catch(Exception e)
-        {
-            System.out.println(e.toString());
-            e.printStackTrace();
-        }
+
 		
 		addTwitterDatetoStockFolder("stock_data/cleaned_data", "stock_data/tweet_date_data", 2);
 	}
