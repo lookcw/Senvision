@@ -137,7 +137,3 @@ for file in files:
 # print("Classification:", voted_classifier.classify(testing_set[3][0]), "Confidence %:",voted_classifier.confidence(testing_set[3][0])*100)
 # print("Classification:", voted_classifier.classify(testing_set[4][0]), "Confidence %:",voted_classifier.confidence(testing_set[4][0])*100)
 # print("Classification:", voted_classifier.classify(testing_set[5][0]), "Confidence %:",voted_classifier.confidence(testing_set[5][0])*100)
-with codecs.open("../../../Downloads/positive.txt","r",encoding='latin-1') as f:
-        short_pos = f.read()
-with codecs.open("../../../Downloads/negative.txt","r",encoding='latin-1') as f:
-        short_neg = f.read()
