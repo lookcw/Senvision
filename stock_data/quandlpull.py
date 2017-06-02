@@ -17,6 +17,6 @@ for i in range(len(TickerNames)):
 
 #Pulls data from Quandl
 for i in TickerNames:
-	data_intel = quandl.get("WIKI/"+str(i),trim_start = "2016-07-01", trim_end = "2017-5-30", authtoken=auth_tok)
+	data_intel = quandl.get("WIKI/"+str(i),trim_start = "2016-07-01", trim_end = time.strftime("%d-%m-%Y"), authtoken=auth_tok)
 	f = open("alldata/" + ticker2Comp[i] + ".csv", "w")
 	data_intel.to_csv("alldata/"+str(ticker2Comp[i])+'.csv', header=True, index=True, sep=',')
