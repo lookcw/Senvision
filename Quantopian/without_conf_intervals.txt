@@ -1,0 +1,57 @@
+def preview(df):
+    log.info(df.head())
+    return df
+
+def initialize(context):
+    context.investment_size = (context.portfolio.cash)
+    context.stop_loss_pct = 0.995
+    set_symbol_lookup_date('2016-08-05')
+    schedule_function(myfunc, date_rules.every_day(), time_rules.market_open(minutes=1))  
+    fetch_csv('https://docs.google.com/spreadsheets/d/1l6N120lBDR3GDij9nOF0GyJ7tthOkknC9VIrAVelk9o/pub?output=csv', date_column='date', date_format ='%y-%m-%d')
+
+    context.security_list = symbols('AAPL', 'GOOG', 'BA', 'MRK', 'WMT', 'INTC', 'PG')
+    
+
+# Will be called on every trade event for the securities you specify. 
+def myfunc(context, data):
+    
+    cash = context.portfolio.cash
+    
+    try:
+
+        numplus=0
+        prediction = ''
+        for s in context.security_list:
+
+            prediction=data.current(s, 'Pred')
+            if prediction=="+":
+                numplus+=1
+            
+            #print(numplus)
+        
+        for s in context.security_list:
+            
+            sentiment = data.current(s, 'Pred')
+            #current_position = context.portfolio.positions['amount']
+            current_position = context.portfolio.positions[s].amount
+            current_price = data.current(s, 'price')
+            
+            #print('current pos:', current_position, 'symbol: ', s.symbol, 'cash amount: ', cash)
+
+            if (sentiment == '-') and (current_position > 0):
+                    #print('selling...' + str(s))
+                order_target(s,0)
+            
+            elif (sentiment == '+' ) and (current_position == 0) and numplus != 0:
+                if cash/float(numplus) > current_price:
+                    print('cash: ', cash, 'investment size: ', cash/float(numplus))
+                    #print('buying...' + str(s))
+                order_value(s, cash/float(numplus), style=StopOrder(current_price * context.stop_loss_pct))
+                cash -= cash/float(numplus)
+
+            
+            #order_value(s, context.investment_size/float(numplus), style=StopOrder(current_price * context.stop_loss_pct))
+            
+            
+    except Exception as e:
+        print(str(e))
