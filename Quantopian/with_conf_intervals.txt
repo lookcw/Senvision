@@ -1,0 +1,76 @@
+def preview(df):
+    log.info(df.head())
+    return df
+
+def initialize(context):
+    # set investment size to total cash
+    # not really necessary b/c investment size won't be a fixed value
+    context.investment_size = context.portfolio.cash
+    # have it stop once it reaches a certain loss  
+    # this is called a trailing stop loss, bc it is a %
+    context.stop_loss_pct = .9
+    set_symbol_lookup_date('2016-08-05')
+    # have it trade once per day, not once every minute
+    schedule_function(myfunc, date_rules.every_day(), time_rules.market_open(minutes=5)) 
+    set_slippage(slippage.FixedSlippage(spread=0.1))  
+    fetch_csv("https://docs.google.com/spreadsheets/d/1oTwUIqXWqRlOJUWszikMNd8IYlnbMQ2nGtUYlQrEwWw/pub?gid=282201860&single=true&output=csv", date_column = 'date', date_format = '%y-%m-%d') # confidence intervals, real data
+    # load the csv data containing the predictions - this one is Twitter-based predictions
+     #fetch_csv('https://docs.google.com/spreadsheets/d/1GvpOl1SOGMcbftSxxOffuYz_tzE28s3Bp7gU7rU6eo8/pub?output=csv', date_column = 'date', date_format = '%y-%m-%d') # mutual fund
+    #fetch_csv('https://docs.google.com/spreadsheets/d/1v7ZwEi3tAFvrhqP2lqGwhlW3SO3qo2temTLyNWru-so/pub?output=csv', date_column = 'date', date_format = '%y-%m-%d') - shuffled +/-
+    #fetch_csv('https://docs.google.com/spreadsheets/d/1l6N120lBDR3GDij9nOF0GyJ7tthOkknC9VIrAVelk9o/pub?output=csv', date_column='date', date_format ='%y-%m-%d') - real data
+
+    # initialize the list of stocks we are trading
+    context.security_list = symbols('AAPL', 'GOOG', 'BA', 'MRK', 'WMT', 'INTC', 'PG', 'JPM')
+    
+
+# Will be called on every trade event for the securities you specify. 
+def myfunc(context, data):
+    
+    try:
+        
+        print(context.portfolio.portfolio_value)
+
+        for s in context.security_list:
+            sentiment = data.current(s, 'Pred')
+            conf_interval = data.current(s, 'Conf')
+            current_position = context.portfolio.positions[s].amount
+            print s," ",data.current(s,'price')
+            current_price = data.current(s, 'price')
+            if (sentiment == '-') and (current_position > 0):
+                #print('selling...' + str(s))
+                order_target(s,0,style=StopOrder(current_price * 0.000))
+        
+        #numplus=0
+        #for s in context.security_list:
+        #    prediction = ''
+        #    prediction=data.current(s, 'Pred')
+        #    if prediction=="+":
+        #        numplus+=1
+        #    #print(numplus)
+            
+        for s in context.security_list:
+            sentiment = data.current(s, 'Pred')
+            current_price = data.current(s, 'price')
+            conf_interval = data.current(s, 'Conf')
+            current_position = context.portfolio.positions[s].amount
+            current_value = current_position * current_price
+            if current_value > context.portfolio.portfolio_value * conf_interval:
+                if (sentiment == '+' ) and conf_interval != 0:
+                    #order_target_value(s, context.portfolio.portfolio_value*float(conf_interval))
+                    order_target_value(s, context.portfolio.portfolio_value*float(conf_interval), style=StopOrder(current_price * context.stop_loss_pct))
+                    
+        for s in context.security_list:
+            sentiment = data.current(s, 'Pred')
+            current_price = data.current(s, 'price')
+            current_position = context.portfolio.positions[s].amount
+            current_value = current_position * current_price
+            if current_value < context.portfolio.portfolio_value*conf_interval:
+                if (sentiment == '+' ) and conf_interval != 0:
+                    #order_target_value(s, context.portfolio.portfolio_value*float(conf_interval))
+                    order_target_value(s, context.portfolio.portfolio_value*float(conf_interval), style=StopOrder(current_price * context.stop_loss_pct))
+      
+            #order_value(s, context.investment_size/float(numplus), style=StopOrder(current_price * context.stop_loss_pct))
+            
+            
+    except Exception as e:
+        print(str(e))
