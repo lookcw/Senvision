@@ -29,7 +29,8 @@ def getArticlesUrls(queryterm,startdate,enddate):
 		print "skipping "+ folder_name+ " "+str(startdate)
 		return
 	print "running " +queryterm+ " " +str(startdate)
-	er = EventRegistry(apiKey="f3472b56-284f-4c86-9312-c08eeafaa579")
+	er = EventRegistry()
+	#apiKey="f3472b56-284f-4c86-9312-c08eeafaa579"
 	q = QueryArticles(lang=["eng"],isDuplicateFilter="skipDuplicates",hasDuplicateFilter="skipHasDuplicates")
 	if not os.path.exists(companyfolderpath): #checks if folder exists. If not, make it
 		os.makedirs(companyfolderpath)
@@ -80,6 +81,6 @@ def iterateDays(startyear,startmonth,startdate,endyear,endmonth,enddate):#runs g
 now= datetime.datetime.now()
 now-=td(days=1)
 
-iterateDays(2016,12,15,now.year,now.month,now.day)
+iterateDays(2017,5,26,now.year,now.month,now.day)
 		 
 #getArticlesUrls("Apple",date(2016,9,15),date(2016,9,16))	
