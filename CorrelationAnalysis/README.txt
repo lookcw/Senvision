@@ -3,8 +3,4 @@
 *The synonyms directory contains synonyms of those "good" and "bad" words, which can be used if you want to increase power.
 *tweetfrequencycount.py counts the frequencies of each word in our collection of Tweets and outputs it into the tweetfrequencies directory. Respectively for newsfrequencycount.py.
 *Then tweetcorrelation.py and newscorrelation.py perform a point biserial correlation between the frequency of a given word and whether the stock movement goes up or down for a given company. It selects words that have at least a (+/-) 30% correlation, and these words go into the directory "(tweet/news)finalwords".
-<<<<<<< HEAD
 *tweettestmodelclusters4.py and newstestmodelclusters4.py are then used to generate descriptors based off of the words selected in the previous step. These files are then ready to be trained on.
-=======
-*tweettestmodelclusters4.py and newstestmodelclusters4.py are then used to generate descriptors based off of the words selected in the previous step. These files are then ready to be trained on.
->>>>>>> 94118ad251966d11e44a8a4e31cf1fa122b7a859
