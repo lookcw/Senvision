@@ -1,0 +1,1 @@
+*contains a list of each of positive sentiment words and negative sentiment words
