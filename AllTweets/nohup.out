@@ -1,0 +1,14 @@
+  File "getTweets.py", line 25
+    os.makedirs("stocktwits/"+i)
+     ^
+IndentationError: expected an indented block
+  File "getTweets.py", line 25
+    os.makedirs("stocktwits/"+i)
+     ^
+IndentationError: expected an indented block
+2017-06-29
+$AAPL change my mind, end of the month down tomorrow.
+Traceback (most recent call last):
+  File "getTweets.py", line 27, in <module>
+    print key["body"]
+UnicodeEncodeError: 'ascii' codec can't encode character u'\U0001f612' in position 10: ordinal not in range(128)

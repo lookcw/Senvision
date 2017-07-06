@@ -1,4 +1,3 @@
-import simplejson
 import json
 import urllib  # the lib that handles the url stuff
 import os
@@ -22,7 +21,7 @@ while (time_run.date()==now.date()):
 		now = datetime.datetime.now()
 		print now.date()
 		if not os.path.exists("stocktwits/"+i):
-    		os.makedirs("stocktwits/"+i)
+	    		os.makedirs("stocktwits/"+i)
 		tweetfile=open("stocktwits/"+i+"/"+str(now.date())+"_"+i+"_"+"twits.txt",'a')
 		for key in data["messages"]:
 			print key["body"]
