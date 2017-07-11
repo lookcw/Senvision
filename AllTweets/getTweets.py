@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-=======
 import tweepy
->>>>>>> 67d21c72b0817eedfa00caab54e853371f41c4ca
 import json
 import datetime
 import os
@@ -27,17 +24,6 @@ while (time_run.date()==now.date()):
 		read_tweetfile=open("stocktweets/"+i+"/"+str(now.date())+"_"+i+"_"+"tweets1.txt",'rb')
 		now = datetime.datetime.now()
 		print now.date()
-<<<<<<< HEAD
-		if not os.path.exists("stocktwits/"+i):
-	    		os.makedirs("stocktwits/"+i)
-		tweetfile=open("stocktwits/"+i+"/"+str(now.date())+"_"+i+"_"+"twits.txt",'a')
-		for key in data["messages"]:
-			print key["body"]
-			string=key["body"].encode('utf-8').strip()
-			tweetfile.write(string+"\n")
-	time.sleep(60*6)
-=======
-
 		all_tweets = read_tweetfile.readlines()
 		for i in all_tweets:
 			print i
@@ -62,4 +48,3 @@ while (time_run.date()==now.date()):
 		read_tweetfile.close()
 		tweetfile.close()
 	time.sleep(60*15)
->>>>>>> 67d21c72b0817eedfa00caab54e853371f41c4ca

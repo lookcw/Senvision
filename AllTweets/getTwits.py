@@ -1,4 +1,3 @@
-import simplejson
 import json
 import urllib  # the lib that handles the url stuff
 import os
