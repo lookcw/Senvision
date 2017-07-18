@@ -24,7 +24,6 @@ while (time_run.date()==now.date()):
 		read_tweetfile=open("stocktweets/"+i+"/"+str(now.date())+"_"+i+"_"+"tweets1.txt",'rb')
 		now = datetime.datetime.now()
 		print now.date()
-
 		all_tweets = read_tweetfile.readlines()
 		for i in all_tweets:
 			print i
