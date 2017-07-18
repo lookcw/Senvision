@@ -22,25 +22,27 @@ while (time_run.date()==now.date()):
 		print now.date()
 		if not os.path.exists("stocktwits/"+i):
 			os.makedirs("stocktwits/"+i)
-		tweetfile=open("stocktwits/"+i+"/"+str(now.date())+"_"+i+"_"+"twits1.txt",'a')
-		read_tweetfile=open("stocktwits/"+i+"/"+str(now.date())+"_"+i+"_"+"twits1.txt",'rb')
+		read_tweetfile=open("stocktwits/"+i+"/"+str(time_run.date())+"_"+i+"_"+"twits.txt",'r')
 		all_tweets = read_tweetfile.readlines()
+		read_tweetfile.close()
+		tweetfile=open("stocktwits/"+i+"/"+str(now.date())+"_"+i+"_"+"twits.txt",'a')
+		for i in range(len(all_tweets)):
+			all_tweets[i]=all_tweets[i].strip()
 		print "number of tweets alrady in file:_________________________________________" ,len(all_tweets)
 		try:
 			for key in data["messages"]:
 				#print key["body"]
-				tweet=key["body"].encode('utf-8').strip()+"\n"
+				tweet=key["body"].encode('utf-8').strip()
 				#print all_tweets
 				if tweet not in all_tweets:
 					print tweet
-					tweetfile.write(tweet)
+					tweetfile.write(tweet+"\r\n")
 			print "done streaming"
-		except KeyError:
+		except:
 			print "key error"
 			time.sleep(60*50)
-		read_tweetfile.close()
 		tweetfile.close()
 
-	time.sleep(60*10)
+	time.sleep(60*15)
 
 	

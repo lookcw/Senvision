@@ -17,34 +17,38 @@ now = datetime.datetime.now()
 while (time_run.date()==now.date()):
 	for i in company_tickers:
 		query = "$"+i
-		max_tweets = 100
+		max_tweets = 70
 		if not os.path.exists("stocktweets/"+i):
 			os.makedirs("stocktweets/"+i)
-		tweetfile=open("stocktweets/"+i+"/"+str(now.date())+"_"+i+"_"+"tweets1.txt",'a')
+		if not os.path.exists(
 		read_tweetfile=open("stocktweets/"+i+"/"+str(now.date())+"_"+i+"_"+"tweets1.txt",'rb')
 		now = datetime.datetime.now()
 		print now.date()
 		all_tweets = read_tweetfile.readlines()
+		for i in range(len(all_tweets)):
+			all_tweets[i]=all_tweets[i].strip()
 		for i in all_tweets:
 			print i
+		read_tweetfile.close()
+		tweetfile=open("stocktweets/"+i+"/"+str(now.date())+"_"+i+"_"+"tweets1.txt",'a')
+
 		print "==============================end of all Tweets=========================="
 		#print all_tweets
 		print "number of tweets alrady in file:_________________________________________" ,len(all_tweets)
-		searched_tweets = [status for status in tweepy.Cursor(api.search, q=query,lang="en").items(max_tweets)]	
 		try:
+			searched_tweets = [status for status in tweepy.Cursor(api.search, q=query,lang="en").items(max_tweets)]
 			for i in range(len(searched_tweets)):
 				json_str = json.dumps(searched_tweets[i]._json)
 				data = json.loads(json_str)
-				tweet=data["text"].encode('utf-8').strip()+"\r\n"
+				tweet=data["text"].encode('utf-8').strip()
 				if tweet not in all_tweets:
 						print "adding tweet"				
-						tweetfile.write(tweet)
+						tweetfile.write(tweet+"\r\n")
 				else:
 					print "ignoring tweet"
 			print "==========================end of new tweets==========================="
-		except tweepy.TweepError:
+		except :
 			print "Rate used up"
 			time.sleep(60*50)
-		read_tweetfile.close()
 		tweetfile.close()
 	time.sleep(60*15)
