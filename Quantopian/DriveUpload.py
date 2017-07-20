@@ -14,7 +14,7 @@ sheet = client.open("DIDMBT")
 # Extract and print all of the values
 #list_of_hashes = sheet.get_all_values()
 #print(list_of_hashes)
-f = open("../Results/News_Future_Predictions.csv",'r')
+f = open("../Results/Future_predictions.csv",'r')
 k=f.read()
 print k
 
