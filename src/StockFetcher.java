@@ -91,15 +91,17 @@ public class StockFetcher {
 	
 	
 	public static void addTwitterDatetoStockFile(File inputfile,String outputfile,int numDaysToAdd) throws IOException, ParseException{
-		CSVReader cR = new CSVReader(new FileReader(inputfile),'\t');
+		if(inputfile.getName().contains(".DS_Store"))
+			return;
+		CSVReader cR = new CSVReader(new FileReader(inputfile),',');
 		CSVWriter cW = new CSVWriter(new FileWriter(outputfile),'\t');
 		String[] nextLine;
 		nextLine = cR.readNext();
 		//System.out.println(outputfile);
-		System.out.println(nextLine);
+		System.out.println(inputfile);
 		String[] writeLine=new String[nextLine.length];
 		writeLine[0]=nextLine[0];
-		writeLine[1]="Tweet Prediction Date";;
+		writeLine[1]="Tweet Prediction Date";
 		for(int i=1;i<nextLine.length-1;i++){
 			writeLine[i+1]=nextLine[i];
 		}//adding new label of Tweet Prediction date
@@ -133,6 +135,6 @@ public class StockFetcher {
 		c.add(Calendar.DATE, -1);
 
 		
-		addTwitterDatetoStockFolder("stock_data/cleaned_data", "stock_data/tweet_date_data", 3);
+		addTwitterDatetoStockFolder("stock_data/alldata", "stock_data/tweet_date_data", 3);
 	}
 }

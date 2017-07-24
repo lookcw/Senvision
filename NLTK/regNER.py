@@ -46,7 +46,7 @@ if data_type=="tweet":
 if data_type=="news":
 	data_dir='../News/ArticlesData'
 	common_words_file="News_Common_NER"
-	output="news_NER_descriptors_2_days"
+	output="news_NER_descriptors"
 
 #find x most common NERx
 num_common_words=1000                                                                                                                  
@@ -88,7 +88,7 @@ def find_features_comp(subdir):
 	files = os.walk(subdir).next()[2]
 
 	#######opening files per comp
-	stock_file=open("../stock_data/tweet_date_data/"+comp+"_cleaned.tsv",'r')
+	stock_file=open("../stock_data/tweet_date_data/"+comp+".tsv",'r')
 	stock_reader=csv.reader(stock_file,delimiter='\t')
 	common_words=open(common_words_file+"/"+comp+"_top_"+str(num_common_words)+"_words.tsv",'r')
 	word_reader=csv.reader(common_words,delimiter='\t')
@@ -98,15 +98,14 @@ def find_features_comp(subdir):
 	if(com=="y"):
 		descriptor_file=open(output+"/"+comp+"_descriptor.tsv",'w')
 	else:
-		descriptor_file=open(output+"/"+comp+"_descriptor.tsv",'a')
 		descriptor_file_read=open(output+"/"+comp+"_descriptor.tsv",'r')
 		descriptor_reader=csv.reader(descriptor_file_read,delimiter='\t')
 		descriptor_lines=list(descriptor_reader)
 		for line in descriptor_lines:
 			dates_done.append(line[0])
+		descriptor_file_read.close()
+		descriptor_file=open(output+"/"+comp+"_descriptor.tsv",'a')
 	descriptor_writer=csv.writer(descriptor_file,delimiter='\t')
-
-
 	word_features=next(word_reader) #the common words 
 	stock_lines=list(stock_reader)
 	stock_dict={}
@@ -115,8 +114,6 @@ def find_features_comp(subdir):
 	#set key of date equal to value of +/-
 	for line in stock_lines:
 		stock_dict[line[1]]=line[-2]
-
-	print stock_dict
 	#create descriptors and add value to end
 	if (len(files) > 0): 
 		for file in files:
@@ -128,7 +125,6 @@ def find_features_comp(subdir):
 			if(data_type=="news"):
 				date = file.split('_')[1]
 			filename=subdir + "/" + file
-			#print "reached before if statement"
 			if date not in dates_done and com!="y" and date in stock_dict:
 				print "Running NLTK"
 				with codecs.open(filename, 'r','latin-1') as f:
@@ -147,6 +143,7 @@ def find_features_comp(subdir):
 					features[w]=k
 				#write nltk results
 				if date in stock_dict:
+					print "appending"
 					descriptors.append([date,features,stock_dict[date]])
 					descriptor_writer.writerow([date,features,stock_dict[date]])
 
