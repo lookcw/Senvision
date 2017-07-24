@@ -1,4 +1,5 @@
 import gspread
+import csv
 from oauth2client.service_account import ServiceAccountCredentials
  
  
@@ -9,13 +10,25 @@ client = gspread.authorize(creds)
  
 # Find a workbook by name and open the first sheet
 # Make sure you use the right name here.
-sheet = client.open("DIDMBT")
- 
+sheet = client.open_by_key("1ZRhTB_t_9cpjtdUhUpY5TkSPqHxrZ3fItpI2BIp8tvo")
+print "why"
+worksheet =sheet.get_worksheet(0)
+print "whyyy"
+print type(worksheet)
 # Extract and print all of the values
 #list_of_hashes = sheet.get_all_values()
 #print(list_of_hashes)
 f = open("../Results/Future_predictions.csv",'r')
-k=f.read()
-print k
-
-client.import_csv("1ZRhTB_t_9cpjtdUhUpY5TkSPqHxrZ3fItpI2BIp8tvo",k)
+results_reader=csv.reader(f,delimiter=',')
+results_lines=list(results_reader)
+print results_lines
+for i in range(len(results_lines)):
+	for j in range(len(results_lines[i])):
+		print i," ",j
+		if results_lines[i][j]=='+':
+			worksheet.update_cell(i+1,j+1,"'+")
+		else:
+			worksheet.update_cell(i+1,j+1,results_lines[i][j])
+#k=f.read()
+#print k
+#client.import_csv("1ZRhTB_t_9cpjtdUhUpY5TkSPqHxrZ3fItpI2BIp8tvo",k)
