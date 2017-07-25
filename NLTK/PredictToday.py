@@ -8,26 +8,26 @@ import sys
 import codecs
 import nltk
 import csv
-
 from nltk.classify.scikitlearn import SklearnClassifier
-import pickle
-
 from sklearn.naive_bayes import MultinomialNB, BernoulliNB
 from sklearn.linear_model import LogisticRegression, SGDClassifier
 from sklearn.svm import SVC, LinearSVC, NuSVC
 from sklearn.ensemble import RandomForestClassifier
 #from sklearn.gaussian_process import GuassianProcessClassifier
 from sklearn.neighbors import KNeighborsClassifier
-
-
 import ast
-
 from nltk.classify import ClassifierI
 from statistics import mode
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
+TickerNames=["INTC","AAPL","BA","GOOGL","JPM","MRK","PG","WMT"]
+CompNames=["Intel","Apple","Boeing","Google","JPMorganChase","Merck","Procter&Gamble","Walmart"]
 
+
+comp2ticker={}
+for i in range(len(TickerNames)):
+	comp2ticker[CompNames[i]]=TickerNames[i]
 
 #returns array of entity names in a string
 def extract_entity_names(t):
@@ -176,7 +176,7 @@ class VoteClassifier(ClassifierI):
 files = os.walk(output_descriptors).next()[2]
 predictions_file=open('../Results/'+predictions,'w')
 predictions_writer=csv.writer(predictions_file,delimiter=',')
-predictions_writer.writerow(["date","symbol","Pred","Conf"])
+predictions_writer.writerow(["date","symbol","pred","conf"])
 #write identifier at start of results file
 predictions=[]
 
@@ -282,14 +282,14 @@ for i in predictions:
 for i in predictions:
 	if i[2]=="+":
 		if i[0] in percentages and i[0] != "Google":
-			percentages[i[0]].append([i[0],i[1],i[2],i[-1]/totals[i[0]]])
+			percentages[i[0]].append([i[0],comp2ticker[i[1]],i[2],i[-1]/totals[i[0]]])
 		elif i[0]!="Google":
-			percentages[i[0]]=[[i[0],i[1],i[2],i[-1]/totals[i[0]]]]
+			percentages[i[0]]=[[i[0],comp2ticker[i[1]],i[2],i[-1]/totals[i[0]]]]
 	else:
 		if i[0] in percentages and i[0] != "Google":
-			percentages[i[0]].append([i[0],i[1],i[2],0])
+			percentages[i[0]].append([i[0],comp2ticker[i[1]],i[2],0])
 		elif i[0]!="Google"	:
-			percentages[i[0]]=[[i[0],i[1],i[2],0]]
+			percentages[i[0]]=[[i[0],comp2ticker[i[1]],i[2],0]]
 
 for i in percentages:
 	for k in percentages[i]:
