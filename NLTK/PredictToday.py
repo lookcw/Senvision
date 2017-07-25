@@ -73,7 +73,7 @@ day3before=now-td(days=2)
 
 
 
-recents=[day2before,day3before]
+recents=[day3before]
 num_common_words=1000
 subdirs = [x[0] for x in os.walk(data_dir)]
 
@@ -87,7 +87,7 @@ def find_features_comp(subdir):
 
 
 	#######opening files per comp
-	stock_file=open("../stock_data/tweet_date_data/"+comp+"_cleaned.tsv",'r')
+	stock_file=open("../stock_data/tweet_date_data/"+comp+".tsv",'r')
 	stock_reader=csv.reader(stock_file,delimiter='\t') #reader for the stock data file
 	common_words=open(common_words_file+"/"+comp+"_top_"+str(num_common_words)+"_words.tsv",'r')
 	word_reader=csv.reader(common_words,delimiter='\t')#reader for common words
