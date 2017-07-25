@@ -18,7 +18,7 @@ print type(worksheet)
 # Extract and print all of the values
 #list_of_hashes = sheet.get_all_values()
 #print(list_of_hashes)
-f = open("../Results/Future_predictions.csv",'r')
+f = open("../Results/Twitter_Future_Predictions.csv",'r')
 results_reader=csv.reader(f,delimiter=',')
 results_lines=list(results_reader)
 print results_lines
