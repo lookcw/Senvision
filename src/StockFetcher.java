@@ -79,7 +79,7 @@ public class StockFetcher {
 	public static void addTwitterDatetoStockFolder(String inputfolder,String outputfolder,int numDaysToAdd){
 		for(File Stockfile: new File(inputfolder).listFiles() ){
 			try {
-				addTwitterDatetoStockFile(Stockfile,outputfolder+"/"+Stockfile.getName().replaceAll(".csv", "")+".tsv",numDaysToAdd);
+				addTwitterDatetoStockFile(Stockfile,outputfolder+"/"+Stockfile.getName().replaceAll(".csv", "").replaceAll("_cleaned", "")+".tsv",numDaysToAdd);
 				System.out.println(Stockfile.getName());
 			} catch (IOException | ParseException e) {
 				// TODO Auto-generated catch block
@@ -93,7 +93,7 @@ public class StockFetcher {
 	public static void addTwitterDatetoStockFile(File inputfile,String outputfile,int numDaysToAdd) throws IOException, ParseException{
 		if(inputfile.getName().contains(".DS_Store"))
 			return;
-		CSVReader cR = new CSVReader(new FileReader(inputfile),',');
+		CSVReader cR = new CSVReader(new FileReader(inputfile),'\t');
 		CSVWriter cW = new CSVWriter(new FileWriter(outputfile),'\t');
 		String[] nextLine;
 		nextLine = cR.readNext();
@@ -135,6 +135,6 @@ public class StockFetcher {
 		c.add(Calendar.DATE, -1);
 
 		
-		addTwitterDatetoStockFolder("stock_data/alldata", "stock_data/tweet_date_data", 3);
+		addTwitterDatetoStockFolder("stock_data/cleaned_data", "stock_data/tweet_date_data", 3);
 	}
 }
