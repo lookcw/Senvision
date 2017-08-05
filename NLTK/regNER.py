@@ -114,6 +114,7 @@ def find_features_comp(subdir):
 	#set key of date equal to value of +/-
 	for line in stock_lines:
 		stock_dict[line[1]]=line[-2]
+		#print line[-2]
 	#create descriptors and add value to end
 	if (len(files) > 0): 
 		for file in files:

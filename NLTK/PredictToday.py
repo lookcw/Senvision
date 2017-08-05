@@ -243,10 +243,15 @@ for file in files:
 	# NuSVC_classifier = SklearnClassifier(NuSVC())
 	# NuSVC_classifier.train(training_set)
 
-	voted_classifier = VoteClassifier(
-	  RandomForest_classifier,
-	                                  SGDClassifier_classifier,
-	                                  LogisticRegression_classifier,BernoulliNB_classifier,MNB_classifier,NearestNeighbors_classifier,SVC_classifier)
+	voted_classifier = VoteClassifier(RandomForest_classifier,LogisticRegression_classifier,MNB_classifier,NearestNeighbors_classifier,SVC_classifier)
+	print	RandomForest_classifier.classify(testing_set[0])
+	print SGDClassifier_classifier.classify(testing_set[0])
+	print LogisticRegression_classifier.classify(testing_set[0])
+	print BernoulliNB_classifier.classify(testing_set[0])
+	print MNB_classifier.classify(testing_set[0])
+	print NearestNeighbors_classifier.classify(testing_set[0])
+	print SVC_classifier.classify(testing_set[0])
+#	print voted_classifier.confidence(testing_set)
 	print len(testing_set)
 	plusminus=voted_classifier.classify_many(testing_set)
 	#print LinearSVC_classifier.prob_classify_many(testing_set)
