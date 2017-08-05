@@ -85,7 +85,7 @@ for file in files:
   descriptor_file=open(data_dir+"/"+file,'r')
   descriptor_reader=csv.reader(descriptor_file,delimiter='\t')
   featuresets=list(descriptor_reader)
-  print featuresets[0][0]
+  #print featuresets[0][0]
   for x in range(len(featuresets)):
     featuresets[x][1]=ast.literal_eval(featuresets[x][1])
     if featuresets[x][-1]=="=":
@@ -155,7 +155,7 @@ for file in files:
     for i in range(len(dates)):
       predictions.append([dates[i],comp_name,str(plusminus[i]),voted_classifier.confidence(blind_testing_set[i])])  
       #predictions_writer.writerow([dates[i],comp_name,str(plusminus[i])])
-      print [plusminus[i],true[i]]
+      #print [plusminus[i],true[i]]
 
       
       #print predictions
