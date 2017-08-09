@@ -57,7 +57,7 @@ if data_type!="tweet" and data_type!="news":
 	print "set -type to tweet or news or tweet_NER or news_NER_descriptors"
 	sys.exit(0)
 
-
+now = datetime.datetime.now()
 four_months_ago = date.today() + relativedelta(months=-4)
 
 #setting types of data accepted to determine what folder to get descriptors from. 
