@@ -1,0 +1,2 @@
+sshpass -t -p "Rewq!234" ssh -o StrictHostKeyChecking=no lookcw@159.89.38.217
+ls

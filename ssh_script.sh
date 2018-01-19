@@ -1,0 +1,14 @@
+sshpass -p "Rewq!234" ssh -o StrictHostKeyChecking=no lookcw@165.227.214.239
+sshpass -p "Rewq!234" ssh -o StrictHostKeyChecking=no lookcw@165.227.214.104
+sshpass -p "Rewq!234" ssh -o StrictHostKeyChecking=no lookcw@165.227.104.143
+sshpass -p "Rewq!234" ssh -o StrictHostKeyChecking=no lookcw@165.227.214.105
+sshpass -p "Rewq!234" ssh -o StrictHostKeyChecking=no lookcw@165.227.214.103
+sshpass -p "Rewq!234" ssh -o StrictHostKeyChecking=no lookcw@165.227.220.49
+sshpass -p "Rewq!234" ssh -o StrictHostKeyChecking=no lookcw@165.227.179.232
+sshpass -p "Rewq!234" ssh -o StrictHostKeyChecking=no lookcw@165.227.214.211
+sshpass -p "Rewq!234" ssh -o StrictHostKeyChecking=no lookcw@165.227.214.43
+sshpass -p "Rewq!234" ssh -o StrictHostKeyChecking=no lookcw@165.227.214.203
+sshpass -p "Rewq!234" ssh -o StrictHostKeyChecking=no lookcw@165.227.101.146
+sshpass -p "Rewq!234" ssh -o StrictHostKeyChecking=no lookcw@165.227.75.156
+sshpass -p "Rewq!234" ssh -o StrictHostKeyChecking=no lookcw@159.89.32.27
+sshpass -p "Rewq!234" ssh -o StrictHostKeyChecking=no lookcw@159.89.45.118
