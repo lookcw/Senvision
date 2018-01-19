@@ -291,9 +291,9 @@ for i in predictions:
 		elif i[0]!="Google":
 			percentages[i[0]]=[[i[0],comp2ticker[i[1]],i[2],i[-1]/totals[i[0]]]]
 	else:
-		if i[0] in percentages and i[0] != "Google":
+		if i[0] in percentages:
 			percentages[i[0]].append([i[0],comp2ticker[i[1]],i[2],0])
-		elif i[0]!="Google"	:
+		else:
 			percentages[i[0]]=[[i[0],comp2ticker[i[1]],i[2],0]]
 
 for i in percentages:
