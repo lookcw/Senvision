@@ -4,4 +4,4 @@ Here you'll find our work on sentiment analysis, specifically using NLTK, scikit
 We have Tweet and news article streaming infrastructure.
 We have algorithms on Quantopian to back-test our strategies and give us an idea of our returns.
 We have financial stock data from Quandl.
-Find out more at senvision.io
+Find out more at [senvision.io]
